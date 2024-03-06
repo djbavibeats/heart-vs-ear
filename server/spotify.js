@@ -140,8 +140,8 @@ router.get('/get-user', (req, res) => {
 
 router.get('/get-bracket-tracks', (req, res) => {
     const { trackIDsString, access_token, token_type } = req.query
-    console.log(trackIDsString)
-    axios(`https://api.spotify.com/v1/tracks?ids=` + { trackIDsString }, {
+    console.log(`https://api.spotify.com/v1/tracks?ids=` + trackIDsString.split(',').join('%2C'))
+    axios(`https://api.spotify.com/v1/tracks?ids=` + trackIDsString.split(',').join('%2C'), {
         headers: {
             Authorization: `${ token_type } ${ access_token }`
         }
