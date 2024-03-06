@@ -1,210 +1,169 @@
 import { useEffect, useState } from 'react'
 
-import Round from './Round.jsx'
-import Seed from './Seed.jsx'
+let participants = {
+    total: 8,
+    divisions: [
+        [
+            { name: "one" },
+            { name: "two" },
+            { name: "three" },
+            { name: "four" },
+            { name: "five" },
+            { name: "six" },
+            { name: "seven" },
+            { name: "eight" },
+        ],
+        [
+            { name: "nine" },
+            { name: "ten" },
+            { name: "eleven" },
+            { name: "twelve" },
+            { name: "thirteen" },
+            { name: "fourteen" },
+            { name: "fifteen" },
+            { name: "sixteen" },
+        
+        ],
+        [
+            { name: "seventeen" },
+            { name: "eighteen" },
+            { name: "nineteen" },
+            { name: "twenty" },
+            { name: "twentyone" },
+            { name: "twentytwo" },
+            { name: "twentythree" },
+            { name: "twentyfour" },
+        
+        ],
+        [
+            { name: "twentyfive" },
+            { name: "twentysix" },
+            { name: "twentyseven" },
+            { name: "twentyeight" },
+            { name: "twentynine" },
+            { name: "thirty" },
+            { name: "thirtyone" },
+            { name: "thirtytwo" },        
+        ]
+    ]
+}
 
-import songs from './utils/songs'
-import seeds from './utils/seeds'
-
-export default function Bracket({ accessToken, tokenType }) {
-    const [ tracks, setTracks ] = useState(null)
-
-    const [ participants, setParticipants ] = useState(0)
-    const [ rounds, setRounds ] = useState([])
-    const [ userBracket, setUserBracket ] = useState([])
-
-    const [ loading, setLoading ] = useState(true)
-    const [ initialized, setInitialized ] = useState(false)
-
-    const constructRound = (p, n) => {
-        let matches = []
-        let count = 0
-        for (let i = 0; i < p.length; i+=2) {
-            matches.push({
-                matchNumber: count,
-                a: p[i],
-                b: p[i+1],
-                winner: null
-            })
-            count++
-        }
-        let round = {
-            number: n,
-            complete: false,
-            matches: matches
-        }
-        setRounds([
-            ...rounds,
-            round
-        ])
+function init() {
+    console.log("initializing bracket")
+    // Setup Rounds
+    var initBracket = {
+        id: "userId",
+        rounds: [],
+        divisions: [],
+        champion: null
     }
 
-    useEffect(() => {
-        if (initialized) {
-            console.log("Round One Intialized", rounds)
-        }
-    }, [ rounds ])
-
-    useEffect(() => {
-        var track_ids_string = "" 
-        var possible = Math.log(seeds.length) / Math.log(2)
-        console.log("Checking if it possible to form a bracket with number of songs given (" + seeds.length + ").")
-        if (possible % 1 !== 0) {
-            console.log("Stop right there! I can't make a bracket with that many tracks!")
-        } else {
-            console.log("Valid number of tracks for bracket creation. There will be " + possible + " rounds.")
-            setParticipants(seeds.length)
-
-            // Setup Round 1
-            let participants = seeds
-            constructRound(participants, 1)
-            setInitialized(true)
-            // songs.map((song, index) => {
-            //     if (index === 0) {
-            //         track_ids_string = song.spotify_id
-            //     } else {
-            //         track_ids_string = track_ids_string + "%2C" + song.spotify_id
-            //     }
-            // })
-            // fetch(`http://localhost:5000/spotify/get-bracket-tracks?trackIDsString=${track_ids_string}&access_token=${accessToken}&token_type=${tokenType}`)
-            //     .then(resp => resp.json())
-            //     .then(data => {
-            //         setTracks(data.data.tracks)
-            //     })
-        }
-    }, [])
-
-    useEffect(() => {
-        if (tracks) {
-            console.log("We've got tracks.")
-            console.log(tracks)
-            setLoading(false)
-        } else {
-            // console.log("No tracks yet.")
-        }
-    }, [ tracks ])
+    for (let d = 0; d < participants.divisions.length; d++) {
+        var numberOfRounds = Math.log(participants.total) / Math.log(2)
+        var division = []
     
-    const moveToNextRound = (bool, r) => {
-        if (bool) {
-            console.log("Ready for next round", r)
-            let nextRoundParticipants = r.matches.map(match => {
-                return match.winner
-            })
-            console.log(nextRoundParticipants)
-            constructRound(nextRoundParticipants, r.number+1)
-            
-        } else {
-            console.log("Not ready for next round", r)
+        let roundCount = 0
+        let matchCount = 0
+        let setCount = 0
+        let roundMatches = 0
+        let roundParticipants = participants.total
+    
+        for (var i = 0; i < numberOfRounds; i++) {
+            roundMatches = roundParticipants / 2 
+    
+            var roundConstructor = {
+                number: roundCount,
+                numberOfParticipants: roundParticipants,
+                final: false,
+                matches: []
+            }
+    
+            if (roundMatches === 1) { roundConstructor.final = true }
+    
+            for (var j = 0; j < roundMatches; j++) {
+                roundConstructor.matches.push({
+                    number: matchCount,
+                    set: setCount,
+                    a: i === 0 ? participants.divisions[d][ matchCount * 2 ] : "",
+                    b: i === 0 ? participants.divisions[d][ ( matchCount*2 ) + 1 ] : "",
+                    pick: ""
+                })
+    
+                if (matchCount % 2 === 1) { setCount = setCount += 1 }
+                matchCount = matchCount += 1
+            }
+    
+            setCount = 0
+    
+            initBracket.rounds.push(roundConstructor)
+            division.push(roundConstructor)
+            roundParticipants = roundParticipants / 2
+            roundCount = roundCount += 1
         }
+        initBracket.divisions.push(division)
     }
+    return initBracket
+}
+
+export default function Bracket() {
+    const [ bracket, setBracket ] = useState(init)
 
     useEffect(() => {
-        console.log("User bracket updated!")
-        console.log(userBracket)
-    }, [ userBracket ])
+        console.log(bracket)
+    }, [ bracket ])
 
-    const renderRounds = (rounds) => {
-        return Array.from(
-            { length: rounds.length },
-            (_, i) => {
-                return (<div className="col-span-1" key={ i }>
-                    <Round  
-                        round={ rounds[i] } 
-                        moveToNextRound={ moveToNextRound }
-                    />
-                </div>)
+    const handleMatchPick = (division, round, set, match, pick, isFinal) => {
+        let bracketCopy = bracket
+        bracketCopy.divisions[division][round].matches[match].pick = pick
+
+        if (!isFinal) {
+            if (match % 2 === 0) {
+                bracketCopy.divisions[division][round+1].matches[set].a = pick
+            } else if (match % 2 === 1) {
+                bracketCopy.divisions[division][round+1].matches[set].b = pick
             }
-        )
+        } else {
+            bracketCopy.divisions[division].champion = pick
+        }
+        setBracket({ ...bracketCopy })
+ 
     }
+
+    // let matchcounter = -1
 
     return (<>
-        { initialized &&
-        
-            <>
-                <div className={`grid grid-cols-4 gap-10 items-center`}>
-                    {/* Round One */}
-                    {/* { renderRounds(rounds) } */}
-                    <div>
-                        {/* Match One */}
-                        <div className="border-2 mb-8">
-                            <div className="border-b-2 p-2">
-                                <p>One</p>
-                            </div>
-                            <div className="p-2">
-                                <p>Two</p>
-                            </div>
-                        </div>
-
-                        {/* Match Two */}
-                        <div className="border-2 mb-8">
-                            <div className="border-b-2 p-2">
-                                <p>Three</p>
-                            </div>
-                            <div className="p-2">
-                                <p>Four</p>
-                            </div>
-                        </div>
-
-                        {/* Match Three */}
-                        <div className="border-2 mb-8">
-                            <div className="border-b-2 p-2">
-                                <p>Five</p>
-                            </div>
-                            <div className="p-2">
-                                <p>Six</p>
-                            </div>
-                        </div>
-
-                        {/* Match Four */}
-                        <div className="border-2 mb-8">
-                            <div className="border-b-2 p-2">
-                                <p>Seven</p>
-                            </div>
-                            <div className="p-2">
-                                <p>Eight</p>
-                            </div>
-                        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-2 w-full items-center">
+  
+            { bracket.divisions.map((division, divisionindex) => {
+                
+                return (
+                <div key={ divisionindex } className="flex flex-col border-2 p-2 gap-5">
+                    <div className="text-left">
+                        <p className="font-bold text-2xl">Division { divisionindex + 1 }</p>
                     </div>
-
-                    {/* Round Two */}
-
-                    {/* Round Three */}
-
-                    {/* Round Four */}
+                    <div className="grid grid-cols-3 gap-5 grid-flow-col-dense" dir={ `${divisionindex % 2 === 0 ? 'ltr' : 'rtl' }` }>
+                        { division.map((round, roundindex) => {
+                            return (<div key={ roundindex } className={`h-full flex flex-col justify-around gap-10`}>
+                                { round.matches.map((match, matchindex) => {
+                                    // matchcounter += 1
+                                    return (<div key={ matchindex } className={`border-2`}>
+                                        <div className="border-b-2 p-2 h-12" onClick={ () => handleMatchPick(divisionindex, roundindex, match.set, matchindex, match.a, round.final) }>
+                                            <p>{ match.a.name }</p>
+                                        </div>
+                                        <div className="p-2 h-12" onClick={ () => handleMatchPick(divisionindex, roundindex, match.set, matchindex, match.b, round.final) }>
+                                            <p>{ match.b.name }</p>
+                                        </div>
+                                    </div>)
+                                }) }
+                            </div>)
+                        }) }
+                    </div>
+                    <div className="text-right">
+                        <p className="font-bold text-2xl">Champion: { division.champion ? division.champion.name : 'Undecided' } </p>
+                    </div>
                 </div>
-            </>
-        }
-            {/* Round One: 32 Participants */}
-
-            {/* Round Two: 16 Participants */}
-
-            {/* Round Three: 8 Participants */}
-
-            {/* Round Four: 4 Participants */}
-
-            {/* Round Five: 2 Participants */}
-            {/*
-            <div>
-                { loading === false &&
-                    tracks.map((track, index) => {
-                        if (index % 2 === 0) {
-                            return <Round 
-                                key={ index }
-                                seedA={ tracks[index] }
-                                seedB={ tracks[index+1]}
-                            />
-                            // if (index === 0) {
-                            //     console.log('first round')
-                            // } else if (index === (tracks.length-1)) {
-                            //     console.log('last round')
-                            // }
-                        }
-                        // console.log(tracks[index].name)
-                        // console.log(tracks[index+1].name)
-                        // return <Seed key={ index } track={ track } />
-                    })
-                }
-            </div>
-            */}
+                )
+            }) }
+        </div>
     </>)
 }
