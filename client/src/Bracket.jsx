@@ -141,9 +141,9 @@ export default function Bracket() {
                     <div className="text-left">
                         <p className="font-bold text-2xl">Division { divisionindex + 1 }</p>
                     </div>
-                    <div className="grid grid-cols-3 gap-2 grid-flow-col-dense" dir={ `${divisionindex % 2 === 0 ? 'ltr' : 'rtl' }` }>
+                    <div className="grid grid-cols-3 gap-5 grid-flow-col-dense" dir={ `${divisionindex % 2 === 0 ? 'ltr' : 'rtl' }` }>
                         { division.map((round, roundindex) => {
-                            return (<div key={ roundindex } className={`h-full flex flex-col justify-around gap-10`}>
+                            return (<div key={ roundindex } className={`h-full flex flex-col justify-around gap-5`}>
                                 { round.matches.map((match, matchindex) => {
                                     // matchcounter += 1
                                     return (<div key={ matchindex } className={`border-2`}>
