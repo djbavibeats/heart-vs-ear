@@ -133,9 +133,7 @@ export default function Bracket() {
 
     return (<>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-1 md:gap-2 w-full items-center">
-  
             { bracket.divisions.map((division, divisionindex) => {
-                
                 return (
                 <div key={ divisionindex } className="h-full flex flex-col border-2 p-2 gap-5">
                     <div className="text-left">
@@ -165,5 +163,13 @@ export default function Bracket() {
                 )
             }) }
         </div>
+        {/* @TODO: 
+				1. Create semifinals matches between division champions
+            	2. Create finals match
+				3. Create champion slot
+				4. Enable bracket saving
+				5. Load in bracket with pre-defined choices
+				6. Populate bracket choices with Spotify songs 
+		 */} 
     </>)
 }
