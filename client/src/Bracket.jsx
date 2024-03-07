@@ -137,7 +137,7 @@ export default function Bracket() {
             { bracket.divisions.map((division, divisionindex) => {
                 
                 return (
-                <div key={ divisionindex } className="flex flex-col border-2 p-2 gap-5">
+                <div key={ divisionindex } className="h-full flex flex-col border-2 p-2 gap-5">
                     <div className="text-left">
                         <p className="font-bold text-2xl">Division { divisionindex + 1 }</p>
                     </div>
@@ -147,10 +147,10 @@ export default function Bracket() {
                                 { round.matches.map((match, matchindex) => {
                                     // matchcounter += 1
                                     return (<div key={ matchindex } className={`border-2`}>
-                                        <div className="border-b-2 p-2 h-12" onClick={ () => handleMatchPick(divisionindex, roundindex, match.set, matchindex, match.a, round.final) }>
+                                        <div className="border-b-2 p-2 h-8" onClick={ () => handleMatchPick(divisionindex, roundindex, match.set, matchindex, match.a, round.final) }>
                                             <p>{ match.a.name }</p>
                                         </div>
-                                        <div className="p-2 h-12" onClick={ () => handleMatchPick(divisionindex, roundindex, match.set, matchindex, match.b, round.final) }>
+                                        <div className="p-2 h-8" onClick={ () => handleMatchPick(divisionindex, roundindex, match.set, matchindex, match.b, round.final) }>
                                             <p>{ match.b.name }</p>
                                         </div>
                                     </div>)
