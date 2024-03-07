@@ -147,10 +147,10 @@ export default function Bracket() {
                                 { round.matches.map((match, matchindex) => {
                                     // matchcounter += 1
                                     return (<div key={ matchindex } className={`border-2`}>
-                                        <div className="flex items-center border-b-2 p-2" onClick={ () => handleMatchPick(divisionindex, roundindex, match.set, matchindex, match.a, round.final) }>
+                                        <div className="flex items-center border-b-2 p-2 min-h-10" onClick={ () => handleMatchPick(divisionindex, roundindex, match.set, matchindex, match.a, round.final) }>
                                             <p>{ match.a.name }</p>
                                         </div>
-                                        <div className="flex items-center p-2" onClick={ () => handleMatchPick(divisionindex, roundindex, match.set, matchindex, match.b, round.final) }>
+                                        <div className="flex items-center p-2 min-h-10" onClick={ () => handleMatchPick(divisionindex, roundindex, match.set, matchindex, match.b, round.final) }>
                                             <p>{ match.b.name }</p>
                                         </div>
                                     </div>)
