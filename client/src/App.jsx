@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 
 import Bracket from './Bracket'
 
-let url = "http://localhost:5000"
+let url = 'https://heart-vs-ear.onrender.com'
 
 function App() {
   const [ user, setUser ] = useState(null)
