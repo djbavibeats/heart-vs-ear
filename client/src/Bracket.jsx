@@ -4,7 +4,7 @@ import songs from './utils/songs'
 
 import namelogo from './assets/name-logo.png'
 
-let url = 'http://localhost:5000'
+let url = 'https://heart-vs-ear.onrender.com'
 
 export default function Bracket({ accessToken , tokenType }) {    
     const [ participantsReady, setParticipantsReady ] = useState(false)
