@@ -182,19 +182,58 @@ export default function Bracket({ accessToken , tokenType }) {
         console.log("Bracket", bracket)
     }
 
+    async function share() {
+        const shareData = {
+            title: "I Prevail - Heart Vs. Ear",
+            text: "Sixty-four songs enter, only one will remain.",
+            url: "https://zippy-lily-3f86ad.netlify.app",
+        }
+
+        if (navigator.share && navigator.canShare(shareData)) {
+            try {
+                await navigator.share(shareData);
+                console.log("Shared successfully")
+            } catch (err) {
+                console.log(`Error: ${err}`)
+            }
+         } else {
+            // do something else like copying the data to the clipboard
+            console.log(`Can't share in this browser`)
+         }
+    }
+
+    function openMenu() {
+        window.open('https://iprevailband.com/')
+    }
     // let matchcounter = -1
 
     return (<>
     { bracketReady &&
         bracket && <>
-        <div className="absolute top-10 left-0 right-0 flex flex-col items-center justify-center">
+        <div className="h-20 flex items-center justify-between w-screen px-8 bg-none relative z-10">
+            {/* Share Icon */}
+            <div className="text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:cursor-pointer" onClick={ share }>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+                </svg>  
+            </div>
+            
+            {/* Menu Icon */}
+            <div className="text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:cursor-pointer" onClick={ openMenu }>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                </svg>
+
+            </div>
+        </div>
+        <div className="absolute top-10 left-0 right-0 flex flex-col items-center justify-center z-0">
             <img className="max-w-[225px]" src={ namelogo } />
             <p className="
                 bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
                 text-[51px] font-ultra-condensed tracking-[14px]
             ">BRACKET</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-8 w-full items-center p-2">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-8 w-full items-center p-2 z-1 relative">
             {/* Division 1 */}
             <div className={ `flex flex-col gap-5 col-span-2` }>
                 <div key={ 0 } className={`division-${ 0 } h-full flex flex-col gap-2` }>
