@@ -19,7 +19,7 @@ const generateRandomString = length => {
 
 router.get('/login', (req,res) => {
     const state = generateRandomString(16)
-    const scope = ''
+    const scope = 'user-read-private'
 
     const paramsObj = {
         client_id: client_id,
@@ -139,9 +139,10 @@ router.get('/get-user', (req, res) => {
 })
 
 router.get('/get-bracket-tracks', (req, res) => {
-    const { trackIDsString, access_token, token_type } = req.query
-    console.log(`https://api.spotify.com/v1/tracks?ids=` + trackIDsString.split(',').join('%2C'))
-    axios(`https://api.spotify.com/v1/tracks?ids=` + trackIDsString.split(',').join('%2C'), {
+    const { ids, access_token, token_type } = req.query
+    console.log(req.query)
+    console.log(`https://api.spotify.com/v1/tracks?ids=` + ids)
+    axios(`https://api.spotify.com/v1/tracks?ids=` + ids, {
         headers: {
             Authorization: `${ token_type } ${ access_token }`
         }
