@@ -226,16 +226,16 @@ export default function Bracket({ accessToken , tokenType }) {
 
             </div>
         </div>
-        <div className="absolute top-10 left-0 right-0 flex flex-col items-center justify-center z-0">
-            <img className="max-w-[225px]" src={ namelogo } />
+        <div className="absolute top-4 md:top-10 left-0 right-0 flex flex-col items-center justify-center z-0">
+            <img className="max-w-[125px] md:max-w-[225px]" src={ namelogo } />
             <p className="
                 bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
-                text-[51px] font-ultra-condensed tracking-[14px]
+                text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px]
             ">BRACKET</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-8 w-full items-center p-2 z-1 relative">
             {/* Division 1 */}
-            <div className={ `flex flex-col gap-5 col-span-2` }>
+            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2` }>
                 <div key={ 0 } className={`division-${ 0 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense" dir={ `${ 0 === 2 || 0 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[0].map((round, roundindex) => {
@@ -273,7 +273,7 @@ export default function Bracket({ accessToken , tokenType }) {
             </div>
 
             {/* Division 3 */}
-            <div className={ `flex flex-col gap-5 col-span-2` }>
+            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2` }>
                 <div key={ 2 } className={`division-${ 2 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense" dir={ `${ 2 === 2 || 2 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[2].map((round, roundindex) => {
@@ -312,7 +312,7 @@ export default function Bracket({ accessToken , tokenType }) {
                         
             {/* Playoffs */}
             <div className={ `flex flex-col col-span-4 items-center justify-center` }>
-                <div className={ `flex flex-col w-full -mb-[10%] -mt-[10%] max-w-[552px]` }>
+                <div className={ `flex flex-col w-full -mb-[0%] -mb-[10%] md:-mb-[10%] -mt-[0%] md:-mt-[10%] max-w-[552px]` }>
                     {/* <div className={ `flex justify-center` }>
                         { bracket.champion ? <>
                         <div className="">
@@ -427,7 +427,7 @@ export default function Bracket({ accessToken , tokenType }) {
             </div>
 
             {/* Division 2 */}
-            <div className={ `flex flex-col gap-5 col-span-2` }>
+            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2` }>
                 <div key={ 1 } className={`division-${ 1 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense" dir={ `${ 1 === 2 || 1 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[1].map((round, roundindex) => {
@@ -465,7 +465,7 @@ export default function Bracket({ accessToken , tokenType }) {
             </div>
 
             {/* Division 4 */}
-            <div className={ `flex flex-col gap-5 col-span-2` }>
+            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2` }>
                 <div key={ 3 } className={`division-${ 3 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense" dir={ `${ 3 === 2 || 3 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[3].map((round, roundindex) => {
