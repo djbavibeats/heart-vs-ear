@@ -20,7 +20,6 @@ export default function Bracket({ accessToken , tokenType }) {
     })
 
     function init() {
-        console.log("initializing bracket", accessToken)
         let divisionOneIds = ""
         let divisionTwoIds = ""
         let divisionThreeIds = ""
@@ -73,7 +72,6 @@ export default function Bracket({ accessToken , tokenType }) {
     }
 
     useEffect(() => {
-        console.log("Ready to setup bracket?", participantsReady)
         if (participantsReady) {
             // Setup Rounds
             var initBracket = {
@@ -147,7 +145,9 @@ export default function Bracket({ accessToken , tokenType }) {
 
 
     useEffect(() => {
-        console.log(bracket)
+        bracket ?
+            console.log(bracket)
+            : ''
     }, [ bracket ])
 
     const handleMatchPick = (division, round, set, match, pick, isFinal) => {
@@ -252,7 +252,7 @@ export default function Bracket({ accessToken , tokenType }) {
                                                 : "bg-ip-gray-transparent "
                                             } `} onClick={ () => handleMatchPick(0, roundindex, match.set, matchindex, match.a, round.final) }>
                                                 { imgurlA !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                                <p className="font-ultra-condensed tracking-wide text-xl pl-2 truncate">{ match.a.name }</p>
+                                                <p className="font-ultra-condensed tracking-wide text-xl px-2">{ match.a.name }</p>
                                             </div>
                                             <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4  ${ 
                                                 match.pick ?
@@ -262,7 +262,7 @@ export default function Bracket({ accessToken , tokenType }) {
                                                 : "bg-ip-gray-transparent"
                                             } `} onClick={ () => handleMatchPick(0, roundindex, match.set, matchindex, match.b, round.final) }>
                                                 { imgurlB !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                                <p className="font-ultra-condensed tracking-wide text-xl pl-2 truncate">{ match.b.name }</p>
+                                                <p className="font-ultra-condensed tracking-wide text-xl px-2">{ match.b.name }</p>
                                             </div>
                                         </div>)
                                     }) }
@@ -282,7 +282,7 @@ export default function Bracket({ accessToken , tokenType }) {
                                     let imgurlA = match.a ? match.a !== "undecided" ? match.a.album.images[0].url : "" : ""
                                     let imgurlB = match.b ? match.b !== "undecided" ? match.b.album.images[0].url : "" : ""
                                     return (<div key={ matchindex } className={`division-${ 2 } round-${ roundindex } match-${ matchindex } text-sm`}>
-                                        <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border border-b-0 min-h-10 ${ 
+                                        <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border border-b-0 min-h-10 ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
                                                 match.pick.name === match.a.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -290,9 +290,9 @@ export default function Bracket({ accessToken , tokenType }) {
                                             : "bg-ip-gray-transparent "
                                         } `} onClick={ () => handleMatchPick(2, roundindex, match.set, matchindex, match.a, round.final) }>
                                             { imgurlA !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                            <p className="font-ultra-condensed tracking-wide text-xl pr-2 truncate">{ match.a.name }</p>
+                                            <p className="font-ultra-condensed tracking-wide text-xl px-2">{ match.a.name }</p>
                                         </div>
-                                        <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4  ${ 
+                                        <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-4  ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
                                                 match.pick.name === match.b.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -300,7 +300,7 @@ export default function Bracket({ accessToken , tokenType }) {
                                             : "bg-ip-gray-transparent"
                                         } `} onClick={ () => handleMatchPick(2, roundindex, match.set, matchindex, match.b, round.final) }>
                                             { imgurlB !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                            <p className="font-ultra-condensed tracking-wide text-xl pr-2 truncate">{ match.b.name }</p>
+                                            <p className="font-ultra-condensed tracking-wide text-xl px-2">{ match.b.name }</p>
                                         </div>
                                     </div>)
                                 }) }
@@ -338,11 +338,13 @@ export default function Bracket({ accessToken , tokenType }) {
                                         : "bg-ip-gray-transparent"
                                     }
                                 `} onClick={ () => handleSemifinalPick(0, 0, bracket.divisions[0].champion) }>
-                                    { bracket.divisions[0].champion !== undefined ? 
+                                    { bracket.divisions[0].champion ?
+                                        bracket.divisions[0].champion !== undefined ? 
                                         <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[0].champion.album.images[0].url }` } />
                                         : <div className="h-[50px] w-[50px]"></div>
+                                        : <div className="h-[50px] w-[50px]"></div>
                                     }
-                                    <p className="font-ultra-condensed tracking-wide text-xl pl-2 truncate">{ bracket.divisions[0].champion ? bracket.divisions[0].champion.name : "" }</p>
+                                    <p className="font-ultra-condensed tracking-wide text-xl px-2">{ bracket.divisions[0].champion ? bracket.divisions[0].champion.name : "" }</p>
                                 </div>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4 
                                     ${  bracket.semifinals[0].pick
@@ -350,11 +352,13 @@ export default function Bracket({ accessToken , tokenType }) {
                                         : "bg-ip-gray-transparent"
                                     }
                                 `} onClick={ () => handleSemifinalPick(1, 0, bracket.divisions[1].champion) }>
-                                    { bracket.divisions[1].champion !== undefined ? 
+                                    { bracket.divisions[1].champion ?
+                                        bracket.divisions[1].champion !== undefined ? 
                                         <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[1].champion.album.images[0].url }` } />
                                         : <div className="h-[50px] w-[50px]"></div>
+                                        : <div className="h-[50px] w-[50px]"></div>
                                     }
-                                    <p className="font-ultra-condensed tracking-wide text-xl pl-2 truncate">{ bracket.divisions[1].champion ? bracket.divisions[1].champion.name : "" }</p>
+                                    <p className="font-ultra-condensed tracking-wide text-xl px-2">{ bracket.divisions[1].champion ? bracket.divisions[1].champion.name : "" }</p>
                                 </div>
                             </div>
                         </div>
@@ -363,29 +367,33 @@ export default function Bracket({ accessToken , tokenType }) {
                                 <p>Semifinal</p>
                             </div>
                             <div className={`text-sm col-span-1`}>
-                                <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-2
+                                <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-2
                                     ${ bracket.semifinals[1].pick 
                                         ? bracket.semifinals[1].pick === bracket.divisions[2].champion ? "bg-ip-blue" : "bg-ip-gray-transparent" 
                                         : "bg-ip-gray-transparent"
                                     }
                                 ` } onClick={ () => handleSemifinalPick(2, 1, bracket.divisions[2].champion) }>
-                                    { bracket.divisions[2].champion !== undefined ? 
+                                    { bracket.divisions[2].champion ?
+                                        bracket.divisions[2].champion !== undefined ? 
                                         <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[2].champion.album.images[0].url }` } />
                                         : <div className="h-[50px] w-[50px]"></div>
+                                        : <div className="h-[50px] w-[50px]"></div>
                                     }
-                                    <p className="font-ultra-condensed tracking-wide text-xl pr-2 truncate">{ bracket.divisions[2].champion ? bracket.divisions[2].champion.name : "" }</p>
+                                    <p className="font-ultra-condensed tracking-wide text-xl text-left px-2">{ bracket.divisions[2].champion ? bracket.divisions[2].champion.name : "" }</p>
                                 </div>
-                                <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4 
+                                <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-4 
                                     ${ bracket.semifinals[1].pick 
                                         ? bracket.semifinals[1].pick === bracket.divisions[3].champion ? "bg-ip-blue" : "bg-ip-gray-transparent" 
                                         : "bg-ip-gray-transparent"
                                     }
                                 `} onClick={ () => handleSemifinalPick(3, 1, bracket.divisions[3].champion) }>
-                                    { bracket.divisions[3].champion !== undefined ? 
+                                    { bracket.divisions[3].champion ?
+                                        bracket.divisions[3].champion !== undefined ? 
                                         <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[3].champion.album.images[0].url }` } />
                                         : <div className="h-[50px] w-[50px]"></div>
+                                        : <div className="h-[50px] w-[50px]"></div>
                                     }
-                                    <p className="font-ultra-condensed tracking-wide text-xl pr-2 truncate">{ bracket.divisions[3].champion ? bracket.divisions[3].champion.name : "" }</p>
+                                    <p className="font-ultra-condensed tracking-wide text-xl text-left px-2">{ bracket.divisions[3].champion ? bracket.divisions[3].champion.name : "" }</p>
                                 </div>
                             </div>
                         </div>
@@ -412,7 +420,6 @@ export default function Bracket({ accessToken , tokenType }) {
                                     bg-ip-gray-transparent
                                     hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
                                 `} onClick={ () => handleChampionshipPick(bracket.semifinals[1].pick) }>
-                                { console.log(bracket.semifinals[1].pick) }
                                 { bracket.semifinals[1].pick ? 
                                     <img className="object-contain" src={ bracket.semifinals[1].pick.album.images[0].url } />
                                     : <div className="h-[271px]"></div> 
@@ -444,7 +451,7 @@ export default function Bracket({ accessToken , tokenType }) {
                                             : "bg-ip-gray-transparent "
                                         } `} onClick={ () => handleMatchPick(1, roundindex, match.set, matchindex, match.a, round.final) }>
                                             { imgurlA !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                            <p className="font-ultra-condensed tracking-wide text-xl pl-2 truncate">{ match.a.name }</p>
+                                            <p className="font-ultra-condensed tracking-wide text-xl px-2">{ match.a.name }</p>
                                         </div>
                                         <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4  ${ 
                                             match.pick ?
@@ -454,7 +461,7 @@ export default function Bracket({ accessToken , tokenType }) {
                                             : "bg-ip-gray-transparent"
                                         } `} onClick={ () => handleMatchPick(1, roundindex, match.set, matchindex, match.b, round.final) }>
                                             { imgurlB !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                            <p className="font-ultra-condensed tracking-wide text-xl pl-2 truncate">{ match.b.name }</p>
+                                            <p className="font-ultra-condensed tracking-wide text-xl px-2">{ match.b.name }</p>
                                         </div>
                                     </div>)
                                 }) }
@@ -474,7 +481,7 @@ export default function Bracket({ accessToken , tokenType }) {
                                     let imgurlA = match.a ? match.a !== "undecided" ? match.a.album.images[0].url : "" : ""
                                     let imgurlB = match.b ? match.b !== "undecided" ? match.b.album.images[0].url : "" : ""
                                     return (<div key={ matchindex } className={`division-${ 3 } round-${ roundindex } match-${ matchindex } text-sm`}>
-                                        <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border border-b-0 min-h-10 ${ 
+                                        <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center justify-between border border-b-0 min-h-10 ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
                                                 match.pick.name === match.a.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -482,9 +489,9 @@ export default function Bracket({ accessToken , tokenType }) {
                                             : "bg-ip-gray-transparent "
                                         } `} onClick={ () => handleMatchPick(3, roundindex, match.set, matchindex, match.a, round.final) }>
                                             { imgurlA !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                            <p className="font-ultra-condensed tracking-wide text-xl pr-2 truncate">{ match.a.name }</p>
+                                            <p className="font-ultra-condensed tracking-wide text-xl px-2 text-left">{ match.a.name }</p>
                                         </div>
-                                        <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4  ${ 
+                                        <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center justify-between border min-h-10 mb-4  ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
                                                 match.pick.name === match.b.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -492,7 +499,7 @@ export default function Bracket({ accessToken , tokenType }) {
                                             : "bg-ip-gray-transparent"
                                         } `} onClick={ () => handleMatchPick(3, roundindex, match.set, matchindex, match.b, round.final) }>
                                             { imgurlB !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                            <p className="font-ultra-condensed tracking-wide text-xl pr-2 truncate">{ match.b.name }</p>
+                                            <p className="font-ultra-condensed tracking-wide text-xl px-2 text-left">{ match.b.name }</p>
                                         </div>
                                     </div>)
                                 }) }
