@@ -7,7 +7,6 @@ var client_id = process.env.SPOTIFY_CLIENT_ID
 var client_secret = process.env.SPOTIFY_CLIENT_SECRET
 var redirect_uri = process.env.SPOTIFY_REDIRECT_URI
 
-console.log(client_id, redirect_uri)
 const generateRandomString = length => {
     let text = ''
     const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -63,9 +62,7 @@ router.get('/callback', (req, res) => {
             }
         })
             .then(response => {
-                console.log(response.status)
                 if (response.status === 200) {
-                    console.log('everything went well, store the refresh token and continue...')
                     res.send({
                         status: 200,
                         message: 'success',
@@ -77,7 +74,7 @@ router.get('/callback', (req, res) => {
                 }
             })
             .catch(error => {
-                console.log('error authorizing user')
+                
                 res.send({
                     status: 400,
                     message: 'error authenticating user',
@@ -110,7 +107,6 @@ router.get('/refresh', (req, res) => {
         }
     })
         .then((response) => {
-            console.log(response.status, "yay")
             if (response.status === 200) {
                 res.send({
                     status: 200,
@@ -140,14 +136,11 @@ router.get('/get-user', (req, res) => {
 
 router.get('/get-bracket-tracks', (req, res) => {
     const { ids, access_token, token_type } = req.query
-    console.log(req.query)
-    console.log(`https://api.spotify.com/v1/tracks?ids=` + ids)
     axios(`https://api.spotify.com/v1/tracks?ids=` + ids, {
         headers: {
             Authorization: `${ token_type } ${ access_token }`
         }
     }).then(response => {
-        console.log(response)
         res.send({
             status: 200,
             message: 'success',

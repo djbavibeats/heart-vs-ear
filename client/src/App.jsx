@@ -5,6 +5,7 @@ import namelogo from './assets/name-logo.png'
 import symbolLogo from './assets/symbol-logo.png'
 
 let url = 'https://heart-vs-ear.onrender.com'
+// let url = 'http://localhost:5000'
 
 function App() {
   const [ user, setUser ] = useState(null)
@@ -28,11 +29,36 @@ function App() {
       fetch(`${url}/spotify/get-user?access_token=${accessToken}&token_type=${tokenType}`)
         .then(resp => resp.json())
         .then(data => {  
-          console.log("Logged user in", data)
-          setUser(data.data)
+          const spotifyInfo = data.data
+          fetch(`${url}/database/users/get?spotify_id=${data.data.id}`)
+            .then(resp => resp.json())
+            .then(data => {
+              if (data.user) {
+                console.log('user exists', data.user)
+                setUser(data.user)
+              } else {
+                const newUser = {
+                  displayName: spotifyInfo.display_name,
+                  spotifyRefreshToken: localStorage.getItem('hve_spotify_refresh'),
+                  spotifyId: spotifyInfo.id
+                }
+                fetch(`${url}/database/users/create`, {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify(newUser)
+                }).then(resp => resp.json())
+                .then(data => {
+                  console.log(data)
+                })
+              }
+              // setUser(data.data)
+            })
         })
     }
   }, [ accessToken ])
+
   useEffect(() => {
     const spotifyToken = getTokenFromUrl()
 
@@ -135,8 +161,8 @@ function openMenu() {
             Participation requires a Spotify account.
           </p>
           <div className="flex flex-row items-center justify-center gap-x-2 bg-gradient-to-t from-cyan-400 to-ip-blue text-black font-bold drop-shadow-glow-sm px-4 py-3 rounded-xl min-w-40 text-center hover:cursor-pointer hover:scale-105 transition-all" onClick={ spotifyAuth }>
-            <div className="mt-[1.75px]"><p className="text-md">LOG IN</p></div> 
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" viewBox="0 0 512 512">
+            <div className="mt-[1.75px]"><p className="text-sm">LOG IN</p></div> 
+            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
               <path d="M217 401L345 273c9.4-9.4 9.4-24.6 0-33.9L217 111c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l87 87L24 232c-13.3 0-24 10.7-24 24s10.7 24 24 24l246.1 0-87 87c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0zM344 80l80 0c22.1 0 40 17.9 40 40l0 272c0 22.1-17.9 40-40 40l-80 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l80 0c48.6 0 88-39.4 88-88l0-272c0-48.6-39.4-88-88-88l-80 0c-13.3 0-24 10.7-24 24s10.7 24 24 24z"/>
             </svg>
           </div>
