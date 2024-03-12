@@ -116,7 +116,7 @@ function openMenu() {
           <p className="text-center -mr-[10px]
               bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
               text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[15px]
-          ">BRACKET</p>
+          ">BRACKET-OLOGY</p>
       </div>
       { !user &&
         <div className="w-[500px] mt-[150px] flex items-center justify-start flex-col gap-8">
