@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react'
 
 import songs from './utils/songs'
 
-import namelogo from './assets/name-logo.png'
 
 let url = 'https://heart-vs-ear.onrender.com'
 
@@ -182,62 +181,16 @@ export default function Bracket({ accessToken , tokenType }) {
         console.log("Bracket", bracket)
     }
 
-    async function share() {
-        const shareData = {
-            title: "I Prevail - Heart Vs. Ear",
-            text: "Sixty-four songs enter, only one will remain.",
-            url: "https://zippy-lily-3f86ad.netlify.app",
-        }
-
-        if (navigator.share && navigator.canShare(shareData)) {
-            try {
-                await navigator.share(shareData);
-                console.log("Shared successfully")
-            } catch (err) {
-                console.log(`Error: ${err}`)
-            }
-         } else {
-            // do something else like copying the data to the clipboard
-            console.log(`Can't share in this browser`)
-         }
-    }
-
-    function openMenu() {
-        window.open('https://iprevailband.com/')
-    }
     // let matchcounter = -1
 
     return (<>
     { bracketReady &&
         bracket && <>
-        <div className="h-20 flex items-center justify-between w-screen px-8 bg-none relative z-10">
-            {/* Share Icon */}
-            <div className="text-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:cursor-pointer" onClick={ share }>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-                </svg>  
-            </div>
-            
-            {/* Menu Icon */}
-            <div className="text-center">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:cursor-pointer" onClick={ openMenu }>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                </svg>
-
-            </div>
-        </div>
-        <div className="absolute top-4 md:top-10 left-0 right-0 flex flex-col items-center justify-center z-0">
-            <img className="max-w-[125px] md:max-w-[225px]" src={ namelogo } />
-            <p className="
-                bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
-                text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px]
-            ">BRACKET</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-8 w-full items-center p-2 z-1 relative">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-8 w-full items-center p-2 z-1 relative mt-[75px]">
             {/* Division 1 */}
-            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2` }>
+            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2 h-full` }>
                 <div key={ 0 } className={`division-${ 0 } h-full flex flex-col gap-2` }>
-                    <div className="grid grid-cols-4 gap-2 grid-flow-col-dense" dir={ `${ 0 === 2 || 0 === 3 ? 'rtl' : 'ltr' }` }>
+                    <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 0 === 2 || 0 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[0].map((round, roundindex) => {
                             return (<div key={ roundindex } className={`h-full flex flex-col justify-around gap-2`}>
                                     { round.matches.map((match, matchindex) => {
@@ -273,9 +226,9 @@ export default function Bracket({ accessToken , tokenType }) {
             </div>
 
             {/* Division 3 */}
-            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2` }>
+            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2 h-full` }>
                 <div key={ 2 } className={`division-${ 2 } h-full flex flex-col gap-2` }>
-                    <div className="grid grid-cols-4 gap-2 grid-flow-col-dense" dir={ `${ 2 === 2 || 2 === 3 ? 'rtl' : 'ltr' }` }>
+                    <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 2 === 2 || 2 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[2].map((round, roundindex) => {
                             return (<div key={ roundindex } className={`h-full flex flex-col justify-around gap-2`}>
                                 { round.matches.map((match, matchindex) => {
@@ -311,24 +264,101 @@ export default function Bracket({ accessToken , tokenType }) {
             </div>
                         
             {/* Playoffs */}
-            <div className={ `flex flex-col col-span-4 items-center justify-center` }>
-                <div className={ `flex flex-col w-full -mb-[0%] -mb-[10%] md:-mb-[10%] -mt-[0%] md:-mt-[10%] max-w-[552px]` }>
-                    {/* <div className={ `flex justify-center` }>
+            <div className={ `flex flex-col col-span-4 items-center justify-center z-50` }>
+                <div className={ `flex flex-col w-full -mb-[0%] -mb-[10%] md:-mb-[10%] -mt-[0%] md:-mt-[17.5%] max-w-[612px]` }>
+                    <div className={ `flex justify-center mb-8` }>
                         { bracket.champion ? <>
-                        <div className="">
-                            <p className="text-center">
-                                Your Champion<br />
-                                { bracket.champion.name }
-                            </p>
-                        </div>
+                            <div className={`border max-w-[250px] min-h-[360px] flex flex-1 flex-col items-center justify-center text-sm 
+                                bg-ip-gray-transparent
+                                hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                                `}>
+                                <p className={ `font-ultra-condensed tracking-wide text-center text-xl px-2 h-[35px] flex items-center justify-center border-b` }>
+                                    Your Champion
+                                </p>
+                                <p className={ `font-ultra-condensed tracking-wide text-center text-xl px-2 min-h-[75px] flex items-center justify-center` }>
+                                    { bracket.champion.name }
+                                </p>
+                                <img className="object-contain h-[250px]" src={ bracket.champion.album.images[0].url } />
+                            </div>
                         </>
-                        : "" 
+                        : <div className={`border max-w-[250px] min-h-[360px] flex flex-1 flex-col items-center justify-center text-sm 
+                        bg-ip-gray-transparent
+                        hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                        `}>
+                        <p className={ `font-ultra-condensed tracking-wide text-center text-xl px-2 h-[35px] flex items-center justify-center border-b` }>
+                            Your Champion
+                        </p>
+                        <p className={ `font-ultra-condensed tracking-wide text-center text-xl px-2 min-h-[75px] flex items-center justify-center` }>
+                            Undecided
+                        </p>
+                        <div className="object-contain h-[250px]"></div>
+                    </div>
                         }
+                    </div>
+                    <div className={ `flex flex-col col-span-4 items-center justify-center mb-8` }>
+                        <div className={ `flex justify-center w-full mb-2` }>
+                            <p>Championship</p>
+                        </div>
+                        <div className={`gap-2 text-sm col-span-1 w-full flex flex-row`}>
+                            <div className={`h-[100px] border flex flex-1 flex-row items-center justify-start text-sm 
+                                    bg-ip-gray-transparent
+                                    hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                                `} onClick={ () => handleChampionshipPick(bracket.semifinals[0].pick) }>
+                                { bracket.semifinals[0].pick ?
+                                    <img className="object-contain h-[100px] max-h-full" src={ bracket.semifinals[0].pick.album.images[0].url } />
+                                    : <div className="h-[100px]"></div>
+                                }
+                                <div className="min-h-[100px] p-1 items-center justify-center flex">
+                                    <p className="font-ultra-condensed tracking-wide px-2 text-xl text-right">{ bracket.semifinals[0].pick ? bracket.semifinals[0].pick.name : "" }</p>
+                                </div>
+                            </div>
+                            <div className={`h-[100px] border flex flex-1 flex-row items-center justify-between text-sm 
+                                    bg-ip-gray-transparent
+                                    hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                                `} onClick={ () => handleChampionshipPick(bracket.semifinals[1].pick) }>
+                                { bracket.semifinals[1].pick ?
+                                    <img className="object-contain h-[100px] max-h-full" src={ bracket.semifinals[1].pick.album.images[0].url } />
+                                    : <div className="h-[100px]"></div>
+                                }
+                                <div className="min-h-[100px] p-1 items-center justify-center flex">
+                                    <p className="font-ultra-condensed tracking-wide px-2 text-xl text-left">{ bracket.semifinals[1].pick ? bracket.semifinals[1].pick.name : "" }</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* OLD Championship */}
+                    {/* <div className={ `flex flex-col col-span-4 items-center justify-center mb-8` }>
+                        <div className={`gap-2 text-sm col-span-1 w-full flex flex-row`}>
+                            <div className={`border w-[125px] flex flex-1 flex-col items-center justify-center text-sm 
+                                    bg-ip-gray-transparent
+                                    hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                                `} onClick={ () => handleChampionshipPick(bracket.semifinals[0].pick) }>
+                                { bracket.semifinals[0].pick ?
+                                    <img className="object-contain" src={ bracket.semifinals[0].pick.album.images[0].url } />
+                                    : <div className="h-[271px]"></div>
+                                }
+                                <div className="min-h-[65px] p-1 items-center justify-center flex">
+                                    <p className="font-ultra-condensed tracking-wide text-xl pr-2 text-center">{ bracket.semifinals[0].pick ? bracket.semifinals[0].pick.name : "" }</p>
+                                </div>
+                            </div>
+                            <div className={`border w-[125px] flex flex-1 flex-col items-center justify-center text-sm 
+                                    bg-ip-gray-transparent
+                                    hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                                `} onClick={ () => handleChampionshipPick(bracket.semifinals[1].pick) }>
+                                { bracket.semifinals[1].pick ? 
+                                    <img className="object-contain" src={ bracket.semifinals[1].pick.album.images[0].url } />
+                                    : <div className="h-[271px]"></div> 
+                                }
+                                <div className="min-h-[65px] p-1 items-center justify-center flex">
+                                    <p className="font-ultra-condensed tracking-wide text-xl pr-2 text-center">{ bracket.semifinals[1].pick ? bracket.semifinals[1].pick.name : "" }</p>
+                                </div>
+                            </div>
+                        </div>
                     </div> */}
                     {/* Semifinals */}
                     <div className={ `grid grid-cols-8 gap-2 w-full items-center` }>
                         <div className="col-span-4">
-                            <div className={ `flex justify-center` }>
+                            <div className={ `flex justify-center mb-2` }>
                                 <p>Semifinal</p>
                             </div>
                             <div className={`text-sm col-span-1`}>
@@ -363,7 +393,7 @@ export default function Bracket({ accessToken , tokenType }) {
                             </div>
                         </div>
                         <div className="col-span-4" dir="rtl">
-                            <div className={ `flex justify-center` }>
+                            <div className={ `flex justify-center mb-2` }>
                                 <p>Semifinal</p>
                             </div>
                             <div className={`text-sm col-span-1`}>
@@ -398,45 +428,13 @@ export default function Bracket({ accessToken , tokenType }) {
                             </div>
                         </div>
                     </div>
-                    {/* Championship */}
-                    <div className={ `flex flex-col col-span-4 items-center justify-center` }>
-                        <div className={ `flex justify-center w-full` }>
-                            <p>Championship</p>
-                        </div>
-                        <div className={`gap-2 text-sm col-span-1 w-full flex flex-row`}>
-                            <div className={`border w-[125px] flex flex-1 flex-col items-center justify-center text-sm 
-                                    bg-ip-gray-transparent
-                                    hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
-                                `} onClick={ () => handleChampionshipPick(bracket.semifinals[0].pick) }>
-                                { bracket.semifinals[0].pick ?
-                                    <img className="object-contain" src={ bracket.semifinals[0].pick.album.images[0].url } />
-                                    : <div className="h-[271px]"></div>
-                                }
-                                <div className="min-h-[65px] p-1 items-center justify-center flex">
-                                    <p className="font-ultra-condensed tracking-wide text-xl pr-2 text-center">{ bracket.semifinals[0].pick ? bracket.semifinals[0].pick.name : "" }</p>
-                                </div>
-                            </div>
-                            <div className={`border w-[125px] flex flex-1 flex-col items-center justify-center text-sm 
-                                    bg-ip-gray-transparent
-                                    hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
-                                `} onClick={ () => handleChampionshipPick(bracket.semifinals[1].pick) }>
-                                { bracket.semifinals[1].pick ? 
-                                    <img className="object-contain" src={ bracket.semifinals[1].pick.album.images[0].url } />
-                                    : <div className="h-[271px]"></div> 
-                                }
-                                <div className="min-h-[65px] p-1 items-center justify-center flex">
-                                    <p className="font-ultra-condensed tracking-wide text-xl pr-2 text-center">{ bracket.semifinals[1].pick ? bracket.semifinals[1].pick.name : "" }</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
 
             {/* Division 2 */}
-            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2` }>
+            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2 h-full` }>
                 <div key={ 1 } className={`division-${ 1 } h-full flex flex-col gap-2` }>
-                    <div className="grid grid-cols-4 gap-2 grid-flow-col-dense" dir={ `${ 1 === 2 || 1 === 3 ? 'rtl' : 'ltr' }` }>
+                    <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 1 === 2 || 1 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[1].map((round, roundindex) => {
                             return (<div key={ roundindex } className={`h-full flex flex-col justify-around gap-2`}>
                                 { round.matches.map((match, matchindex) => {
@@ -472,9 +470,9 @@ export default function Bracket({ accessToken , tokenType }) {
             </div>
 
             {/* Division 4 */}
-            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2` }>
+            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2 h-full` }>
                 <div key={ 3 } className={`division-${ 3 } h-full flex flex-col gap-2` }>
-                    <div className="grid grid-cols-4 gap-2 grid-flow-col-dense" dir={ `${ 3 === 2 || 3 === 3 ? 'rtl' : 'ltr' }` }>
+                    <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 3 === 2 || 3 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[3].map((round, roundindex) => {
                             return (<div key={ roundindex } className={`h-full flex flex-col justify-around gap-2`}>
                                 { round.matches.map((match, matchindex) => {

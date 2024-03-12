@@ -23,6 +23,9 @@ export default {
       dropShadow: {
         glow: [
           "0px 0px 20px #319fff"
+        ],
+        "glow-sm": [
+          "0px 0px 10px #319fff"
         ]
       }
     },
