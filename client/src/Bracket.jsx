@@ -105,7 +105,6 @@ export default function Bracket({ accessToken , tokenType, user }) {
             fetch(`${url}/spotify/get-bracket-tracks?access_token=${accessToken}&token_type=${tokenType}&ids=${divisionOneIds}`)
                 .then(resp => resp.json())
                 .then(data => {
-                    console.log('first data', user)
                     let divisionOneTracks = []
                     data.data.tracks.map(track => {
                         divisionOneTracks.push({
@@ -192,7 +191,6 @@ export default function Bracket({ accessToken , tokenType, user }) {
         if (participantsReady) {
             // Setup Rounds
             if (user.bracket.length !== 0) {
-                console.log('here')
                 setBracket(user.bracket[0])
             } else {
                 var initBracket = {
@@ -282,6 +280,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
     const [ party, setParty ] = useState(init)
     const [ bracket, setBracket ] = useState(null)
     const [ bracketReady, setBracketReady ] = useState(false)
+    const [ submitting, setSubmitting ] = useState(false)
 
     const handleMatchPick = (division, round, set, match, pick, isFinal) => {
         let bracketCopy = bracket
@@ -317,10 +316,8 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
 
     const handleSaveBracket = () => {
-        console.log("Bracket", bracket.divisions[0])
         let saveBracket = bracket
-        console.log(JSON.stringify({ ...saveBracket }))
-        
+        setSubmitting(true)
         fetch(`${url}/database/users/update-bracket`, {
           method: 'POST',
           headers: {
@@ -329,12 +326,11 @@ export default function Bracket({ accessToken , tokenType, user }) {
           body: JSON.stringify(saveBracket)
         }).then(resp => resp.json())
         .then(data => {
-            console.log('user bracket saved')
+            setSubmitting(false)
         })
     }
 
     useEffect(() => {
-        console.log('bracket chnaged!', bracket)
     }, [ bracket ])
 
     const toggleInstructionsModal = () => {
@@ -343,6 +339,11 @@ export default function Bracket({ accessToken , tokenType, user }) {
     // let matchcounter = -1
 
     return (<>
+    { submitting &&
+        <div className="absolute z-[999] h-full w-full bg-black top-0 right-0 left-0 bottom-0 flex items-center justify-center">
+            <p>Submitting your bracket...</p>
+        </div>
+    }
     { bracketReady &&
         bracket && <>
         <div className="flex flex-col gap-4 items-center">
@@ -571,7 +572,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                         : <div className="h-[50px] w-[50px]"></div>
                                         : <div className="h-[50px] w-[50px]"></div>
                                     }
-                                    <p className="font-ultra-condensed tracking-wide text-xl px-2">da{ bracket.divisions[1].champion ? bracket.divisions[1].champion.name : "" }</p>
+                                    <p className="font-ultra-condensed tracking-wide text-xl px-2">{ bracket.divisions[1].champion ? bracket.divisions[1].champion.name : "" }</p>
                                 </div>
                             </div>
                         </div>
