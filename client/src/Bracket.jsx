@@ -316,9 +316,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
     
     const clearBracket = () => {
-        let clearBracket = []
-        setBracket({ clearBracket })
-        init()
+        console.log('clear bracket')
     }
 
     const handleSaveBracket = () => {
