@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react'
-import { isMobile, isBrowser } from 'react-device-detect'
-
+import { useRef, useEffect, useState } from 'react'
+import { Howl } from 'howler'
 import songs from './utils/songs'
 import symbolLogo from './assets/symbol-logo.png'
 
@@ -62,11 +61,15 @@ const CountdownTimer = () => {
 
 
 }
+
+const OrientationPrompt = () => {
+    return (<>
+        <p>Orientation Prompt</p>
+    </>)
+}
 export default function Bracket({ accessToken , tokenType, user }) {    
     const [ participantsReady, setParticipantsReady ] = useState(false)
     const [ instructionVisible, setInstructionVisible ] = useState(false)
-    const [ isLandscape, setIsLandscape ] = useState(false)
-    const [ disableOrientationCheck, setDisableOrientationCheck ] = useState(false)
     const [ participants, setParticipants ] = useState({
         totalParticipants: 64,
         participantsPerDivision: 16,
@@ -109,7 +112,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 .then(resp => resp.json())
                 .then(data => {
                     let divisionOneTracks = []
+                    console.log(data.data.tracks)
                     data.data.tracks.map(track => {
+                        console.log(track.preview_url ? "got it" : "not it")
                         divisionOneTracks.push({
                             album: {
                                 images: track.album.images[0]
@@ -121,6 +126,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                             name: track.name,
                             type: track.type,
                             uri: track.uri,
+                            preview_url: track.preview_url ? track.preview_url : "unavailable"
                         })
                     })
                     participants.divisions[0] = divisionOneTracks
@@ -140,6 +146,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                     name: track.name,
                                     type: track.type,
                                     uri: track.uri,
+                                    preview_url: track.preview_url ? track.preview_url : "unavailable"
                                 })
                             })
                             participants.divisions[1] = divisionTwoTracks
@@ -159,6 +166,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                             name: track.name,
                                             type: track.type,
                                             uri: track.uri,
+                                            preview_url: track.preview_url ? track.preview_url : "unavailable"
                                         })
                                     })
                                     participants.divisions[2] = divisionThreeTracks
@@ -178,6 +186,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                     name: track.name,
                                                     type: track.type,
                                                     uri: track.uri,
+                                                    preview_url: track.preview_url ? track.preview_url : "unavailable"
                                                 })
                                             })
                                             participants.divisions[3] = divisionFourTracks
@@ -444,44 +453,60 @@ export default function Bracket({ accessToken , tokenType, user }) {
 
     useEffect(() => {
         if (bracketReady) {
-            console.log('widen the screen!')
             document.querySelector('html').style.minWidth = '1400px'
             document.querySelector('body').style.minWidth = '1400px'
-            // if (window.innerWidth > 768) {
-            //     if (window.innerWidth > window.innerHeight) {
-            //         console.log('wider than tall')
-            //         setIsLandscape(true)
-            //     } else {
-            //         console.log('taller than wide')
-            //         setIsLandscape(false)
-            //     }
-            // }
-
-            window.addEventListener('resize', (e) => {
-                if (isMobile) {
-                    alert('orienation check? ' + disableOrientationCheck)
-                    if (!disableOrientationCheck) {
-                        if (e.target.innerWidth > e.target.innerHeight) {
-                            console.log('wider than tall')
-                            setIsLandscape(true)
-                        } else {
-                            console.log('taller than wide')
-                            setIsLandscape(false)
-                        }
-                    } else {
-                        console.log('orientation check has been disabled')
-                    }
-                }
-            })
         } else {
             console.log('not yet')
         }
     }, [ bracketReady ])
 
-    const acceptPortraitView = () => {
-        setDisableOrientationCheck(true)
-        setIsLandscape(true)
+    const previewAudio = useRef(new Howl({ 
+        src: "https://p.scdn.co/mp3-preview/b3368b85360333a9cb4b3242ad431179bd1b14bf?cid=9a35c8ababfc499ba5d709d474eebc73",
+        html5: true
+    }))
+
+    const [ currentPreview, setCurrentPreview ] = useState({ match: '', participant: '' })
+
+    const playAudioPreview = (matchnumber, track) => {
+        if (currentPreview.match === matchnumber && previewAudio.current._src === track.preview_url) {
+            setCurrentPreview({
+                match: "",
+                participant: ""
+            })
+            previewAudio.current.stop()
+        } else {
+            setCurrentPreview({
+                match: matchnumber,
+                participant: track.id
+            })
+            previewAudio.current.unload()
+            previewAudio.current._src = track.preview_url
+            previewAudio.current.stop()
+            previewAudio.current.play()
+        }
     }
+
+    const renderAlbumArt = (match, participant) => {
+        return (<div className="relative">
+            <div onClick={ () => playAudioPreview(match.number, participant) } className="absolute h-[50px] w-[50px] top-0 right-0 bottom-0 left-0 flex items-end justify-start p-1">
+            { currentPreview.match === match.number 
+                ? currentPreview.participant === participant.id ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="w-4 h-4">
+                    <path fill="#ffffff" d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"/>
+                </svg>
+                : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-4 h-4">
+                    <path fill="#ffffff" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
+                </svg>
+            : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-4 h-4">
+                <path fill="#ffffff" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
+            </svg>  }
+            
+
+            
+            </div>
+            <img className="z-10 min-h-[50px] h-[50px] min-w-[50px] w-[50px]" src={` ${ participant.album.images.url || "" } `} />
+        </div>)
+    }
+    
     return (<>
     <div>
     { submitting &&
@@ -497,26 +522,8 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
     { bracketReady &&
         bracket && <>
-        {
-            !isLandscape &&
-                <div className="flex flex-col items-center justify-center w-screen h-screen absolute z-[9999] top-0 bottom-0 right-0 left-0 bg-black">
-                    <p className="text-center
-                        bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
-                        text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] -mr-[0px] px-8">
-                        Please rotate your device for the best experience!
-                    </p>
-                    <div className="min-w-52 mt-8 flex flex-row items-center justify-center gap-x-2 
-                        bg-transparent text-white font-bold border-2
-                        px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
-                        onClick={ acceptPortraitView }
-                    >
-                        <div className="mt-[1.75px]"><p className="text-sm">OR DON'T</p></div> 
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 512 512">
-                            <path fill="#ffffff" d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm72.4-118.5c9.7-9 10.2-24.2 1.2-33.9C315.3 344.3 290.6 328 256 328s-59.3 16.3-73.5 31.6c-9 9.7-8.5 24.9 1.2 33.9s24.9 8.5 33.9-1.2c7.4-7.9 20-16.4 38.5-16.4s31.1 8.5 38.5 16.4c9 9.7 24.2 10.2 33.9 1.2zM176.4 272c17.7 0 32-14.3 32-32c0-1.5-.1-3-.3-4.4l10.9 3.6c8.4 2.8 17.4-1.7 20.2-10.1s-1.7-17.4-10.1-20.2l-96-32c-8.4-2.8-17.4 1.7-20.2 10.1s1.7 17.4 10.1 20.2l30.7 10.2c-5.8 5.8-9.3 13.8-9.3 22.6c0 17.7 14.3 32 32 32zm192-32c0-8.9-3.6-17-9.5-22.8l30.2-10.1c8.4-2.8 12.9-11.9 10.1-20.2s-11.9-12.9-20.2-10.1l-96 32c-8.4 2.8-12.9 11.9-10.1 20.2s11.9 12.9 20.2 10.1l11.7-3.9c-.2 1.5-.3 3.1-.3 4.7c0 17.7 14.3 32 32 32s32-14.3 32-32z"/>                   
-                        </svg>
-                    </div>
-                </div>
-        }
+        {/* TODO: Make it so you are prompted to view the device in landscape mode on mobile */}
+        {/* <OrientationPrompt /> */}
         <div className="flex flex-col gap-4 items-center bracket-container text-white">
             <div className="max-w-[28rem] items-center flex-wrap justify-center flex gap-4 z-10">
                 <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
@@ -591,7 +598,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                     : "bg-ip-gray-transparent" 
                                                 : "bg-ip-gray-transparent "
                                             } `} onClick={ () => handleMatchPick(0, roundindex, match.set, matchindex, match.a, round.final) }>
-                                                { imgurlA !== "" ? <img className="z-10 h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
+                                                { imgurlA !== "" ? 
+                                                    <>{ renderAlbumArt(match, match.a) }</>
+                                                    : <div className="h-[50px] w-[50px]"></div> }
                                                 { renderText(match.a.name) }
                                             </div>
                                             <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4  ${ 
@@ -601,7 +610,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                     : "bg-ip-gray-transparent" 
                                                 : "bg-ip-gray-transparent"
                                             } `} onClick={ () => handleMatchPick(0, roundindex, match.set, matchindex, match.b, round.final) }>
-                                                { imgurlB !== "" ? <img className="z-10 h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
+                                                { imgurlB !== "" ? 
+                                                    <>{ renderAlbumArt(match, match.b) }</>
+                                                    : <div className="h-[50px] w-[50px]"></div> }
                                                 { renderText(match.b.name) }
                                                 
                                             </div>
@@ -630,7 +641,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                 : "bg-ip-gray-transparent" 
                                             : "bg-ip-gray-transparent "
                                         } `} onClick={ () => handleMatchPick(2, roundindex, match.set, matchindex, match.a, round.final) }>
-                                            { imgurlA !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
+                                            { imgurlA !== "" ? 
+                                                <>{ renderAlbumArt(match, match.a) }</>
+                                                : <div className="h-[50px] w-[50px]"></div> }
                                             { renderText(match.a.name) }
                                         </div>
                                         <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-4  ${ 
@@ -640,7 +653,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                 : "bg-ip-gray-transparent" 
                                             : "bg-ip-gray-transparent"
                                         } `} onClick={ () => handleMatchPick(2, roundindex, match.set, matchindex, match.b, round.final) }>
-                                            { imgurlB !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
+                                            { imgurlB !== "" ? 
+                                                <>{ renderAlbumArt(match, match.b) }</>
+                                                : <div className="h-[50px] w-[50px]"></div> }
                                             { renderText(match.b.name) }
                                         </div>
                                     </div>)
@@ -816,7 +831,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                 : "bg-ip-gray-transparent" 
                                             : "bg-ip-gray-transparent "
                                         } `} onClick={ () => handleMatchPick(1, roundindex, match.set, matchindex, match.a, round.final) }>
-                                            { imgurlA !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
+                                            { imgurlA !== "" ? 
+                                                <>{ renderAlbumArt(match, match.a) }</>
+                                                : <div className="h-[50px] w-[50px]"></div> }
                                             { renderText(match.a.name) }
                                         </div>
                                         <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4  ${ 
@@ -826,7 +843,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                 : "bg-ip-gray-transparent" 
                                             : "bg-ip-gray-transparent"
                                         } `} onClick={ () => handleMatchPick(1, roundindex, match.set, matchindex, match.b, round.final) }>
-                                            { imgurlB !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
+                                            { imgurlB !== "" ? 
+                                                <>{ renderAlbumArt(match, match.b) }</>
+                                                : <div className="h-[50px] w-[50px]"></div> }
                                             { renderText(match.b.name) }
                                         </div>
                                     </div>)
@@ -854,7 +873,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                 : "bg-ip-gray-transparent" 
                                             : "bg-ip-gray-transparent "
                                         } `} onClick={ () => handleMatchPick(3, roundindex, match.set, matchindex, match.a, round.final) }>
-                                            { imgurlA !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
+                                            { imgurlA !== "" ? 
+                                                <>{ renderAlbumArt(match, match.a) }</>
+                                                : <div className="h-[50px] w-[50px]"></div> }
                                             { renderText(match.a.name) }
                                         </div>
                                         <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center justify-between border min-h-10 mb-4  ${ 
@@ -864,7 +885,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                 : "bg-ip-gray-transparent" 
                                             : "bg-ip-gray-transparent"
                                         } `} onClick={ () => handleMatchPick(3, roundindex, match.set, matchindex, match.b, round.final) }>
-                                            { imgurlB !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
+                                            { imgurlB !== "" ? 
+                                                <>{ renderAlbumArt(match, match.b) }</>
+                                                : <div className="h-[50px] w-[50px]"></div> }
                                             { renderText(match.b.name) }
                                         </div>
                                     </div>)
