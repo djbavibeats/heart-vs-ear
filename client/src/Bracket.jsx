@@ -422,6 +422,22 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
     // let matchcounter = -1
 
+    const renderText = (matchname) => {
+        if (matchname) {
+            if (matchname.split('').length >= 15) {
+                return (<div className="relative flex overflow-x-hidden">
+                    <div className="animate-marquee whitespace-nowrap">
+                        <span className="font-ultra-condensed tracking-wide text-xl mx-2">{ matchname }</span>
+                    </div>
+                    <div className="absolute top-0 animate-marquee2 whitespace-nowrap">
+                        <span className="font-ultra-condensed tracking-wide text-xl mx-2">{ matchname }</span>
+                    </div>
+                </div>)
+            } else {
+                return (<div><span className="font-ultra-condensed tracking-wide text-xl mx-2">{ matchname }</span></div>)
+            }
+        }
+    }
     return (<>
     { submitting &&
         <div className="absolute z-[999] h-full w-full bg-black top-0 right-0 left-0 bottom-0 flex items-center justify-center">
@@ -431,7 +447,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
     { bracketReady &&
         bracket && <>
         <div className="flex flex-col gap-4 items-center bracket-container text-white">
-            <div className="mt-[175px] max-w-[28rem] items-center flex-wrap justify-center flex gap-4 z-10">
+            <div className="max-w-[28rem] items-center flex-wrap justify-center flex gap-4 z-10">
                 <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
                     bg-transparent text-white font-bold border-2
                     px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
@@ -504,8 +520,8 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                     : "bg-ip-gray-transparent" 
                                                 : "bg-ip-gray-transparent "
                                             } `} onClick={ () => handleMatchPick(0, roundindex, match.set, matchindex, match.a, round.final) }>
-                                                { imgurlA !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                                <p className="font-ultra-condensed tracking-wide text-xl px-2">{ match.a.name }</p>
+                                                { imgurlA !== "" ? <img className="z-10 h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
+                                                { renderText(match.a.name) }
                                             </div>
                                             <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4  ${ 
                                                 match.pick ?
@@ -514,8 +530,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                     : "bg-ip-gray-transparent" 
                                                 : "bg-ip-gray-transparent"
                                             } `} onClick={ () => handleMatchPick(0, roundindex, match.set, matchindex, match.b, round.final) }>
-                                                { imgurlB !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                                <p className="font-ultra-condensed tracking-wide text-xl px-2">{ match.b.name }</p>
+                                                { imgurlB !== "" ? <img className="z-10 h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
+                                                { renderText(match.b.name) }
+                                                
                                             </div>
                                         </div>)
                                     }) }
@@ -543,7 +560,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                             : "bg-ip-gray-transparent "
                                         } `} onClick={ () => handleMatchPick(2, roundindex, match.set, matchindex, match.a, round.final) }>
                                             { imgurlA !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                            <p className="font-ultra-condensed tracking-wide text-xl px-2">{ match.a.name }</p>
+                                            { renderText(match.a.name) }
                                         </div>
                                         <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-4  ${ 
                                             match.pick ?
@@ -553,7 +570,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                             : "bg-ip-gray-transparent"
                                         } `} onClick={ () => handleMatchPick(2, roundindex, match.set, matchindex, match.b, round.final) }>
                                             { imgurlB !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                            <p className="font-ultra-condensed tracking-wide text-xl px-2">{ match.b.name }</p>
+                                            { renderText(match.b.name) }
                                         </div>
                                     </div>)
                                 }) }
@@ -563,9 +580,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 </div>
             </div>
                         
-            {/* Playoffs */}
-            <div className={ `flex flex-col col-span-4 items-center justify-center z-50` }>
-                <div className={ `flex flex-col w-full -mb-[20%] md:-mb-[10%] -mt-[30%] md:-mt-[17.5%] max-w-[612px]` }>
+            {/* Desktop Playoffs */}
+            <div className={ `hidden md:visible md:flex flex-col col-span-4 items-center justify-center z-50` }>
+                <div className={ `flex flex-col w-full -mb-[10%] md:-mb-[10%] -mt-[30%] md:-mt-[17.5%] max-w-[612px]` }>
                     <div className={ `flex justify-center mb-8` }>
                         { bracket.champion ? <>
                             <div className={`border max-w-[250px] min-h-[360px] flex flex-1 flex-col items-center justify-center text-sm 
@@ -729,7 +746,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                             : "bg-ip-gray-transparent "
                                         } `} onClick={ () => handleMatchPick(1, roundindex, match.set, matchindex, match.a, round.final) }>
                                             { imgurlA !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                            <p className="font-ultra-condensed tracking-wide text-xl px-2">{ match.a.name }</p>
+                                            { renderText(match.a.name) }
                                         </div>
                                         <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4  ${ 
                                             match.pick ?
@@ -739,7 +756,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                             : "bg-ip-gray-transparent"
                                         } `} onClick={ () => handleMatchPick(1, roundindex, match.set, matchindex, match.b, round.final) }>
                                             { imgurlB !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                            <p className="font-ultra-condensed tracking-wide text-xl px-2">{ match.b.name }</p>
+                                            { renderText(match.b.name) }
                                         </div>
                                     </div>)
                                 }) }
@@ -767,7 +784,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                             : "bg-ip-gray-transparent "
                                         } `} onClick={ () => handleMatchPick(3, roundindex, match.set, matchindex, match.a, round.final) }>
                                             { imgurlA !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlA || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                            <p className="font-ultra-condensed tracking-wide text-xl px-2 text-left">{ match.a.name }</p>
+                                            { renderText(match.a.name) }
                                         </div>
                                         <div className={ `hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center justify-between border min-h-10 mb-4  ${ 
                                             match.pick ?
@@ -777,12 +794,160 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                             : "bg-ip-gray-transparent"
                                         } `} onClick={ () => handleMatchPick(3, roundindex, match.set, matchindex, match.b, round.final) }>
                                             { imgurlB !== "" ? <img className="h-[50px] w-[50px]" src={` ${ imgurlB || "" } `} /> : <div className="h-[50px] w-[50px]"></div> }
-                                            <p className="font-ultra-condensed tracking-wide text-xl px-2 text-left">{ match.b.name }</p>
+                                            { renderText(match.b.name) }
                                         </div>
                                     </div>)
                                 }) }
                             </div>)
                         }) }
+                    </div>
+                </div>
+            </div>
+
+            {/* Mobile Playoffs */}
+            <div className={ `md:hidden visible flex flex-col col-span-4 items-center justify-center z-50` }>
+                <div className={ `flex flex-col w-full -mb-[0%] md:-mb-[10%] -mt-[30%] md:-mt-[17.5%] max-w-[612px]` }>
+                    <div className={ `flex justify-center mb-8` }>
+                        { bracket.champion ? <>
+                            <div className={`border max-w-[250px] min-h-[360px] flex flex-1 flex-col items-center justify-center text-sm 
+                                
+                                ${ bracket.champion ? "bg-ip-blue drop-shadow-glow" 
+                                : "bg-ip-gray-transparent"
+                                }
+                                hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                                `}>
+                                <p className={ `font-ultra-condensed tracking-wide text-center text-xl px-2 h-[35px] flex items-center justify-center border-b` }>
+                                    Your Champion
+                                </p>
+                                <p className={ `font-ultra-condensed tracking-wide text-center text-xl px-2 min-h-[75px] flex items-center justify-center` }>
+                                    { bracket.champion.name }
+                                </p>
+                                <img className="object-contain h-[250px]" src={ bracket.champion.album.images.url } />
+                            </div>
+                        </>
+                        : <div className={`border max-w-[250px] min-h-[360px] flex flex-1 flex-col items-center justify-center text-sm 
+                        bg-ip-gray-transparent
+                        hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                        `}>
+                        <p className={ `font-ultra-condensed tracking-wide text-center text-xl px-2 h-[35px] flex items-center justify-center border-b` }>
+                            Your Champion
+                        </p>
+                        <p className={ `font-ultra-condensed tracking-wide text-center text-xl px-2 min-h-[75px] flex items-center justify-center` }>
+                            Undecided
+                        </p>
+                        <div className="object-contain h-[250px]"></div>
+                    </div>
+                        }
+                    </div>
+                    <div className={ `flex flex-col col-span-4 items-center justify-center mb-8` }>
+                        <div className={ `flex justify-center w-full mb-2` }>
+                            <p>Championship</p>
+                        </div>
+                        <div className={`gap-2 text-sm col-span-1 w-full flex flex-row`}>
+                            <div className={`h-[100px] border flex flex-1 flex-row items-center justify-start text-sm 
+                                    ${ bracket.champion ?
+                                        bracket.champion === bracket.semifinals[0].pick ? "bg-ip-blue" : "bg-ip-gray-transparent"
+                                        : "bg-ip-gray-transparent"
+                                    }
+                                    hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                                `} onClick={ () => handleChampionshipPick(bracket.semifinals[0].pick) }>
+                                { bracket.semifinals[0].pick ?
+                                    <img className="object-contain h-[100px] max-h-full" src={ bracket.semifinals[0].pick.album.images.url } />
+                                    : <div className="h-[100px]"></div>
+                                }
+                                <div className="min-h-[100px] p-1 items-center justify-center flex">
+                                    <p className="font-ultra-condensed tracking-wide px-2 text-xl text-right">{ bracket.semifinals[0].pick ? bracket.semifinals[0].pick.name : "" }</p>
+                                </div>
+                            </div>
+                            <div className={`h-[100px] border flex flex-1 flex-row-reverse items-center justify-between text-sm 
+                                    ${ bracket.champion ?
+                                        bracket.champion === bracket.semifinals[1].pick ? "bg-ip-blue" : "bg-ip-gray-transparent"
+                                        : "bg-ip-gray-transparent"
+                                    }
+                                    hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                                `} onClick={ () => handleChampionshipPick(bracket.semifinals[1].pick) }>
+                                { bracket.semifinals[1].pick ?
+                                    <img className="object-contain h-[100px] max-h-full" src={ bracket.semifinals[1].pick.album.images.url } />
+                                    : <div className="h-[100px]"></div>
+                                }
+                                <div className="min-h-[100px] p-1 items-center justify-center flex">
+                                    <p className="font-ultra-condensed tracking-wide px-2 text-xl text-left">{ bracket.semifinals[1].pick ? bracket.semifinals[1].pick.name : "" }</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {/* Semifinals */}
+                    <div className={ `grid grid-cols-8 gap-2 w-full items-center` }>
+                        <div className="col-span-4">
+                            <div className={ `flex justify-center mb-2` }>
+                                <p>Final Four</p>
+                            </div>
+                            <div className={`text-sm col-span-1`}>
+                                <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-2 
+                                    ${ bracket.semifinals[0].pick
+                                        ? bracket.semifinals[0].pick === bracket.divisions[0].champion ? "bg-ip-blue" : "bg-ip-gray-transparent" 
+                                        : "bg-ip-gray-transparent"
+                                    }
+                                `} onClick={ () => handleSemifinalPick(0, 0, bracket.divisions[0].champion) }>
+                                    { bracket.divisions[0].champion ?
+                                        bracket.divisions[0].champion !== undefined ? 
+                                        <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[0].champion.album.images.url }` } />
+                                        : <div className="h-[50px] w-[50px]"></div>
+                                        : <div className="h-[50px] w-[50px]"></div>
+                                    }
+                                    <p className="font-ultra-condensed tracking-wide text-xl px-2">{ bracket.divisions[0].champion ? bracket.divisions[0].champion.name : "" }</p>
+                                </div>
+                                <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4 
+                                    ${  bracket.semifinals[0].pick
+                                        ? bracket.semifinals[0].pick === bracket.divisions[1].champion ? "bg-ip-blue" : "bg-ip-gray-transparent" 
+                                        : "bg-ip-gray-transparent"
+                                    }
+                                `} onClick={ () => handleSemifinalPick(1, 0, bracket.divisions[1].champion) }>
+                                    { bracket.divisions[1].champion ?
+                                        bracket.divisions[1].champion !== undefined ? 
+                                        <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[1].champion.album.images.url }` } />
+                                        : <div className="h-[50px] w-[50px]"></div>
+                                        : <div className="h-[50px] w-[50px]"></div>
+                                    }
+                                    <p className="font-ultra-condensed tracking-wide text-xl px-2">{ bracket.divisions[1].champion ? bracket.divisions[1].champion.name : "" }</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-span-4" dir="rtl">
+                            <div className={ `flex justify-center mb-2` }>
+                                <p>Final Four</p>
+                            </div>
+                            <div className={`text-sm col-span-1`}>
+                                <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-2
+                                    ${ bracket.semifinals[1].pick 
+                                        ? bracket.semifinals[1].pick === bracket.divisions[2].champion ? "bg-ip-blue" : "bg-ip-gray-transparent" 
+                                        : "bg-ip-gray-transparent"
+                                    }
+                                ` } onClick={ () => handleSemifinalPick(2, 1, bracket.divisions[2].champion) }>
+                                    { bracket.divisions[2].champion ?
+                                        bracket.divisions[2].champion !== undefined ? 
+                                        <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[2].champion.album.images.url }` } />
+                                        : <div className="h-[50px] w-[50px]"></div>
+                                        : <div className="h-[50px] w-[50px]"></div>
+                                    }
+                                    <p className="font-ultra-condensed tracking-wide text-xl text-left px-2">{ bracket.divisions[2].champion ? bracket.divisions[2].champion.name : "" }</p>
+                                </div>
+                                <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-4 
+                                    ${ bracket.semifinals[1].pick 
+                                        ? bracket.semifinals[1].pick === bracket.divisions[3].champion ? "bg-ip-blue" : "bg-ip-gray-transparent" 
+                                        : "bg-ip-gray-transparent"
+                                    }
+                                `} onClick={ () => handleSemifinalPick(3, 1, bracket.divisions[3].champion) }>
+                                    { bracket.divisions[3].champion ?
+                                        bracket.divisions[3].champion !== undefined ? 
+                                        <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[3].champion.album.images.url }` } />
+                                        : <div className="h-[50px] w-[50px]"></div>
+                                        : <div className="h-[50px] w-[50px]"></div>
+                                    }
+                                    <p className="font-ultra-condensed tracking-wide text-xl text-left px-2">{ bracket.divisions[3].champion ? bracket.divisions[3].champion.name : "" }</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

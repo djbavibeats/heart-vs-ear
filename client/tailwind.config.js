@@ -27,7 +27,21 @@ export default {
         "glow-sm": [
           "0px 0px 10px #319fff"
         ]
-      }
+      },
+      animation: {
+        marquee: 'marquee 10s linear infinite',
+        marquee2: 'marquee2 10s linear infinite'
+      },
+      keyframes: {
+        marquee: {
+          '0%': { transform: 'translateX(0%)' },
+          '100%': { transform: 'translateX(-100%)' },
+        },
+        marquee2: {
+          '0%': { transform: 'translateX(100%)' },
+          '100%': { transform: 'translateX(0%)' }
+        }
+      },
     },
   },
   plugins: [],

@@ -122,7 +122,7 @@ function openMenu() {
 
   return (<>
     <div className="content-wrapper flex flex-col items-center justify-center text-white">
-      <div className="h-20 flex items-center justify-between bg-none fixed top-0 left-0 right-0 px-4 z-10">
+      <div className="h-20 flex items-center justify-between bg-none w-full top-0 left-0 right-0 px-4 z-10">
       {/* <div className="bg-red-500 fixed w-fulls top-0 left-0 right-0 flex h-20 items-center justify-between"> */}
           {/* Share Icon */}
           <div className="text-center">
@@ -138,7 +138,7 @@ function openMenu() {
               </svg>
           </div>
       </div>
-      <div className="fixed top-4 md:top-6 left-0 right-0 flex flex-col items-center justify-center z-0">
+      <div className="flex flex-col items-center justify-center w-full top-4 md:top-6 -mt-[50px] left-0 right-0 z-0">
           <img className="max-w-[125px] md:max-w-[225px]" src={ namelogo } />
           <p className="text-center -mr-[10px]
               bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
@@ -146,29 +146,31 @@ function openMenu() {
           ">BRACKET-OLOGY</p>
       </div>
       { !user &&
-        <div className="w-[500px] mt-[150px] flex items-center justify-start flex-col gap-8">
-          <p className="text-center
-              bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
-              text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] -mr-[18px]
-          ">HOW TO PLAY</p>
-          <p className="text-center mb-2">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Magna aliqua. 
-            Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
-            <br/><br/>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-            Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
-            <br/><br/>
-            Participation requires a Spotify account.
-          </p>
-          <div className="flex flex-row items-center justify-center gap-x-2 bg-gradient-to-t from-cyan-400 to-ip-blue text-black font-bold drop-shadow-glow-sm px-4 py-3 rounded-xl min-w-40 text-center hover:cursor-pointer hover:scale-105 transition-all" onClick={ spotifyAuth }>
-            <div className="mt-[1.75px]"><p className="text-sm">LOG IN</p></div> 
-            <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
-              <path d="M217 401L345 273c9.4-9.4 9.4-24.6 0-33.9L217 111c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l87 87L24 232c-13.3 0-24 10.7-24 24s10.7 24 24 24l246.1 0-87 87c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0zM344 80l80 0c22.1 0 40 17.9 40 40l0 272c0 22.1-17.9 40-40 40l-80 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l80 0c48.6 0 88-39.4 88-88l0-272c0-48.6-39.4-88-88-88l-80 0c-13.3 0-24 10.7-24 24s10.7 24 24 24z"/>
-            </svg>
-          </div>
-          <div className="pb-8">
-            <img src={ symbolLogo } className="h-[100px]" />
+        <div className="absolute left-0 right-0 m-0 w-full  mt-[150px] flex items-center justify-start flex-col gap-8">
+          <div className="w-[500px] flex items-center flex-col justify-start gap-8">
+            <p className="text-center
+                bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
+                text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] -mr-[18px]
+            ">HOW TO PLAY</p>
+            <p className="text-center mb-2">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+              Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Magna aliqua. 
+              Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+              <br/><br/>
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+              Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+              <br/><br/>
+              Participation requires a Spotify account.
+            </p>
+            <div className="flex flex-row items-center justify-center gap-x-2 bg-gradient-to-t from-cyan-400 to-ip-blue text-black font-bold drop-shadow-glow-sm px-4 py-3 rounded-xl min-w-40 text-center hover:cursor-pointer hover:scale-105 transition-all" onClick={ spotifyAuth }>
+              <div className="mt-[1.75px]"><p className="text-sm">LOG IN</p></div> 
+              <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
+                <path d="M217 401L345 273c9.4-9.4 9.4-24.6 0-33.9L217 111c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l87 87L24 232c-13.3 0-24 10.7-24 24s10.7 24 24 24l246.1 0-87 87c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0zM344 80l80 0c22.1 0 40 17.9 40 40l0 272c0 22.1-17.9 40-40 40l-80 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l80 0c48.6 0 88-39.4 88-88l0-272c0-48.6-39.4-88-88-88l-80 0c-13.3 0-24 10.7-24 24s10.7 24 24 24z"/>
+              </svg>
+            </div>
+            <div className="pb-8">
+              <img src={ symbolLogo } className="h-[100px]" />
+            </div>
           </div>
         </div>
       }
@@ -181,7 +183,7 @@ function openMenu() {
           />
       }
     </div>
-    <div className="h-[45px] bg-ip-blue relative flex items-center justify-between px-4 text-sm">
+    <div className="h-[45px] bg-ip-blue flex items-center justify-between px-4 text-sm">
       <div className="w-1/3 text-left">
         <p>
           I Prevail. Fearless Records.
