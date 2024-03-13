@@ -112,9 +112,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 .then(resp => resp.json())
                 .then(data => {
                     let divisionOneTracks = []
-                    console.log(data.data.tracks)
                     data.data.tracks.map(track => {
-                        console.log(track.preview_url ? "got it" : "not it")
                         divisionOneTracks.push({
                             album: {
                                 images: track.album.images[0]
@@ -328,7 +326,6 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
     
     const clearBracket = () => {
-        console.log('clear bracket')
         var initBracket = {
         	id: user._id,
             divisions: [],
@@ -424,6 +421,32 @@ export default function Bracket({ accessToken , tokenType, user }) {
         .then(data => {
             setSubmitting(false)
         })
+        /*
+        THIS STUFF ALL HAS TO DO WITH PLAYLIST SAVING
+        let winnerURIs = []
+        saveBracket.divisions.map(round => {
+            for (let i = 0; i < round.length; i++) {
+                if (round[i].number === 0) {
+                    round[i].matches.map(match => {
+                        console.log(match.pick.uri)
+                        winnerURIs.push(match.pick.uri)
+                        
+                    })
+                }
+            }
+        })
+        fetch(`${url}/spotify/make-bracket-playlist`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                spotifyId: user.spotifyId,
+                spotifyRefreshToken: user.spotifyRefreshToken,
+                winnerURIs: winnerURIs
+            })
+        })
+        */
     }
 
     useEffect(() => {
@@ -437,11 +460,13 @@ export default function Bracket({ accessToken , tokenType, user }) {
     const renderText = (matchname) => {
         if (matchname) {
             if (matchname.split('').length >= 15) {
-                return (<div className="relative flex overflow-x-hidden">
+                return (<div className="relative flex overflow-x-hidden w-full">
                     <div className="animate-marquee whitespace-nowrap">
+                        <span className="font-ultra-condensed tracking-wide text-xl mx-2">{ matchname }</span>
                         <span className="font-ultra-condensed tracking-wide text-xl mx-2">{ matchname }</span>
                     </div>
                     <div className="absolute top-0 animate-marquee2 whitespace-nowrap">
+                        <span className="font-ultra-condensed tracking-wide text-xl mx-2">{ matchname }</span>
                         <span className="font-ultra-condensed tracking-wide text-xl mx-2">{ matchname }</span>
                     </div>
                 </div>)
@@ -487,7 +512,6 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
 
     const renderAlbumArt = (match, participant) => {
-        console.log(participant)
         return (<div className="relative">
             { participant.preview_url === "freeuser" ? "" : 
                 <div onClick={ () => playAudioPreview(match.number, participant) } className="absolute h-[50px] w-[50px] top-0 right-0 bottom-0 left-0 flex items-end justify-start p-1">
@@ -908,7 +932,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
     {
         instructionVisible &&
         <div className="absolute h-screen w-screen flex items-center justify-center bg-[rgba(0,0,0,1)] top-0 left-0 right-0 bottom-0 z-50">
-        <div className="py-8 px-16 flex items-center justify-start flex-col gap-8 relative">
+        <div className="max-w-[500px] py-8 px-16 flex items-center justify-start flex-col gap-8 relative">
             <div className="absolute top-4 right-1 py-1 px-1 hover:cursor-pointer text-white" onClick={ toggleInstructionsModal }>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-6 h-6">
                     <path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>

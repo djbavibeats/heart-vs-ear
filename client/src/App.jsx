@@ -34,7 +34,7 @@ function App() {
             .then(resp => resp.json())
             .then(data => {
               if (data.user) {
-                console.log('user exists', data.user)
+                // This runs when a user is returning
                 setUser(data.user)
               } else {
                 const newUser = {
@@ -51,9 +51,24 @@ function App() {
                 }).then(resp => resp.json())
                 .then(data => {
                   console.log(data)
+                  // This is runs when a user first signs up
+                  fetch(`${url}/spotify/follow-i-prevail`, {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                      spotifyId: data.user.spotifyId,
+                      spotifyRefreshToken: data.user.spotifyRefreshToken
+                    })
+                  })
+                  .then(resp => resp.json())
+                  .then(data => {
+                    console.log(data)
+                    setUser(data.user)
+                  })
                 })
               }
-              // setUser(data.data)
             })
         })
     }

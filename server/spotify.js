@@ -6,6 +6,7 @@ const router = express.Router()
 var client_id = process.env.SPOTIFY_CLIENT_ID
 var client_secret = process.env.SPOTIFY_CLIENT_SECRET
 var redirect_uri = process.env.SPOTIFY_REDIRECT_URI
+var root_url = process.env.ROOT_URL
 
 const generateRandomString = length => {
     let text = ''
@@ -18,7 +19,7 @@ const generateRandomString = length => {
 
 router.get('/login', (req,res) => {
     const state = generateRandomString(16)
-    const scope = 'user-read-private'
+    const scope = 'user-read-private user-read-email user-follow-read user-follow-modify user-library-modify user-library-read playlist-modify-public playlist-modify-private'
 
     const paramsObj = {
         client_id: client_id,
@@ -134,6 +135,33 @@ router.get('/get-user', (req, res) => {
     })
 })
 
+router.post('/follow-i-prevail', (req, res) => {
+    console.log(req.body)
+    axios(`${process.env.ROOT_URL}/spotify/refresh?refresh_token=${req.body.spotifyRefreshToken}`)
+        .then(response => {
+            const access_token = response.data.data.access_token
+            const token_type = response.data.data.token_type
+            axios({
+                method: 'put',
+                url: 'https://api.spotify.com/v1/me/following?type=artist&ids=3Uobr6LgQpBbk6k4QGAb3V',
+                headers: {
+                    Authorization: `${token_type} ${access_token}`
+                }
+            }).then(response => {
+                res.send({
+                    status: 200,
+                    message: 'Success, user now follows I Prevail'
+                })
+            })
+            .catch(error => {
+                res.send({
+                    status: 400,
+                    message: 'Error, was not able to follow I Prevail'
+                })
+            })
+        })
+})
+
 router.get('/get-bracket-tracks', (req, res) => {
     const { ids, access_token, token_type } = req.query
     axios(`https://api.spotify.com/v1/tracks?ids=` + ids, {
@@ -147,6 +175,41 @@ router.get('/get-bracket-tracks', (req, res) => {
             data: response.data
         })
     })
+})
+
+router.post('/make-bracket-playlist', (req, res) => {
+    axios(`${process.env.ROOT_URL}/spotify/refresh?refresh_token=${req.body.spotifyRefreshToken}`)
+        .then(response => {
+            const access_token = response.data.data.access_token
+            const token_type = response.data.data.token_type
+
+            axios({
+                method: 'post',
+                url: `https://api.spotify.com/v1/users/${req.body.spotifyId}/playlists`,
+                headers: {
+                    Authorization: `${token_type} ${access_token}`
+                },
+                data: {
+                    "name": "I Prevail - Bracket-ology Playlist",
+                    "description": "Sixty-four songs enter, only one will remain. Your Round 1 picks.",
+                    "public": true
+                }
+            })
+            .then(response => {
+                let playlistId = response.data.id
+                axios({
+                    method: 'post',
+                    url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+                    headers: {
+                        Authorization: `${token_type} ${access_token}`
+                    },
+                    data: {
+                        "uris": req.body.winnerURIs.join(',')
+                    }
+                })
+                console.log(response)
+            })
+        })
 })
 
 export default router
