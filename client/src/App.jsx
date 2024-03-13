@@ -146,7 +146,7 @@ function openMenu() {
           ">BRACKET-OLOGY</p>
       </div>
       { !user &&
-        <div className="flex items-center justify-start flex-col gap-8 max-w-screen w-screen h-full md:mt-[175px]">
+        <div className="flex items-center justify-start flex-col gap-8 max-w-screen w-screen h-full md:mt-[25px]">
           <div className="w-[325px] md:w-[500px] flex items-center flex-col justify-start gap-8">
             <p className="text-center
                 bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
@@ -183,7 +183,7 @@ function openMenu() {
           />
       }
     </div>
-    <div className="h-[45px] bg-ip-blue flex flex-row md:flex-col items-center justify-between px-4 text-sm">
+    <div className="h-[45px] bg-ip-blue flex flex-row md:flex-row items-center justify-between px-4 text-sm">
       <div className="w-1/3 text-left">
         <p className="text-[10px] leading-[12px] md:text-md">
           I Prevail. Fearless Records.
