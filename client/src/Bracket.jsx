@@ -66,6 +66,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
     const [ participantsReady, setParticipantsReady ] = useState(false)
     const [ instructionVisible, setInstructionVisible ] = useState(false)
     const [ isLandscape, setIsLandscape ] = useState(false)
+    const [ disableOrientationCheck, setDisableOrientationCheck ] = useState(false)
     const [ participants, setParticipants ] = useState({
         totalParticipants: 64,
         participantsPerDivision: 16,
@@ -458,12 +459,16 @@ export default function Bracket({ accessToken , tokenType, user }) {
 
             window.addEventListener('resize', (e) => {
                 if (isMobile) {
-                    if (e.target.innerWidth > e.target.innerHeight) {
-                        console.log('wider than tall')
-                        setIsLandscape(true)
+                    if (!disableOrientationCheck) {
+                        if (e.target.innerWidth > e.target.innerHeight) {
+                            console.log('wider than tall')
+                            setIsLandscape(true)
+                        } else {
+                            console.log('taller than wide')
+                            setIsLandscape(false)
+                        }
                     } else {
-                        console.log('taller than wide')
-                        setIsLandscape(false)
+                        console.log('orientation check has been disabled')
                     }
                 }
             })
@@ -471,6 +476,11 @@ export default function Bracket({ accessToken , tokenType, user }) {
             console.log('not yet')
         }
     }, [ bracketReady ])
+
+    const acceptPortraitView = () => {
+        setDisableOrientationCheck(true)
+        setIsLandscape(true)
+    }
     return (<>
     <div>
     { submitting &&
@@ -497,7 +507,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                     <div className="min-w-52 mt-8 flex flex-row items-center justify-center gap-x-2 
                         bg-transparent text-white font-bold border-2
                         px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
-                        onClick={ () => setIsLandscape(true) }
+                        onClick={ acceptPortraitView }
                     >
                         <div className="mt-[1.75px]"><p className="text-sm">OR DON'T</p></div> 
                         <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 512 512">
