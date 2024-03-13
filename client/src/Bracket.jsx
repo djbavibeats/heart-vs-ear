@@ -447,15 +447,15 @@ export default function Bracket({ accessToken , tokenType, user }) {
             console.log('widen the screen!')
             document.querySelector('html').style.minWidth = '1400px'
             document.querySelector('body').style.minWidth = '1400px'
-            if (window.innerWidth > 768) {
-                if (window.innerWidth > window.innerHeight) {
-                    console.log('wider than tall')
-                    setIsLandscape(true)
-                } else {
-                    console.log('taller than wide')
-                    setIsLandscape(false)
-                }
-            }
+            // if (window.innerWidth > 768) {
+            //     if (window.innerWidth > window.innerHeight) {
+            //         console.log('wider than tall')
+            //         setIsLandscape(true)
+            //     } else {
+            //         console.log('taller than wide')
+            //         setIsLandscape(false)
+            //     }
+            // }
 
             window.addEventListener('resize', (e) => {
                 if (isMobile) {
