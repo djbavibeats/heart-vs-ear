@@ -431,7 +431,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
     { bracketReady &&
         bracket && <>
         <div className="flex flex-col gap-4 items-center">
-            <div className="mt-[175px] max-w-[28rem] items-center flex gap-4 z-10">
+            <div className="mt-[175px] max-w-[28rem] items-center flex-wrap justify-center flex gap-4 z-10">
                 <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
                     bg-transparent text-white font-bold border-2
                     px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
