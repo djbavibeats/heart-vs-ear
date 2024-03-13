@@ -121,8 +121,8 @@ function openMenu() {
 }
 
   return (<>
-    <div className="content-wrapper flex flex-col items-center justify-center text-white">
-      <div className="h-20 flex items-center justify-between bg-none w-full top-0 left-0 right-0 px-4 z-10">
+    <div className="content-wrapper flex flex-col items-center justify-start text-white">
+      <div className="h-20 flex items-center justify-between bg-none w-full top-0 left-0 right-0 px-4 z-20">
       {/* <div className="bg-red-500 fixed w-fulls top-0 left-0 right-0 flex h-20 items-center justify-between"> */}
           {/* Share Icon */}
           <div className="text-center">
@@ -138,7 +138,7 @@ function openMenu() {
               </svg>
           </div>
       </div>
-      <div className="flex flex-col items-center justify-center w-full top-4 md:top-6 -mt-[50px] left-0 right-0 z-0">
+      <div className="flex flex-col items-center justify-center w-full top-4 md:top-6 -mt-[50px] left-0 right-0 z-10">
           <img className="max-w-[125px] md:max-w-[225px]" src={ namelogo } />
           <p className="text-center -mr-[10px]
               bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
@@ -146,7 +146,7 @@ function openMenu() {
           ">BRACKET-OLOGY</p>
       </div>
       { !user &&
-        <div className="absolute left-0 right-0 m-0 w-full  mt-[150px] flex items-center justify-start flex-col gap-8">
+        <div className="flex items-center justify-start flex-col gap-8 max-w-screen w-screen h-full mt-[175px]">
           <div className="w-[500px] flex items-center flex-col justify-start gap-8">
             <p className="text-center
                 bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
@@ -185,17 +185,17 @@ function openMenu() {
     </div>
     <div className="h-[45px] bg-ip-blue flex items-center justify-between px-4 text-sm">
       <div className="w-1/3 text-left">
-        <p>
+        <p className="text-xs md:text-md">
           I Prevail. Fearless Records.
         </p>
       </div>
       <div className="w-1/3 text-center">
-        <p>
+        <p className="text-xs md:text-md">
           Terms of Service. Privacy Policy.
         </p>
       </div>
       <div className="w-1/3 text-right">
-        <p>
+        <p className="text-xs md:text-md">
           Design + Development <strong>Volt Creative</strong>
         </p>
       </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { isMobile, isBrowser } from 'react-device-detect'
 
 import songs from './utils/songs'
 import symbolLogo from './assets/symbol-logo.png'
@@ -64,6 +65,7 @@ const CountdownTimer = () => {
 export default function Bracket({ accessToken , tokenType, user }) {    
     const [ participantsReady, setParticipantsReady ] = useState(false)
     const [ instructionVisible, setInstructionVisible ] = useState(false)
+    const [ isLandscape, setIsLandscape ] = useState(false)
     const [ participants, setParticipants ] = useState({
         totalParticipants: 64,
         participantsPerDivision: 16,
@@ -438,14 +440,72 @@ export default function Bracket({ accessToken , tokenType, user }) {
             }
         }
     }
+
+    useEffect(() => {
+        if (bracketReady) {
+            console.log('widen the screen!')
+            document.querySelector('html').style.minWidth = '1400px'
+            document.querySelector('body').style.minWidth = '1400px'
+            if (window.innerWidth > 768) {
+                if (window.innerWidth > window.innerHeight) {
+                    console.log('wider than tall')
+                    setIsLandscape(true)
+                } else {
+                    console.log('taller than wide')
+                    setIsLandscape(false)
+                }
+            }
+
+            window.addEventListener('resize', (e) => {
+                if (isMobile) {
+                    if (e.target.innerWidth > e.target.innerHeight) {
+                        console.log('wider than tall')
+                        setIsLandscape(true)
+                    } else {
+                        console.log('taller than wide')
+                        setIsLandscape(false)
+                    }
+                }
+            })
+        } else {
+            console.log('not yet')
+        }
+    }, [ bracketReady ])
     return (<>
+    <div>
     { submitting &&
         <div className="absolute z-[999] h-full w-full bg-black top-0 right-0 left-0 bottom-0 flex items-center justify-center">
             <p>Submitting your bracket...</p>
         </div>
     }
+    {
+        !bracketReady &&
+        <div className="absolute z-0 h-full w-full bg-black top-0 right-0 left-0 bottom-0 flex items-center justify-center">
+            Loading...
+        </div>
+    }
     { bracketReady &&
         bracket && <>
+        {
+            !isLandscape &&
+                <div className="flex flex-col items-center justify-center w-screen h-screen absolute z-[9999] top-0 bottom-0 right-0 left-0 bg-black">
+                    <p className="text-center
+                        bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
+                        text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] -mr-[0px] px-8">
+                        Please rotate your device for the best experience!
+                    </p>
+                    <div className="min-w-52 mt-8 flex flex-row items-center justify-center gap-x-2 
+                        bg-transparent text-white font-bold border-2
+                        px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
+                        onClick={ () => setIsLandscape(true) }
+                    >
+                        <div className="mt-[1.75px]"><p className="text-sm">OR DON'T</p></div> 
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" viewBox="0 0 512 512">
+                            <path fill="#ffffff" d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zm72.4-118.5c9.7-9 10.2-24.2 1.2-33.9C315.3 344.3 290.6 328 256 328s-59.3 16.3-73.5 31.6c-9 9.7-8.5 24.9 1.2 33.9s24.9 8.5 33.9-1.2c7.4-7.9 20-16.4 38.5-16.4s31.1 8.5 38.5 16.4c9 9.7 24.2 10.2 33.9 1.2zM176.4 272c17.7 0 32-14.3 32-32c0-1.5-.1-3-.3-4.4l10.9 3.6c8.4 2.8 17.4-1.7 20.2-10.1s-1.7-17.4-10.1-20.2l-96-32c-8.4-2.8-17.4 1.7-20.2 10.1s1.7 17.4 10.1 20.2l30.7 10.2c-5.8 5.8-9.3 13.8-9.3 22.6c0 17.7 14.3 32 32 32zm192-32c0-8.9-3.6-17-9.5-22.8l30.2-10.1c8.4-2.8 12.9-11.9 10.1-20.2s-11.9-12.9-20.2-10.1l-96 32c-8.4 2.8-12.9 11.9-10.1 20.2s11.9 12.9 20.2 10.1l11.7-3.9c-.2 1.5-.3 3.1-.3 4.7c0 17.7 14.3 32 32 32s32-14.3 32-32z"/>                   
+                        </svg>
+                    </div>
+                </div>
+        }
         <div className="flex flex-col gap-4 items-center bracket-container text-white">
             <div className="max-w-[28rem] items-center flex-wrap justify-center flex gap-4 z-10">
                 <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
@@ -502,7 +562,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
 
             </div>
         </div>
-        <div className="grid grid-cols-4 gap-1 md:gap-8 min-w-[1400px] p-2 z-1 relative -mt-[400px] md:-mt-[335px] text-white">
+        <div className="grid grid-cols-4 gap-1 md:gap-8 min-w-[1400px] p-2 z-1 relative -mt-[350px] md:-mt-[335px] text-white">
             {/* Division 1 */}
             <div className={ `flex flex-col gap-5 col-span-2 md:col-span-2 h-full w-full` }>
                 <div key={ 0 } className={`division-${ 0 } h-full flex flex-col gap-2` }>
@@ -954,32 +1014,37 @@ export default function Bracket({ accessToken , tokenType, user }) {
         </div>
     </>}
     {
+        !bracketReady &&
+        <div className="bg-green-500 h-screen"></div>
+    }
+    </div>
+    {
         instructionVisible &&
-        <div className="absolute h-screen w-screen flex items-center justify-center bg-[rgba(0,0,0,0.5)] top-0 left-0 right-0 bottom-0 z-50">
-            <div className="w-[650px] bg-black border rounded-xl  py-8 px-16 flex items-center justify-start flex-col gap-8 relative">
-                <div className="absolute top-1 right-1 py-1 px-1 hover:cursor-pointer text-white" onClick={ toggleInstructionsModal }>
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-6 h-6">
-                        <path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
-                    </svg>
-                </div>
-                <p className="text-center
-                    bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
-                    text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] -mr-[18px]
-                ">HOW TO PLAY</p>
-                <p className="text-center mb-2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Magna aliqua. 
-                    Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
-                    <br/><br/>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                    Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
-                    <br/><br/>
-                    Participation requires a Spotify account.
-                </p>
-                <div className="">
-                    <img src={ symbolLogo } className="h-[100px]" />
-                </div>
+        <div className="absolute h-screen w-screen flex items-center justify-center bg-[rgba(0,0,0,1)] top-0 left-0 right-0 bottom-0 z-50">
+        <div className="py-8 px-16 flex items-center justify-start flex-col gap-8 relative">
+            <div className="absolute top-4 right-1 py-1 px-1 hover:cursor-pointer text-white" onClick={ toggleInstructionsModal }>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-6 h-6">
+                    <path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                </svg>
             </div>
+            <p className="text-center
+                bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
+                text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] -mr-[18px]
+            ">HOW TO PLAY</p>
+            <p className="text-center mb-2">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Magna aliqua. 
+                Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                <br/><br/>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                <br/><br/>
+                Participation requires a Spotify account.
+            </p>
+            <div className="">
+                <img src={ symbolLogo } className="h-[100px]" />
+            </div>
+        </div>
         </div>
     }
     </>)
