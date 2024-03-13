@@ -98,7 +98,7 @@ function App() {
 
   async function share() {
     const shareData = {
-        title: "I Prevail - Heart Vs. Ear",
+        title: "I Prevail - Bracket-ology",
         text: "Sixty-four songs enter, only one will remain.",
         url: "https://zippy-lily-3f86ad.netlify.app",
     }
@@ -117,7 +117,7 @@ function App() {
 }
 
 function openMenu() {
-    window.open('https://iprevailband.com/')
+    window.open('https://iprevailband.com/', '_blank')
 }
 
   return (<>
