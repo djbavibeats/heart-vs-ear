@@ -48,7 +48,7 @@ const CountdownTimer = () => {
 
     Object.keys(timeLeft).forEach((interval) => {
         timerComponents.push(
-            <div key={ interval } className="w-[80px] h-[80px] flex flex-col items-center justify-center">
+            <div key={ interval } className="w-[70px] h-[80px] flex flex-col items-center justify-center">
                 <p className="leading-[42px] text-[42px] font-ultra-condensed tracking-[2px]">{ timeLeft[interval] }</p>
                 <p className="leading-[18px] font-ultra-condensed tracking-[2px]">{ interval }</p>
             </div>
