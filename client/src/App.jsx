@@ -146,8 +146,8 @@ function openMenu() {
           ">BRACKET-OLOGY</p>
       </div>
       { !user &&
-        <div className="flex items-center justify-start flex-col gap-8 max-w-screen w-screen h-full mt-[175px]">
-          <div className="w-[500px] flex items-center flex-col justify-start gap-8">
+        <div className="flex items-center justify-start flex-col gap-8 max-w-screen w-screen h-full md:mt-[175px]">
+          <div className="w-[325px] md:w-[500px] flex items-center flex-col justify-start gap-8">
             <p className="text-center
                 bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
                 text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] -mr-[18px]
@@ -183,19 +183,19 @@ function openMenu() {
           />
       }
     </div>
-    <div className="h-[45px] bg-ip-blue flex items-center justify-between px-4 text-sm">
+    <div className="h-[45px] bg-ip-blue flex flex-row md:flex-col items-center justify-between px-4 text-sm">
       <div className="w-1/3 text-left">
-        <p className="text-xs md:text-md">
+        <p className="text-[10px] leading-[12px] md:text-md">
           I Prevail. Fearless Records.
         </p>
       </div>
-      <div className="w-1/3 text-center">
-        <p className="text-xs md:text-md">
+      <div className="w-1/3  text-center">
+        <p className="text-[10px] leading-[12px] md:text-md">
           Terms of Service. Privacy Policy.
         </p>
       </div>
-      <div className="w-1/3 text-right">
-        <p className="text-xs md:text-md">
+      <div className="w-1/3  text-right">
+        <p className="text-[10px] leading-[12px] md:text-md">
           Design + Development <strong>Volt Creative</strong>
         </p>
       </div>
