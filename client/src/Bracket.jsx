@@ -317,7 +317,86 @@ export default function Bracket({ accessToken , tokenType, user }) {
     
     const clearBracket = () => {
         console.log('clear bracket')
-        init()
+        var initBracket = {
+        	id: user._id,
+            divisions: [],
+            divisionChamps: [
+                        {
+                            "set": 0,
+                            "pick": ""
+                        },
+                        {
+                            "set": 1,
+                            "pick": ""
+                        },
+                        {
+                            "set": 2,
+                            "pick": ""
+                        },
+                        {
+                            "set": 3,
+                            "pick": ""
+                        }
+                    ],
+                    semifinals: [
+                        {   
+                            "set": 0,
+                            "pick": ""
+                        },
+                        {
+                            "set": 1,
+                            "pick": ""
+                        }
+                    ],
+                    champion: ""
+                }
+    
+                for (let d = 0; d < participants.divisions.length; d++) {
+                    var numberOfRounds = Math.log(participants.participantsPerDivision) / Math.log(2)
+                    var division = []
+    
+                    let roundCount = 0
+                    let matchCount = 0
+                    let setCount = 0
+                    let roundMatches = 0
+                    let roundParticipants = participants.participantsPerDivision
+    
+                    for (var i = 0; i < numberOfRounds; i++) {
+                        roundMatches = roundParticipants / 2 
+    
+                        var roundConstructor = {
+                            number: roundCount,
+                            numberOfParticipants: roundParticipants,
+                            final: false,
+                            matches: []
+                        }
+    
+                        if (roundMatches === 1) { roundConstructor.final = true }
+    
+                        for (var j = 0; j < roundMatches; j++) {
+                            roundConstructor.matches.push({
+                                number: matchCount,
+                                set: setCount,
+                                a: i === 0 ? participants.divisions[d][ matchCount * 2 ] : "",
+                                b: i === 0 ? participants.divisions[d][ ( matchCount*2 ) + 1 ] : "",
+                                pick: "undecided"
+                            })
+    
+                            if (matchCount % 2 === 1) { setCount = setCount += 1 }
+                            matchCount = matchCount += 1
+                        }
+    
+                        setCount = 0
+    
+                        // initBracket.rounds.push(roundConstructor)
+                        division.push(roundConstructor)
+                        roundParticipants = roundParticipants / 2
+                        roundCount = roundCount += 1
+                    }
+                    initBracket.divisions.push(division)
+                }
+    
+                return setBracket(initBracket)
     }
 
     const handleSaveBracket = () => {
