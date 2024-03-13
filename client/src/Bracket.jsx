@@ -580,7 +580,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
 
             </div>
         </div>
-        <div className="grid grid-cols-4 gap-1 md:gap-8 min-w-[1400px] p-2 z-1 relative -mt-[350px] md:-mt-[335px] text-white">
+        <div className="grid grid-cols-4 gap-1 md:gap-8 min-w-[1400px] p-2 z-1 relative -mt-[300px] md:-mt-[335px] text-white">
             {/* Division 1 */}
             <div className={ `flex flex-col gap-5 col-span-2 md:col-span-2 h-full w-full` }>
                 <div key={ 0 } className={`division-${ 0 } h-full flex flex-col gap-2` }>
