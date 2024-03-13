@@ -430,7 +430,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
     { bracketReady &&
         bracket && <>
-        <div className="flex flex-col gap-4 items-center">
+        <div className="flex flex-col gap-4 items-center bracket-container text-white">
             <div className="mt-[175px] max-w-[28rem] items-center flex-wrap justify-center flex gap-4 z-10">
                 <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
                     bg-transparent text-white font-bold border-2
@@ -486,9 +486,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
 
             </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-1 md:gap-8 w-full items-center p-2 z-1 relative -mt-[335px]">
+        <div className="grid grid-cols-4 gap-1 md:gap-8 min-w-[1400px] p-2 z-1 relative -mt-[400px] md:-mt-[335px] text-white">
             {/* Division 1 */}
-            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2 h-full` }>
+            <div className={ `flex flex-col gap-5 col-span-2 md:col-span-2 h-full w-full` }>
                 <div key={ 0 } className={`division-${ 0 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 0 === 2 || 0 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[0].map((round, roundindex) => {
@@ -526,7 +526,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
             </div>
 
             {/* Division 3 */}
-            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2 h-full` }>
+            <div className={ `flex flex-col gap-5 col-span-2 md:col-span-2 h-full w-full` }>
                 <div key={ 2 } className={`division-${ 2 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 2 === 2 || 2 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[2].map((round, roundindex) => {
@@ -565,7 +565,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                         
             {/* Playoffs */}
             <div className={ `flex flex-col col-span-4 items-center justify-center z-50` }>
-                <div className={ `flex flex-col w-full -mb-[0%] -mb-[10%] md:-mb-[10%] -mt-[0%] md:-mt-[17.5%] max-w-[612px]` }>
+                <div className={ `flex flex-col w-full -mb-[20%] md:-mb-[10%] -mt-[30%] md:-mt-[17.5%] max-w-[612px]` }>
                     <div className={ `flex justify-center mb-8` }>
                         { bracket.champion ? <>
                             <div className={`border max-w-[250px] min-h-[360px] flex flex-1 flex-col items-center justify-center text-sm 
@@ -712,7 +712,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
             </div>
 
             {/* Division 2 */}
-            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2 h-full` }>
+            <div className={ `flex flex-col gap-5 col-span-2 md:col-span-2 h-full` }>
                 <div key={ 1 } className={`division-${ 1 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 1 === 2 || 1 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[1].map((round, roundindex) => {
@@ -750,7 +750,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
             </div>
 
             {/* Division 4 */}
-            <div className={ `flex flex-col gap-5 col-span-4 md:col-span-2 h-full` }>
+            <div className={ `flex flex-col gap-5 col-span-2 md:col-span-2 h-full` }>
                 <div key={ 3 } className={`division-${ 3 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 3 === 2 || 3 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[3].map((round, roundindex) => {

@@ -33,9 +33,18 @@ html {
 
 body {
     background: rgba(0,0,0,.7);
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 }
 
 .content-wrapper {
     min-height: calc(100vh - 45px);
+}
+
+.bracket-container {
+    /* min-width: 1400px; */
+    /* padding: 0px 16px; */
+}
+
+html, body {
+    min-width: 1400px;
 }

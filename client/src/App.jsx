@@ -122,7 +122,8 @@ function openMenu() {
 
   return (<>
     <div className="content-wrapper flex flex-col items-center justify-center text-white">
-      <div className="h-20 flex items-center justify-between w-screen px-8 bg-none absolute top-0 z-10">
+      <div className="h-20 flex items-center justify-between bg-none fixed top-0 left-0 right-0 px-4 z-10">
+      {/* <div className="bg-red-500 fixed w-fulls top-0 left-0 right-0 flex h-20 items-center justify-between"> */}
           {/* Share Icon */}
           <div className="text-center">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 hover:cursor-pointer" onClick={ share }>
@@ -137,7 +138,7 @@ function openMenu() {
               </svg>
           </div>
       </div>
-      <div className="absolute top-4 md:top-6 left-0 right-0 flex flex-col items-center justify-center z-0">
+      <div className="fixed top-4 md:top-6 left-0 right-0 flex flex-col items-center justify-center z-0">
           <img className="max-w-[125px] md:max-w-[225px]" src={ namelogo } />
           <p className="text-center -mr-[10px]
               bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
