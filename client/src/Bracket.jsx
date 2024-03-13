@@ -459,6 +459,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
 
             window.addEventListener('resize', (e) => {
                 if (isMobile) {
+                    alert('orienation check? ' + disableOrientationCheck)
                     if (!disableOrientationCheck) {
                         if (e.target.innerWidth > e.target.innerHeight) {
                             console.log('wider than tall')
