@@ -610,11 +610,15 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 <div key={ 0 } className={`division-${ 0 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 0 === 2 || 0 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[0].map((round, roundindex) => {
-                            return (<div key={ roundindex } className={`h-full flex flex-col justify-around gap-2`}>
+                            return (<div key={ roundindex } className={`relative h-full flex flex-col justify-around gap-2`}>
+                                    { roundindex === 0 ? <div className="text-2xl text-center font-ultra-condensed w-full absolute -top-[40px]">Round 1</div> : "" }
+                                    { roundindex === 1 ? <div className="text-2xl text-center font-ultra-condensed w-full absolute -top-[40px]">Round 2</div> : "" }
                                     { round.matches.map((match, matchindex) => {
                                         let imgurlA = match.a ? match.a !== "undecided" ? match.a.album.images.url : "" : ""
                                         let imgurlB = match.b ? match.b !== "undecided" ? match.b.album.images.url : "" : ""
                                         return (<div key={ matchindex } className={`division-${ 0 } round-${ roundindex } match-${ matchindex } text-sm`}>
+                                            { roundindex === 2 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Sweet 16</div> : "" }
+                                            { roundindex === 3 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Elite 8</div> : "" }
                                             <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border border-b-0 min-h-10 ${ 
                                                 match.pick ?
                                                 match.pick !== "undecided" ? 
@@ -653,11 +657,15 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 <div key={ 2 } className={`division-${ 2 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 2 === 2 || 2 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[2].map((round, roundindex) => {
-                            return (<div key={ roundindex } className={`h-full flex flex-col justify-around gap-2`}>
+                            return (<div key={ roundindex } className={`relative h-full flex flex-col justify-around gap-2`}>
+                                { roundindex === 0 ? <div className="text-2xl text-center font-ultra-condensed w-full absolute -top-[40px]">Round 1</div> : "" }
+                                { roundindex === 1 ? <div className="text-2xl text-center font-ultra-condensed w-full absolute -top-[40px]">Round 2</div> : "" }
                                 { round.matches.map((match, matchindex) => {
                                     let imgurlA = match.a ? match.a !== "undecided" ? match.a.album.images.url : "" : ""
                                     let imgurlB = match.b ? match.b !== "undecided" ? match.b.album.images.url : "" : ""
                                     return (<div key={ matchindex } className={`division-${ 2 } round-${ roundindex } match-${ matchindex } text-sm`}>
+                                        { roundindex === 2 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Sweet 16</div> : "" }
+                                        { roundindex === 3 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Elite 8</div> : "" }
                                         <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border border-b-0 min-h-10 ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
@@ -727,7 +735,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                     </div>
                     <div className={ `flex flex-col col-span-4 items-center justify-center mb-8` }>
                         <div className={ `flex justify-center w-full mb-2` }>
-                            <p>Championship</p>
+                            <p className="text-2xl text-center -mr-[10px] font-ultra-condensed w-full">Championship</p>
                         </div>
                         <div className={`gap-2 text-sm col-span-1 w-full flex flex-row`}>
                             <div className={`h-[100px] border flex flex-1 flex-row items-center justify-start text-sm 
@@ -766,7 +774,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                     <div className={ `grid grid-cols-8 gap-2 w-full items-center` }>
                         <div className="col-span-4">
                             <div className={ `flex justify-center mb-2` }>
-                                <p>Final Four</p>
+                                <p className="text-2xl text-center -mr-[10px] font-ultra-condensed w-full">Final Four</p>
                             </div>
                             <div className={`text-sm col-span-1`}>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-2 
@@ -801,7 +809,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                         </div>
                         <div className="col-span-4" dir="rtl">
                             <div className={ `flex justify-center mb-2` }>
-                                <p>Final Four</p>
+                                <p className="text-2xl text-center -mr-[10px] font-ultra-condensed w-full">Final Four</p>
                             </div>
                             <div className={`text-sm col-span-1`}>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-2
@@ -843,11 +851,15 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 <div key={ 1 } className={`division-${ 1 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 1 === 2 || 1 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[1].map((round, roundindex) => {
-                            return (<div key={ roundindex } className={`h-full flex flex-col justify-around gap-2`}>
+                            return (<div key={ roundindex } className={`relative h-full flex flex-col justify-around gap-2`}>
+                            { roundindex === 0 ? <div className="text-2xl text-center font-ultra-condensed w-full absolute -top-[40px]">Round 1</div> : "" }
+                            { roundindex === 1 ? <div className="text-2xl text-center font-ultra-condensed w-full absolute -top-[40px]">Round 2</div> : "" }
                                 { round.matches.map((match, matchindex) => {
                                     let imgurlA = match.a ? match.a !== "undecided" ? match.a.album.images.url : "" : ""
                                     let imgurlB = match.b ? match.b !== "undecided" ? match.b.album.images.url : "" : ""
                                     return (<div key={ matchindex } className={`division-${ 1 } round-${ roundindex } match-${ matchindex } text-sm`}>
+                                        { roundindex === 2 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Sweet 16</div> : "" }
+                                        { roundindex === 3 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Elite 8</div> : "" }
                                         <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border border-b-0 min-h-10 ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
@@ -885,11 +897,15 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 <div key={ 3 } className={`division-${ 3 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 3 === 2 || 3 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[3].map((round, roundindex) => {
-                            return (<div key={ roundindex } className={`h-full flex flex-col justify-around gap-2`}>
+                            return (<div key={ roundindex } className={`relative h-full flex flex-col justify-around gap-2`}>
+                                { roundindex === 0 ? <div className="text-2xl text-center font-ultra-condensed w-full absolute -top-[40px]">Round 1</div> : "" }
+                                { roundindex === 1 ? <div className="text-2xl text-center font-ultra-condensed w-full absolute -top-[40px]">Round 2</div> : "" }
                                 { round.matches.map((match, matchindex) => {
                                     let imgurlA = match.a ? match.a !== "undecided" ? match.a.album.images.url : "" : ""
                                     let imgurlB = match.b ? match.b !== "undecided" ? match.b.album.images.url : "" : ""
                                     return (<div key={ matchindex } className={`division-${ 3 } round-${ roundindex } match-${ matchindex } text-sm`}>
+                                        { roundindex === 2 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Sweet 16</div> : "" }
+                                        { roundindex === 3 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Elite 8</div> : "" }
                                         <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center justify-between border border-b-0 min-h-10 ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
