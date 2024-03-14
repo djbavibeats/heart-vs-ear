@@ -287,47 +287,56 @@ export default function Bracket({ accessToken , tokenType, user }) {
     const [ submitting, setSubmitting ] = useState(false)
 
     const handleMatchPick = (division, round, set, match, pick, isFinal) => {
-        let bracketCopy = bracket
-        bracketCopy.divisions[division][round].matches[match].pick = pick
-
-        if (!isFinal) {
-            if (match % 2 === 0) {
-                bracketCopy.divisions[division][round+1].matches[set].a = pick
-            } else if (match % 2 === 1) {
-                bracketCopy.divisions[division][round+1].matches[set].b = pick
+        if (pick) {
+            let bracketCopy = bracket
+            bracketCopy.divisions[division][round].matches[match].pick = pick
+    
+            if (!isFinal) {
+                if (match % 2 === 0) {
+                    bracketCopy.divisions[division][round+1].matches[set].a = pick
+                } else if (match % 2 === 1) {
+                    bracketCopy.divisions[division][round+1].matches[set].b = pick
+                }
+            } else {
+                switch(division) {
+                    case(0):
+                        bracketCopy.semifinals[0].a = pick
+                        break
+                    case(1):
+                        bracketCopy.semifinals[0].b = pick
+                        break
+                    case(2):
+                        bracketCopy.semifinals[1].a = pick
+                        break
+                    case(3):
+                        bracketCopy.semifinals[1].b = pick
+                        break
+                    default:
+                        break
+                }   
+                
             }
-        } else {
-            switch(division) {
-                case(0):
-                    bracketCopy.semifinals[0].a = pick
-                    break
-                case(1):
-                    bracketCopy.semifinals[0].b = pick
-                    break
-                case(2):
-                    bracketCopy.semifinals[1].a = pick
-                    break
-                case(3):
-                    bracketCopy.semifinals[1].b = pick
-                    break
-                default:
-                    break
-            }   
-            
+            setBracket({ ...bracketCopy })
         }
-        setBracket({ ...bracketCopy })
     }
 
     const handleSemifinalPick = (division, set, pick) => {
-        let bracketCopy = bracket
-        bracketCopy.semifinals[set].pick = pick
-        setBracket({ ...bracketCopy })
+        if (pick) {
+            let bracketCopy = bracket
+            bracketCopy.semifinals[set].pick = pick
+            setBracket({ ...bracketCopy })
+        }
     }
 
     const handleChampionshipPick = (pick) => {
-        let bracketCopy = bracket
-        bracketCopy.champion = pick
-        setBracket({ ...bracketCopy })
+        if (pick) {
+            if (pick === "undecided") {
+                return
+            }
+            let bracketCopy = bracket
+            bracketCopy.champion = pick
+            setBracket({ ...bracketCopy })
+        }
     }
 
     const autofillBracket = () => {
@@ -541,8 +550,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
 
     const renderChampionshipAlbumArt = (match, participant) => {
-        console.log(participant)
-        if (participant || participant !== "undecided") {
+        if (participant) {
             return (<div className="relative">
                 { participant.preview_url === "unavailable" ? "" : 
                     <div onClick={ () => playAudioPreview(98, participant) } className="absolute h-[100px] w-[100px] top-0 right-0 bottom-0 left-0 flex items-end justify-start p-1">
@@ -567,7 +575,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
 
     const renderChampionAlbumArt = (match, participant) => {
-        if (participant || participant !== "undecided") {
+        if (participant !== "undecided") {
             return (<div className="relative">
                 { participant.preview_url === "unavailable" ? "" : 
                     <div onClick={ () => playAudioPreview(99, participant) } className="absolute h-[250px] w-[250px] top-0 right-0 bottom-0 left-0 flex items-end justify-start p-1">
@@ -841,9 +849,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                             </div>
                             <div className={`text-sm col-span-1`}>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-2 
-                                    ${ bracket.semifinals[0].pick
-                                        ? bracket.semifinals[0].pick.name === bracket.semifinals[0].a.name ? "bg-ip-blue" : "bg-ip-gray-transparent" 
-                                        : "bg-ip-gray-transparent"
+                                    ${ bracket.semifinals[0].pick !== "undecided"
+                                        ? bracket.semifinals[0].pick === bracket.semifinals[0].a ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
+                                        : "bg-ip-gray-transparent" 
                                     }
                                 `} onClick={ () => handleSemifinalPick(0, 0, bracket.semifinals[0].a) }>
                                     { bracket.semifinals[0].a ?
@@ -857,9 +865,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                     <p className="font-ultra-condensed tracking-wide text-xl px-2">{ bracket.semifinals[0].a ? bracket.semifinals[0].a.name : "" }</p>
                                 </div>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4 
-                                    ${  bracket.semifinals[0].pick
-                                        ? bracket.semifinals[0].pick.name === bracket.semifinals[0].b.name ? "bg-ip-blue" : "bg-ip-gray-transparent" 
-                                        : "bg-ip-gray-transparent"
+                                    ${ bracket.semifinals[0].pick !== "undecided"
+                                        ? bracket.semifinals[0].pick === bracket.semifinals[0].b ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
+                                        : "bg-ip-gray-transparent" 
                                     }
                                 `} onClick={ () => handleSemifinalPick(1, 0, bracket.semifinals[0].b) }>
                                     { bracket.semifinals[0].b ?
@@ -879,9 +887,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                             </div>
                             <div className={`text-sm col-span-1`}>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-2
-                                    ${ bracket.semifinals[1].pick 
-                                        ? bracket.semifinals[1].pick.name === bracket.semifinals[1].a.name ? "bg-ip-blue" : "bg-ip-gray-transparent" 
-                                        : "bg-ip-gray-transparent"
+                                    ${ bracket.semifinals[1].pick !== "undecided"
+                                        ? bracket.semifinals[1].pick === bracket.semifinals[1].a ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
+                                        : "bg-ip-gray-transparent" 
                                     }
                                 ` } onClick={ () => handleSemifinalPick(2, 1, bracket.semifinals[1].a) }>
                                     { bracket.semifinals[1].a ?
@@ -895,9 +903,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                     <p className="font-ultra-condensed tracking-wide text-xl text-left px-2">{ bracket.semifinals[1].a ? bracket.semifinals[1].a.name : "" }</p>
                                 </div>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-4 
-                                    ${ bracket.semifinals[1].pick 
-                                        ? bracket.semifinals[1].pick.name === bracket.semifinals[1].b.name ? "bg-ip-blue" : "bg-ip-gray-transparent" 
-                                        : "bg-ip-gray-transparent"
+                                    ${ bracket.semifinals[1].pick !== "undecided"
+                                        ? bracket.semifinals[1].pick === bracket.semifinals[1].b ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
+                                        : "bg-ip-gray-transparent" 
                                     }
                                 `} onClick={ () => handleSemifinalPick(3, 1, bracket.semifinals[1].b) }>
                                     { bracket.semifinals[1].b ?
