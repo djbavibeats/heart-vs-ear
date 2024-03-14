@@ -542,7 +542,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
 
     const renderChampionshipAlbumArt = (match, participant) => {
         console.log(participant)
-        if (participant) {
+        if (participant || participant !== "undecided") {
             return (<div className="relative">
                 { participant.preview_url === "unavailable" ? "" : 
                     <div onClick={ () => playAudioPreview(98, participant) } className="absolute h-[100px] w-[100px] top-0 right-0 bottom-0 left-0 flex items-end justify-start p-1">
@@ -567,7 +567,6 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
 
     const renderChampionAlbumArt = (match, participant) => {
-        console.log(participant)
         if (participant || participant !== "undecided") {
             return (<div className="relative">
                 { participant.preview_url === "unavailable" ? "" : 
