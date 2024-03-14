@@ -850,7 +850,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                             <div className={`text-sm col-span-1`}>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-2 
                                     ${ bracket.semifinals[0].pick !== "undecided"
-                                        ? bracket.semifinals[0].pick === bracket.semifinals[0].a ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
+                                        ? bracket.semifinals[0].pick.name === bracket.semifinals[0].a.name ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
                                         : "bg-ip-gray-transparent" 
                                     }
                                 `} onClick={ () => handleSemifinalPick(0, 0, bracket.semifinals[0].a) }>
@@ -866,7 +866,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                 </div>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4 
                                     ${ bracket.semifinals[0].pick !== "undecided"
-                                        ? bracket.semifinals[0].pick === bracket.semifinals[0].b ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
+                                        ? bracket.semifinals[0].pick.name === bracket.semifinals[0].b.name ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
                                         : "bg-ip-gray-transparent" 
                                     }
                                 `} onClick={ () => handleSemifinalPick(1, 0, bracket.semifinals[0].b) }>
@@ -888,7 +888,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                             <div className={`text-sm col-span-1`}>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-2
                                     ${ bracket.semifinals[1].pick !== "undecided"
-                                        ? bracket.semifinals[1].pick === bracket.semifinals[1].a ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
+                                        ? bracket.semifinals[1].pick.name === bracket.semifinals[1].a.name ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
                                         : "bg-ip-gray-transparent" 
                                     }
                                 ` } onClick={ () => handleSemifinalPick(2, 1, bracket.semifinals[1].a) }>
@@ -904,7 +904,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                 </div>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-4 
                                     ${ bracket.semifinals[1].pick !== "undecided"
-                                        ? bracket.semifinals[1].pick === bracket.semifinals[1].b ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
+                                        ? bracket.semifinals[1].pick.name === bracket.semifinals[1].b.name ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
                                         : "bg-ip-gray-transparent" 
                                     }
                                 `} onClick={ () => handleSemifinalPick(3, 1, bracket.semifinals[1].b) }>
