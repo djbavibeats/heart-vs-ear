@@ -35,6 +35,7 @@ function App() {
             .then(data => {
               if (data.user) {
                 // This runs when a user is returning
+                console.log(data.user)
                 setUser(data.user)
               } else {
                 const newUser = {
@@ -64,7 +65,7 @@ function App() {
                   })
                   .then(resp => resp.json())
                   .then(data => {
-                    console.log(data)
+                    console.log(data.user)
                     setUser(data.user)
                   })
                 })

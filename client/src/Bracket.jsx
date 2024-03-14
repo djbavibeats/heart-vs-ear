@@ -234,6 +234,12 @@ export default function Bracket({ accessToken , tokenType, user }) {
                             "pick": ""
                         }
                     ],
+                    championship: [
+                        {
+                            "set": 0,
+                            "pick": ""
+                        }
+                    ],
                     champion: ""
                 }
     
@@ -310,6 +316,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
 
     const handleSemifinalPick = (division, set, pick) => {
         let bracketCopy = bracket
+        console.log(bracket)
         bracketCopy.semifinals[set].pick = pick
         setBracket({ ...bracketCopy })
     }
@@ -330,35 +337,41 @@ export default function Bracket({ accessToken , tokenType, user }) {
         	id: user._id,
             divisions: [],
             divisionChamps: [
-                        {
-                            "set": 0,
-                            "pick": ""
-                        },
-                        {
-                            "set": 1,
-                            "pick": ""
-                        },
-                        {
-                            "set": 2,
-                            "pick": ""
-                        },
-                        {
-                            "set": 3,
-                            "pick": ""
-                        }
-                    ],
-                    semifinals: [
-                        {   
-                            "set": 0,
-                            "pick": ""
-                        },
-                        {
-                            "set": 1,
-                            "pick": ""
-                        }
-                    ],
-                    champion: ""
+                {
+                    "set": 0,
+                    "pick": ""
+                },
+                {
+                    "set": 1,
+                    "pick": ""
+                },
+                {
+                    "set": 2,
+                    "pick": ""
+                },
+                {
+                    "set": 3,
+                    "pick": ""
                 }
+            ],
+            semifinals: [
+                {   
+                    "set": 0,
+                    "pick": ""
+                },
+                {
+                    "set": 1,
+                    "pick": ""
+                }
+            ],
+            championship: [
+                {
+                    "set": 0,
+                    "pick": ""
+                }
+            ],
+            champion: ""
+        }
     
                 for (let d = 0; d < participants.divisions.length; d++) {
                     var numberOfRounds = Math.log(participants.participantsPerDivision) / Math.log(2)
@@ -493,6 +506,8 @@ export default function Bracket({ accessToken , tokenType, user }) {
     const [ currentPreview, setCurrentPreview ] = useState({ match: '', participant: '' })
 
     const playAudioPreview = (matchnumber, track) => {
+        console.log(matchnumber)
+
         if (currentPreview.match === matchnumber && previewAudio.current._src === track.preview_url) {
             setCurrentPreview({
                 match: "",
@@ -512,8 +527,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
 
     const renderAlbumArt = (match, participant) => {
+        console.log(participant)
         return (<div className="relative">
-            { participant.preview_url === "freeuser" ? "" : 
+            { participant.preview_url === "unavailable" ? "" : 
                 <div onClick={ () => playAudioPreview(match.number, participant) } className="absolute h-[50px] w-[50px] top-0 right-0 bottom-0 left-0 flex items-end justify-start p-1">
                 { currentPreview.match === match.number 
                     ? currentPreview.participant === participant.id ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="w-4 h-4">
@@ -528,6 +544,26 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 </div>
             }
             <img className="z-10 min-h-[50px] h-[50px] min-w-[50px] w-[50px]" src={` ${ participant.album.images.url || "" } `} />
+        </div>)
+    }
+
+    const renderChampionshipAlbumArt = (match, participant) => {
+        return (<div className="relative">
+            { participant.preview_url === "unavailable" ? "" : 
+                <div onClick={ () => playAudioPreview(98, participant) } className="absolute h-[100px] w-[100px] top-0 right-0 bottom-0 left-0 flex items-end justify-start p-1">
+                { currentPreview.match === 98 
+                    ? currentPreview.participant === participant.id ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="w-4 h-4">
+                        <path fill="#ffffff" d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"/>
+                    </svg>
+                    : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-4 h-4">
+                        <path fill="#ffffff" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
+                    </svg>
+                : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-4 h-4">
+                    <path fill="#ffffff" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
+                </svg>  }
+                </div>
+            }
+            <img className="object-contain z-10 mt-[1px]  h-[98px] w-[98px]" src={` ${ participant.album.images.url || "" } `} />
         </div>)
     }
     
@@ -746,7 +782,8 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                     hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
                                 `} onClick={ () => handleChampionshipPick(bracket.semifinals[0].pick) }>
                                 { bracket.semifinals[0].pick ?
-                                    <img className="object-contain h-[100px] max-h-full" src={ bracket.semifinals[0].pick.album.images.url } />
+                                    <>{ renderChampionshipAlbumArt(bracket, bracket.semifinals[0].pick) }</>
+                                    // <img className="object-contain h-[100px] max-h-full" src={ bracket.semifinals[0].pick.album.images.url } />
                                     : <div className="h-[100px]"></div>
                                 }
                                 <div className="min-h-[100px] p-1 items-center justify-center flex">
@@ -761,7 +798,8 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                     hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
                                 `} onClick={ () => handleChampionshipPick(bracket.semifinals[1].pick) }>
                                 { bracket.semifinals[1].pick ?
-                                    <img className="object-contain h-[100px] max-h-full" src={ bracket.semifinals[1].pick.album.images.url } />
+                                    <>{ renderChampionshipAlbumArt(bracket, bracket.semifinals[1].pick) }</>
+                                    // <img className="object-contain h-[100px] max-h-full" src={ bracket.semifinals[1].pick.album.images.url } />
                                     : <div className="h-[100px]"></div>
                                 }
                                 <div className="min-h-[100px] p-1 items-center justify-center flex">
@@ -785,7 +823,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                 `} onClick={ () => handleSemifinalPick(0, 0, bracket.divisions[0].champion) }>
                                     { bracket.divisions[0].champion ?
                                         bracket.divisions[0].champion !== undefined ? 
-                                        <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[0].champion.album.images.url }` } />
+                                        
+                                        <>{ renderAlbumArt(bracket.semifinals[0], bracket.divisions[0].champion) }</>
+                                        // <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[0].champion.album.images.url }` } />
                                         : <div className="h-[50px] w-[50px]"></div>
                                         : <div className="h-[50px] w-[50px]"></div>
                                     }
@@ -799,7 +839,8 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                 `} onClick={ () => handleSemifinalPick(1, 0, bracket.divisions[1].champion) }>
                                     { bracket.divisions[1].champion ?
                                         bracket.divisions[1].champion !== undefined ? 
-                                        <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[1].champion.album.images.url }` } />
+                                        <>{ renderAlbumArt(bracket.semifinals[0], bracket.divisions[1].champion) }</>
+                                        // <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[1].champion.album.images.url }` } />
                                         : <div className="h-[50px] w-[50px]"></div>
                                         : <div className="h-[50px] w-[50px]"></div>
                                     }
@@ -820,7 +861,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                 ` } onClick={ () => handleSemifinalPick(2, 1, bracket.divisions[2].champion) }>
                                     { bracket.divisions[2].champion ?
                                         bracket.divisions[2].champion !== undefined ? 
-                                        <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[2].champion.album.images.url }` } />
+                                        
+                                        <>{ renderAlbumArt(bracket.semifinals[0], bracket.divisions[2].champion) }</>
+                                        // <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[2].champion.album.images.url }` } />
                                         : <div className="h-[50px] w-[50px]"></div>
                                         : <div className="h-[50px] w-[50px]"></div>
                                     }
@@ -834,7 +877,8 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                 `} onClick={ () => handleSemifinalPick(3, 1, bracket.divisions[3].champion) }>
                                     { bracket.divisions[3].champion ?
                                         bracket.divisions[3].champion !== undefined ? 
-                                        <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[3].champion.album.images.url }` } />
+                                        <>{ renderAlbumArt(bracket.semifinals[0], bracket.divisions[3].champion) }</>
+                                        // <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[3].champion.album.images.url }` } />
                                         : <div className="h-[50px] w-[50px]"></div>
                                         : <div className="h-[50px] w-[50px]"></div>
                                     }
