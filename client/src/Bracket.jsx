@@ -943,12 +943,15 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] -mr-[18px]
             ">HOW TO PLAY</p>
             <p className="text-center mb-2">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Magna aliqua. 
-                Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                Join I Prevail for their bracket-ology tournament in which 64 of the band’s top performing songs will compete against each other for the title of top-streamed track!
                 <br/><br/>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+                Winners of each round will be determined by their streaming performance on Spotify in that pre-determined amount of time.
+                <br/><br/>
+                Select your picks for which track will out-stream it’s competitor, or click the autofill option to have your bracket randomly filled out for you.
+                <br/><br/>
+                Submit your bracket and share your picks on socials to see who will have the winning bracket!
+                <br/><br/>
+                There can only be one champion… “they can try to copy but they can’t compete.”
                 <br/><br/>
                 Participation requires a Spotify account.
             </p>
