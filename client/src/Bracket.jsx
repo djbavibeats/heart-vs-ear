@@ -206,38 +206,26 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 var initBracket = {
                     id: user._id,
                     divisions: [],
-                    divisionChamps: [
-                        {
-                            "set": 0,
-                            "pick": ""
-                        },
-                        {
-                            "set": 1,
-                            "pick": ""
-                        },
-                        {
-                            "set": 2,
-                            "pick": ""
-                        },
-                        {
-                            "set": 3,
-                            "pick": ""
-                        }
-                    ],
                     semifinals: [
                         {   
                             "set": 0,
-                            "pick": ""
+                            "a": "",
+                            "b": "",
+                            "pick": "undecided"
                         },
                         {
                             "set": 1,
-                            "pick": ""
+                            "a": "",
+                            "b": "",
+                            "pick": "undecided"
                         }
                     ],
                     championship: [
                         {
                             "set": 0,
-                            "pick": ""
+                            "a": "",
+                            "b": "",
+                            "pick": "undecided"
                         }
                     ],
                     champion: ""
@@ -309,14 +297,29 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 bracketCopy.divisions[division][round+1].matches[set].b = pick
             }
         } else {
-            bracketCopy.divisions[division].champion = pick
+            switch(division) {
+                case(0):
+                    bracketCopy.semifinals[0].a = pick
+                    break
+                case(1):
+                    bracketCopy.semifinals[0].b = pick
+                    break
+                case(2):
+                    bracketCopy.semifinals[1].a = pick
+                    break
+                case(3):
+                    bracketCopy.semifinals[1].b = pick
+                    break
+                default:
+                    break
+            }   
+            
         }
         setBracket({ ...bracketCopy })
     }
 
     const handleSemifinalPick = (division, set, pick) => {
         let bracketCopy = bracket
-        console.log(bracket)
         bracketCopy.semifinals[set].pick = pick
         setBracket({ ...bracketCopy })
     }
@@ -336,38 +339,26 @@ export default function Bracket({ accessToken , tokenType, user }) {
         var initBracket = {
         	id: user._id,
             divisions: [],
-            divisionChamps: [
-                {
-                    "set": 0,
-                    "pick": ""
-                },
-                {
-                    "set": 1,
-                    "pick": ""
-                },
-                {
-                    "set": 2,
-                    "pick": ""
-                },
-                {
-                    "set": 3,
-                    "pick": ""
-                }
-            ],
             semifinals: [
                 {   
                     "set": 0,
-                    "pick": ""
+                    "a": "",
+                    "b": "",
+                    "pick": "undecided"
                 },
                 {
                     "set": 1,
-                    "pick": ""
+                    "a": "",
+                    "b": "",
+                    "pick": "undecided"
                 }
             ],
             championship: [
                 {
                     "set": 0,
-                    "pick": ""
+                    "a": "",
+                    "b": "",
+                    "pick": "undecided"
                 }
             ],
             champion: ""
@@ -424,6 +415,10 @@ export default function Bracket({ accessToken , tokenType, user }) {
     const handleSaveBracket = () => {
         let saveBracket = bracket
         setSubmitting(true)
+        setSubmitting(false)
+        /*
+        THIS STUFF HAS TO DO WITH BRACKET SAVING
+        */
         fetch(`${url}/database/users/update-bracket`, {
           method: 'POST',
           headers: {
@@ -434,6 +429,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
         .then(data => {
             setSubmitting(false)
         })
+
         /*
         THIS STUFF ALL HAS TO DO WITH PLAYLIST SAVING
         let winnerURIs = []
@@ -506,8 +502,6 @@ export default function Bracket({ accessToken , tokenType, user }) {
     const [ currentPreview, setCurrentPreview ] = useState({ match: '', participant: '' })
 
     const playAudioPreview = (matchnumber, track) => {
-        console.log(matchnumber)
-
         if (currentPreview.match === matchnumber && previewAudio.current._src === track.preview_url) {
             setCurrentPreview({
                 match: "",
@@ -527,7 +521,6 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
 
     const renderAlbumArt = (match, participant) => {
-        console.log(participant)
         return (<div className="relative">
             { participant.preview_url === "unavailable" ? "" : 
                 <div onClick={ () => playAudioPreview(match.number, participant) } className="absolute h-[50px] w-[50px] top-0 right-0 bottom-0 left-0 flex items-end justify-start p-1">
@@ -798,12 +791,12 @@ export default function Bracket({ accessToken , tokenType, user }) {
                         <div className={`gap-2 text-sm col-span-1 w-full flex flex-row`}>
                             <div className={`h-[100px] border flex flex-1 flex-row items-center justify-start text-sm 
                                     ${ bracket.champion ?
-                                        bracket.champion === bracket.semifinals[0].pick ? "bg-ip-blue" : "bg-ip-gray-transparent"
+                                        bracket.champion.name === bracket.semifinals[0].pick.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
                                         : "bg-ip-gray-transparent"
                                     }
                                     hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
                                 `} onClick={ () => handleChampionshipPick(bracket.semifinals[0].pick) }>
-                                { bracket.semifinals[0].pick ?
+                                { bracket.semifinals[0].pick !== "undecided" ?
                                     <>{ renderChampionshipAlbumArt(bracket, bracket.semifinals[0].pick) }</>
                                     // <img className="object-contain h-[100px] max-h-full" src={ bracket.semifinals[0].pick.album.images.url } />
                                     : <div className="h-[100px]"></div>
@@ -814,12 +807,12 @@ export default function Bracket({ accessToken , tokenType, user }) {
                             </div>
                             <div className={`h-[100px] border flex flex-1 flex-row-reverse items-center justify-between text-sm 
                                     ${ bracket.champion ?
-                                        bracket.champion === bracket.semifinals[1].pick ? "bg-ip-blue" : "bg-ip-gray-transparent"
+                                        bracket.champion.name === bracket.semifinals[1].pick.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
                                         : "bg-ip-gray-transparent"
                                     }
                                     hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
                                 `} onClick={ () => handleChampionshipPick(bracket.semifinals[1].pick) }>
-                                { bracket.semifinals[1].pick ?
+                                { bracket.semifinals[1].pick !== "undecided" ?
                                     <>{ renderChampionshipAlbumArt(bracket, bracket.semifinals[1].pick) }</>
                                     // <img className="object-contain h-[100px] max-h-full" src={ bracket.semifinals[1].pick.album.images.url } />
                                     : <div className="h-[100px]"></div>
@@ -839,34 +832,34 @@ export default function Bracket({ accessToken , tokenType, user }) {
                             <div className={`text-sm col-span-1`}>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-2 
                                     ${ bracket.semifinals[0].pick
-                                        ? bracket.semifinals[0].pick === bracket.divisions[0].champion ? "bg-ip-blue" : "bg-ip-gray-transparent" 
+                                        ? bracket.semifinals[0].pick.name === bracket.semifinals[0].a.name ? "bg-ip-blue" : "bg-ip-gray-transparent" 
                                         : "bg-ip-gray-transparent"
                                     }
-                                `} onClick={ () => handleSemifinalPick(0, 0, bracket.divisions[0].champion) }>
-                                    { bracket.divisions[0].champion ?
-                                        bracket.divisions[0].champion !== undefined ? 
+                                `} onClick={ () => handleSemifinalPick(0, 0, bracket.semifinals[0].a) }>
+                                    { bracket.semifinals[0].a ?
+                                        bracket.semifinals[0].a !== undefined ? 
                                         
-                                        <>{ renderAlbumArt(bracket.semifinals[0], bracket.divisions[0].champion) }</>
+                                        <>{ renderAlbumArt(bracket.semifinals[0], bracket.semifinals[0].a) }</>
                                         // <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[0].champion.album.images.url }` } />
                                         : <div className="h-[50px] w-[50px]"></div>
                                         : <div className="h-[50px] w-[50px]"></div>
                                     }
-                                    <p className="font-ultra-condensed tracking-wide text-xl px-2">{ bracket.divisions[0].champion ? bracket.divisions[0].champion.name : "" }</p>
+                                    <p className="font-ultra-condensed tracking-wide text-xl px-2">{ bracket.semifinals[0].a ? bracket.semifinals[0].a.name : "" }</p>
                                 </div>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-center border min-h-10 mb-4 
                                     ${  bracket.semifinals[0].pick
-                                        ? bracket.semifinals[0].pick === bracket.divisions[1].champion ? "bg-ip-blue" : "bg-ip-gray-transparent" 
+                                        ? bracket.semifinals[0].pick.name === bracket.semifinals[0].b.name ? "bg-ip-blue" : "bg-ip-gray-transparent" 
                                         : "bg-ip-gray-transparent"
                                     }
-                                `} onClick={ () => handleSemifinalPick(1, 0, bracket.divisions[1].champion) }>
-                                    { bracket.divisions[1].champion ?
-                                        bracket.divisions[1].champion !== undefined ? 
-                                        <>{ renderAlbumArt(bracket.semifinals[0], bracket.divisions[1].champion) }</>
+                                `} onClick={ () => handleSemifinalPick(1, 0, bracket.semifinals[0].b) }>
+                                    { bracket.semifinals[0].b ?
+                                        bracket.semifinals[0].b !== undefined ? 
+                                        <>{ renderAlbumArt(bracket.semifinals[0], bracket.semifinals[0].b) }</>
                                         // <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[1].champion.album.images.url }` } />
                                         : <div className="h-[50px] w-[50px]"></div>
                                         : <div className="h-[50px] w-[50px]"></div>
                                     }
-                                    <p className="font-ultra-condensed tracking-wide text-xl px-2">{ bracket.divisions[1].champion ? bracket.divisions[1].champion.name : "" }</p>
+                                    <p className="font-ultra-condensed tracking-wide text-xl px-2">{ bracket.semifinals[0].b ? bracket.semifinals[0].b.name : "" }</p>
                                 </div>
                             </div>
                         </div>
@@ -877,34 +870,34 @@ export default function Bracket({ accessToken , tokenType, user }) {
                             <div className={`text-sm col-span-1`}>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-2
                                     ${ bracket.semifinals[1].pick 
-                                        ? bracket.semifinals[1].pick === bracket.divisions[2].champion ? "bg-ip-blue" : "bg-ip-gray-transparent" 
+                                        ? bracket.semifinals[1].pick.name === bracket.semifinals[1].a.name ? "bg-ip-blue" : "bg-ip-gray-transparent" 
                                         : "bg-ip-gray-transparent"
                                     }
-                                ` } onClick={ () => handleSemifinalPick(2, 1, bracket.divisions[2].champion) }>
-                                    { bracket.divisions[2].champion ?
-                                        bracket.divisions[2].champion !== undefined ? 
+                                ` } onClick={ () => handleSemifinalPick(2, 1, bracket.semifinals[1].a) }>
+                                    { bracket.semifinals[1].a ?
+                                        bracket.semifinals[1].a !== undefined ? 
                                         
-                                        <>{ renderAlbumArt(bracket.semifinals[0], bracket.divisions[2].champion) }</>
+                                        <>{ renderAlbumArt(bracket.semifinals[1], bracket.semifinals[1].a) }</>
                                         // <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[2].champion.album.images.url }` } />
                                         : <div className="h-[50px] w-[50px]"></div>
                                         : <div className="h-[50px] w-[50px]"></div>
                                     }
-                                    <p className="font-ultra-condensed tracking-wide text-xl text-left px-2">{ bracket.divisions[2].champion ? bracket.divisions[2].champion.name : "" }</p>
+                                    <p className="font-ultra-condensed tracking-wide text-xl text-left px-2">{ bracket.semifinals[1].a ? bracket.semifinals[1].a.name : "" }</p>
                                 </div>
                                 <div className={`hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-center border min-h-10 mb-4 
                                     ${ bracket.semifinals[1].pick 
-                                        ? bracket.semifinals[1].pick === bracket.divisions[3].champion ? "bg-ip-blue" : "bg-ip-gray-transparent" 
+                                        ? bracket.semifinals[1].pick.name === bracket.semifinals[1].b.name ? "bg-ip-blue" : "bg-ip-gray-transparent" 
                                         : "bg-ip-gray-transparent"
                                     }
-                                `} onClick={ () => handleSemifinalPick(3, 1, bracket.divisions[3].champion) }>
-                                    { bracket.divisions[3].champion ?
-                                        bracket.divisions[3].champion !== undefined ? 
-                                        <>{ renderAlbumArt(bracket.semifinals[0], bracket.divisions[3].champion) }</>
+                                `} onClick={ () => handleSemifinalPick(3, 1, bracket.semifinals[1].b) }>
+                                    { bracket.semifinals[1].b ?
+                                        bracket.semifinals[1].b !== undefined ? 
+                                        <>{ renderAlbumArt(bracket.semifinals[1], bracket.semifinals[1].b) }</>
                                         // <img className="h-[50px] w-[50px]" src={ `${ bracket.divisions[3].champion.album.images.url }` } />
                                         : <div className="h-[50px] w-[50px]"></div>
                                         : <div className="h-[50px] w-[50px]"></div>
                                     }
-                                    <p className="font-ultra-condensed tracking-wide text-xl text-left px-2">{ bracket.divisions[3].champion ? bracket.divisions[3].champion.name : "" }</p>
+                                    <p className="font-ultra-condensed tracking-wide text-xl text-left px-2">{ bracket.semifinals[1].b ? bracket.semifinals[1].b.name : "" }</p>
                                 </div>
                             </div>
                         </div>

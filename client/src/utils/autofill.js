@@ -31,14 +31,50 @@ const autofill = (bracket) => {
                     })
                 } else if (roundindex === 3) {
                     round.matches.map(match => {
+                        console.log(match)
                         switch (getRandomInt(2)) {
                             case (0):
                                 match.pick = match.a
-                                bracket.divisions[divisionindex].champion = match.a
+                                console.log('this match needs to be assigned to the semifinals', match, divisionindex)
+                                switch(divisionindex) {
+                                    case (0):
+                                        bracket.semifinals[0].a = match.a
+                                        break
+                                    case (1):
+                                        bracket.semifinals[0].b = match.a
+                                        break
+                                    case (2):
+                                        bracket.semifinals[1].a = match.a
+                                        break
+                                    case (3):
+                                        bracket.semifinals[1].b = match.a
+                                        break
+                                    default:
+                                        break
+                                }
+                                // if (divisionindex === 0 || divisionindex === 1){
+                                //     bracket.semifinals[0].a = match.a
+                                // }
                                 break
                             case (1):
                                 match.pick = match.b
-                                bracket.divisions[divisionindex].champion = match.b
+                                console.log('this match needs to be assigned to the semifinals', match, divisionindex)
+                                switch(divisionindex) {
+                                    case (0):
+                                        bracket.semifinals[0].a = match.b
+                                        break
+                                    case (1):
+                                        bracket.semifinals[0].b = match.b
+                                        break
+                                    case (2):
+                                        bracket.semifinals[1].a = match.b
+                                        break
+                                    case (3):
+                                        bracket.semifinals[1].b = match.b
+                                        break
+                                    default:
+                                        break
+                                }
                                 break
                             default: 
                                 break
@@ -51,27 +87,31 @@ const autofill = (bracket) => {
     }))
     
     // Semifinals
-    switch (getRandomInt(2)) {
-        case (0):
-            bracket.semifinals[0].pick = bracket.divisions[0].champion
-            break
-        case (1):
-            bracket.semifinals[0].pick = bracket.divisions[1].champion
-            break
-        default:
-            break
-    }
+    bracket.semifinals.map((semifinal, semifinalindex) => {
+        switch (getRandomInt(2)) {
+            case (0):
+                // bracket.semifinals[0].pick = bracket.divisions[0].champion
+                bracket.semifinals[semifinalindex].pick = bracket.semifinals[semifinalindex].a
+                break
+            case (1):
+                // bracket.semifinals[0].pick = bracket.divisions[1].champion
+                bracket.semifinals[semifinalindex].pick = bracket.semifinals[semifinalindex].b
+                break
+            default:
+                break
+        }
+    })
 
-    switch (getRandomInt(2)) {
-        case (0):
-            bracket.semifinals[1].pick = bracket.divisions[2].champion
-            break
-        case (1):
-            bracket.semifinals[1].pick = bracket.divisions[3].champion
-            break
-        default:
-            break
-    }
+    // switch (getRandomInt(2)) {
+    //     case (0):
+    //         bracket.semifinals[1].pick = bracket.divisions[2].champion
+    //         break
+    //     case (1):
+    //         bracket.semifinals[1].pick = bracket.divisions[3].champion
+    //         break
+    //     default:
+    //         break
+    // }
 
     // Championship
     switch (getRandomInt(2)) {
