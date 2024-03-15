@@ -776,8 +776,8 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
     const mergeImageURIs = (images) => {
         return new Promise( (resolve, reject) => {
             var canvas = document.createElement('canvas')
-            canvas.width = 640
-            canvas.height = 1138
+            canvas.width = 600
+            canvas.height = 900
             add2Canvas(canvas, images[0])
             add2Canvas(canvas, images[1])
             setTimeout(() => {
@@ -832,42 +832,45 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             var image = new Image()
             image.onload = function() {
                 console.log(this)
-                canvas.getContext('2d').fillStyle = "black"
-                canvas.getContext('2d').fillRect(0,0, canvas.width, canvas.height)
+                // canvas.getContext('2d').fillStyle = "black"
+                // canvas.getContext('2d').fillRect(0, 0, canvas.width, canvas.height)
+
+                canvas.getContext('2d').fillStyle = "#319fd9"
+                canvas.getContext('2d').shadowColor = "#319fd9"
+                canvas.getContext('2d').shadowBlur = 75
+                canvas.getContext('2d').fillRect(37.5, 37.5, 525, 825)
+                
+                canvas.getContext('2d').fillStyle = "#ffffff"
+                canvas.getContext('2d').shadowColor = "#ffffff"
+                canvas.getContext('2d').shadowBlur = 0
+                canvas.getContext('2d').strokeStyle = "#ffffff"
+                canvas.getContext('2d').lineWidth = 5
+                canvas.getContext('2d').strokeRect(35, 35, 530, 830)
+
                 canvas.getContext('2d').drawImage(this, x, y, imageObj.width, imageObj.height)
 
                 // Draw Label
-                canvas.getContext('2d').font = "50px ShareText"
+                canvas.getContext('2d').font = "45px ShareText"
                 canvas.getContext('2d').fillStyle = "#ffffff"
                 canvas.getContext('2d').strokeStyle = "#0000ff"
                 canvas.getContext("2d").textAlign = "center"
-                canvas.getContext('2d').fillText('My Pick Is', 320, 750)
+                canvas.getContext('2d').fillText('Your Champion', 300, 100)
+
+                canvas.getContext('2d').strokeStyle = "#ffffff"
+                canvas.getContext('2d').fillStyle = "#ffffff"
+                canvas.getContext('2d').lineWidth = 2
+                canvas.getContext('2d').beginPath()
+                canvas.getContext('2d').moveTo(175, 125)
+                canvas.getContext('2d').lineTo(425, 125)
+                canvas.getContext('2d').stroke()
                 
                 // Draw Name
-                canvas.getContext('2d').font = "50px ShareText"
+                canvas.getContext('2d').font = "45px ShareText"
                 canvas.getContext('2d').fillStyle = "#ffffff"
                 canvas.getContext('2d').strokeStyle = "#0000ff"
                 canvas.getContext("2d").textAlign = "center"
-                printAtWordWrap( canvas.getContext("2d"), bracket.champion.name, 320, 830, 60, 580 )
-                
-                // Draw Label
-                // canvas.getContext('2d').font = "50px ShareText"
-                // canvas.getContext('2d').fillStyle = "#ffffff"
-                // canvas.getContext('2d').strokeStyle = "#0000ff"
-                // canvas.getContext("2d").textAlign = "center"
-                // canvas.getContext('2d').fillText("Who's your pick?", 320, 975)
+                printAtWordWrap( canvas.getContext("2d"), bracket.champion.name, 300, 215, 60, 500 )
 
-                // Draw Label
-                canvas.getContext('2d').font = "50px ShareText"
-                canvas.getContext('2d').fillStyle = "#ffffff"
-                canvas.getContext('2d').strokeStyle = "#0000ff"
-                canvas.getContext("2d").textAlign = "center"
-                printAtWordWrap( canvas.getContext("2d"), "Join I Prevail's bracket-ology tournament at bracket.iprevailband.com", 320, 980, 60, 580 )
-                // canvas.fill()
-
-                // Draw Number of Misisons
-                // canvas.getContext('2d').font = "24px"
-                // canvas.getContext('2d').fillText(`Your Bracket`, 85, 595)
                 resolve()
             }
             image.src = imageObj.src
@@ -899,12 +902,12 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
         shareimg.crossOrigin = "anonymous"
 
         var bgimg = new Image()
-        bgimg.src = "/images/bg.jpg"
+        bgimg.src = "/images/sharebg.jpg"
         bgimg.crossOrigin = "anonymous"
 
         var images = [
-            // { src: bgimg.src, x: 0, y: 0, width: 1138, height: 1138 },
-            { src: shareimg.src, x: 20, y: 20, width: 600, height: 600 },
+            { src: bgimg.src, x: 0, y: 0, width: 600, height: 900 },
+            { src: shareimg.src, x: 37.5, y: 337.5, width: 525, height: 525 },
         ]
 
         mergeImageURIs(images)
@@ -913,11 +916,11 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                 test.src = resp
                 test.crossOrigin = "anonymous"
 
-                const file = [ dataURLtoFile(test.src, `BRACKETOLOGY.png`) ]
-                share("I Prevail Bracket-ology", file)
+                // const file = [ dataURLtoFile(test.src, `BRACKETOLOGY.png`) ]
+                // share("I Prevail Bracket-ology", file)
                
-                // var w = window.open("")
-                // w.document.write(test.outerHTML)
+                var w = window.open("")
+                w.document.write(test.outerHTML)
             })
 
     }
