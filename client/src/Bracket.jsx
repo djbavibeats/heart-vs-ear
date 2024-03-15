@@ -31,20 +31,18 @@ const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBrac
         savePrompt.current.style.height = height + 'px'
     }, [ width ])
     return (<div className={`bg-[rgba(0,0,0,.75)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-[999]`} ref={ savePrompt }>
-        <div className={`w-full h-full md:w-[65%] md:h-[65%] bg-black md:border md:rounded-xl flex items-center justify-center flex-col`}>
+        <div className={`w-full h-full p-2 md:w-[65%] md:h-[65%] bg-black md:border md:rounded-xl flex items-center justify-center flex-col`}>
             { saveStatus === "unsaved" 
                 && <>
-                <p className="text-center
+                <p className="text-center max-w-[90%]
                     bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
                     text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] mb-4
                 ">SUBMIT BRACKET?</p>
-                <p className="text-center mb-2">
-                You won't be able to go back and edit your bracket!
-                <br/><br/>
-                But we will make you a playlist with all of your Round 1 picks.
+                <p className="text-center mb-2 max-w-[90%]">
+                You won’t be able to edit your selections once you click SAVE BRACKET!
                 <br/><br/>
                 </p>
-                <div className="flex gap-4">
+                <div className="flex gap-4 flex-col md:flex-row">
                     <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
                         bg-transparent text-white font-bold border-2
                         px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
@@ -71,9 +69,9 @@ const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBrac
                 <p className="text-center
                     bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
                     text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] mb-4
-                ">YOUR IN!</p>
+                ">YOU'RE IN!</p>
                 <p className="text-center mb-2">
-                That worked!
+                Check back when each round closes to see how you did!
                 <br/><br/>
                 </p>
                 <div className="flex gap-4">
@@ -124,7 +122,7 @@ const InstructionsModal = ({ toggleInstructionsVisible }) => {
         instructionsPrompt.current.style.height = height + 'px'
     }, [ width ])
     return (<div className={`bg-[rgba(0,0,0,.75)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-[999]`} ref={ instructionsPrompt }>
-        <div className={`w-full h-full md:w-[65%] md:h-[65%] bg-black md:border md:rounded-xl flex items-center justify-center flex-col p-8`}>
+        <div className={`w-full h-full md:w-[65%] md:h-[65%] bg-black md:border md:rounded-xl flex items-center justify-start flex-col p-8 overflow-y-scroll md:overflow-y-auto`}>
             <div className="absolute top-4 right-4 py-1 px-1 hover:cursor-pointer text-white" onClick={ toggleInstructionsVisible }>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-6 h-6">
                     <path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
@@ -834,6 +832,8 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             var image = new Image()
             image.onload = function() {
                 console.log(this)
+                canvas.getContext('2d').fillStyle = "black"
+                canvas.getContext('2d').fillRect(0,0, canvas.width, canvas.height)
                 canvas.getContext('2d').drawImage(this, x, y, imageObj.width, imageObj.height)
 
                 // Draw Label
@@ -841,28 +841,28 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                 canvas.getContext('2d').fillStyle = "#ffffff"
                 canvas.getContext('2d').strokeStyle = "#0000ff"
                 canvas.getContext("2d").textAlign = "center"
-                canvas.getContext('2d').fillText('My Champion Is', 320, 725)
+                canvas.getContext('2d').fillText('My Pick Is', 320, 750)
                 
                 // Draw Name
                 canvas.getContext('2d').font = "50px ShareText"
                 canvas.getContext('2d').fillStyle = "#ffffff"
                 canvas.getContext('2d').strokeStyle = "#0000ff"
                 canvas.getContext("2d").textAlign = "center"
-                printAtWordWrap( canvas.getContext("2d"), bracket.champion.name, 320, 805, 60, 580 )
+                printAtWordWrap( canvas.getContext("2d"), bracket.champion.name, 320, 830, 60, 580 )
                 
                 // Draw Label
-                canvas.getContext('2d').font = "50px ShareText"
-                canvas.getContext('2d').fillStyle = "#ffffff"
-                canvas.getContext('2d').strokeStyle = "#0000ff"
-                canvas.getContext("2d").textAlign = "center"
-                canvas.getContext('2d').fillText("Who will YOU choose?", 320, 975)
+                // canvas.getContext('2d').font = "50px ShareText"
+                // canvas.getContext('2d').fillStyle = "#ffffff"
+                // canvas.getContext('2d').strokeStyle = "#0000ff"
+                // canvas.getContext("2d").textAlign = "center"
+                // canvas.getContext('2d').fillText("Who's your pick?", 320, 975)
 
                 // Draw Label
                 canvas.getContext('2d').font = "50px ShareText"
                 canvas.getContext('2d').fillStyle = "#ffffff"
                 canvas.getContext('2d').strokeStyle = "#0000ff"
                 canvas.getContext("2d").textAlign = "center"
-                printAtWordWrap( canvas.getContext("2d"), "Join the fray at bracket.iprevailband.com", 320, 1035, 60, 580 )
+                printAtWordWrap( canvas.getContext("2d"), "Join I Prevail's bracket-ology tournament at bracket.iprevailband.com", 320, 980, 60, 580 )
                 // canvas.fill()
 
                 // Draw Number of Misisons
@@ -903,7 +903,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
         bgimg.crossOrigin = "anonymous"
 
         var images = [
-            { src: bgimg.src, x: 0, y: 0, width: 1138, height: 1138 },
+            // { src: bgimg.src, x: 0, y: 0, width: 1138, height: 1138 },
             { src: shareimg.src, x: 20, y: 20, width: 600, height: 600 },
         ]
 
@@ -913,10 +913,27 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                 test.src = resp
                 test.crossOrigin = "anonymous"
 
-                var w = window.open("")
-                w.document.write(test.outerHTML)
+                const file = [ dataURLtoFile(test.src, `BRACKETOLOGY.png`) ]
+                share("I Prevail Bracket-ology", file)
+               
+                // var w = window.open("")
+                // w.document.write(test.outerHTML)
             })
 
+    }
+
+    const share = async (title, file) => {
+        const data = {
+            files: file
+        }
+        try {
+            if (!(navigator.canShare(data))) {
+                throw new Error("Cannot share data.", data)
+            }
+            await navigator.share(data)
+        } catch (err) {
+            console.log(err.name, err.message)
+        }
     }
 
     return (<>
