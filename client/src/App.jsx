@@ -41,6 +41,7 @@ function App() {
               } else {
                 const newUser = {
                   displayName: spotifyInfo.display_name,
+                  spotifyEmail: spotifyInfo.email,
                   spotifyRefreshToken: localStorage.getItem('hve_spotify_refresh'),
                   spotifyId: spotifyInfo.id
                 }

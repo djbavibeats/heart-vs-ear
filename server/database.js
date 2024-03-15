@@ -10,6 +10,7 @@ const userSchema = new Schema({
     email: String,
     spotifyRefreshToken: String,
     spotifyId: String,
+    spotifyEmail: String,
     bracket: [],
     score: Number,
     hasBracket: Boolean
@@ -33,6 +34,7 @@ router.post('/users/create', async (req, res) => {
         displayName: req.body.displayName,
         spotifyRefreshToken: req.body.spotifyRefreshToken,
         spotifyId: req.body.spotifyId,
+        spotifyEmail: req.body.spotifyEmail,
         bracket: [],
         hasBracket: false,
         score: 0
