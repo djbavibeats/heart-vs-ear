@@ -779,7 +779,9 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             canvas.width = 600
             canvas.height = 900
             add2Canvas(canvas, images[0])
-            add2Canvas(canvas, images[1])
+            setTimeout(() => {
+                add2Canvas(canvas, images[1])
+            }, 500)
             setTimeout(() => {
                 resolve(canvas.toDataURL('image/png'), reject)
             }, 1000)
