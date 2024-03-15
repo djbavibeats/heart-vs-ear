@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import Bracket from './Bracket'
 import namelogo from './assets/name-logo.png'
 import symbolLogo from './assets/symbol-logo.png'
+import spotifyLogo from './assets/Spotify_Logo_RGB_White.png'
 
 let url = 'https://heart-vs-ear.onrender.com'
 // let url = 'http://localhost:5000'
@@ -182,10 +183,13 @@ function openMenu() {
               Participation requires a Spotify account.
             </p>
             <div className="flex flex-row items-center justify-center gap-x-2 bg-gradient-to-t from-cyan-400 to-ip-blue text-black font-bold drop-shadow-glow-sm px-4 py-3 rounded-xl min-w-40 text-center hover:cursor-pointer hover:scale-105 transition-all" onClick={ spotifyAuth }>
-              <div className="mt-[1.75px]"><p className="text-sm">LOG IN</p></div> 
+              <div className="mt-[1.75px]"><p className="text-sm">LOGIN WITH SPOTIFY</p></div> 
               <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
                 <path d="M217 401L345 273c9.4-9.4 9.4-24.6 0-33.9L217 111c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l87 87L24 232c-13.3 0-24 10.7-24 24s10.7 24 24 24l246.1 0-87 87c-9.4 9.4-9.4 24.6 0 33.9s24.6 9.4 33.9 0zM344 80l80 0c22.1 0 40 17.9 40 40l0 272c0 22.1-17.9 40-40 40l-80 0c-13.3 0-24 10.7-24 24s10.7 24 24 24l80 0c48.6 0 88-39.4 88-88l0-272c0-48.6-39.4-88-88-88l-80 0c-13.3 0-24 10.7-24 24s10.7 24 24 24z"/>
               </svg>
+            </div>
+            <div className="">
+              <img src={ spotifyLogo } className="w-[80px]" />
             </div>
             <div className="pb-8">
               <img src={ symbolLogo } className="h-[100px]" />
