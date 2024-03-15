@@ -52,7 +52,8 @@ function App() {
                   body: JSON.stringify(newUser)
                 }).then(resp => resp.json())
                 .then(data => {
-                  console.log(data)
+                  console.log("brand new user!", data)
+                  let newuser = data.user
                   // This is runs when a user first signs up
                   fetch(`${url}/spotify/follow-i-prevail`, {
                     method: 'POST',
@@ -66,8 +67,8 @@ function App() {
                   })
                   .then(resp => resp.json())
                   .then(data => {
-                    console.log(data.user)
-                    setUser(data.user)
+                    console.log("user now follows i prevail", data.user)
+                    setUser(newuser)
                   })
                 })
               }
@@ -85,6 +86,7 @@ function App() {
       fetch(`${url}/spotify/refresh?refresh_token=${refresh_token}`)
         .then(resp => resp.json())
         .then(data => {
+          console.log('current user with a cookie')
           setAccessToken(data.data.access_token)
           setTokenType(data.data.token_type)
         })
@@ -96,6 +98,7 @@ function App() {
           .then(resp => resp.json())
           .then(data => {
             if (data.status === 200) {
+              console.log('new user with a code')
               localStorage.setItem('hve_spotify_refresh', data.data.refresh_token)
               setAccessToken(data.data.access_token)
               setTokenType(data.data.token_type)
@@ -203,6 +206,7 @@ function openMenu() {
             user={ user }
             accessToken={ accessToken }
             tokenType={ tokenType }
+            setUser={ setUser }
           />
       }
     </div>

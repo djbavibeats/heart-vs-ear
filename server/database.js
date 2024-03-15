@@ -10,7 +10,9 @@ const userSchema = new Schema({
     email: String,
     spotifyRefreshToken: String,
     spotifyId: String,
-    bracket: []
+    bracket: [],
+    score: Number,
+    hasBracket: Boolean
 })
 const User = model('User', userSchema)
 
@@ -31,7 +33,9 @@ router.post('/users/create', async (req, res) => {
         displayName: req.body.displayName,
         spotifyRefreshToken: req.body.spotifyRefreshToken,
         spotifyId: req.body.spotifyId,
-        bracket: []
+        bracket: [],
+        hasBracket: false,
+        score: 0
     })
 
     await user.save()
@@ -46,7 +50,10 @@ router.post('/users/update-bracket', async (req, res) => {
 
     let updateUser = await User.findOneAndUpdate(
         { _id: req.body.id },
-        { bracket: req.body }
+        { 
+            bracket: req.body,
+            hasBracket: true 
+        }
     ).exec()
 
     res.send({

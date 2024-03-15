@@ -8,6 +8,152 @@ import { autofill } from './utils/autofill'
 let url = 'https://heart-vs-ear.onrender.com'
 // let url = 'http://localhost:5000'
 
+const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBracket }) => {
+    const [ width, setWidth ] = useState(window.innerWidth)
+    const [ height, setHeight ] = useState(window.innerHeight)
+    const savePrompt = useRef()
+
+    const handleWindowSizeChange = () => {
+        setWidth(window.innerWidth)
+        setHeight(window.innerHeight)
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange)
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange)
+        }
+    }, [])
+
+    useEffect(() => {
+        console.log(width)
+        savePrompt.current.style.width = width + 'px'
+        savePrompt.current.style.height = height + 'px'
+    }, [ width ])
+    return (<div className={`bg-[rgba(0,0,0,.75)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-[999]`} ref={ savePrompt }>
+        <div className={`w-full h-full md:w-[65%] md:h-[65%] bg-black md:border md:rounded-xl flex items-center justify-center flex-col`}>
+            { saveStatus === "unsaved" 
+                && <>
+                <p className="text-center
+                    bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
+                    text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] mb-4
+                ">SUBMIT BRACKET?</p>
+                <p className="text-center mb-2">
+                You won't be able to go back and edit your bracket!
+                <br/><br/>
+                But we will make you a playlist with all of your Round 1 picks.
+                <br/><br/>
+                </p>
+                <div className="flex gap-4">
+                    <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
+                        bg-transparent text-white font-bold border-2
+                        px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
+                        onClick={ toggleSavePrompt }
+                    >
+                        <div className="mt-[1.75px]"><p className="text-sm">CANCEL</p></div> 
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
+                            <path fill="#ffffff" d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/>
+                        </svg>
+                    </div>
+                    <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 bg-gradient-to-t from-cyan-400 to-ip-blue text-black font-bold drop-shadow-glow-sm px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
+                        onClick={ handleSaveBracket }
+                    >
+                        <div className="mt-[1.75px]"><p className="text-sm">SAVE BRACKET</p></div> 
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
+                            <path d="M48 96V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V170.5c0-4.2-1.7-8.3-4.7-11.3l33.9-33.9c12 12 18.7 28.3 18.7 45.3V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H309.5c17 0 33.3 6.7 45.3 18.7l74.5 74.5-33.9 33.9L320.8 84.7c-.3-.3-.5-.5-.8-.8V184c0 13.3-10.7 24-24 24H104c-13.3 0-24-10.7-24-24V80H64c-8.8 0-16 7.2-16 16zm80-16v80H272V80H128zm32 240a64 64 0 1 1 128 0 64 64 0 1 1 -128 0z"/>  
+                        </svg>
+                    </div>
+                </div>
+                </>
+            }
+            { saveStatus === "saved" &&
+                <>
+                <p className="text-center
+                    bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
+                    text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] mb-4
+                ">YOUR IN!</p>
+                <p className="text-center mb-2">
+                That worked!
+                <br/><br/>
+                </p>
+                <div className="flex gap-4">
+                    <div className="min-w-52 flex flex-row items-center justify-center gap-x-2
+                        bg-transparent text-white font-bold border-2
+                        px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all"
+                        onClick={ shareBracket }
+                    >
+                        <div className="mt-[1.75px]"><p className="text-sm">SHARE BRACKET</p></div>
+                    </div>
+                    <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
+                        bg-transparent text-white font-bold border-2
+                        px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
+                        onClick={ toggleSavePrompt }
+                    >
+                        <div className="mt-[1.75px]"><p className="text-sm">VIEW BRACKET</p></div> 
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
+                            <path fill="#ffffff" d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/>
+                        </svg>
+                    </div>
+                </div>
+                </>
+            }
+        </div>
+    </div>)
+}
+
+const InstructionsModal = ({ toggleInstructionsVisible }) => {
+    const [ width, setWidth ] = useState(window.innerWidth)
+    const [ height, setHeight ] = useState(window.innerHeight)
+    const instructionsPrompt = useRef()
+
+    const handleWindowSizeChange = () => {
+        setWidth(window.innerWidth)
+        setHeight(window.innerHeight)
+    }
+
+    useEffect(() => {
+        window.addEventListener('resize', handleWindowSizeChange)
+        return () => {
+            window.removeEventListener('resize', handleWindowSizeChange)
+        }
+    }, [])
+
+    useEffect(() => {
+        console.log(width)
+        instructionsPrompt.current.style.width = width + 'px'
+        instructionsPrompt.current.style.height = height + 'px'
+    }, [ width ])
+    return (<div className={`bg-[rgba(0,0,0,.75)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-[999]`} ref={ instructionsPrompt }>
+        <div className={`w-full h-full md:w-[65%] md:h-[65%] bg-black md:border md:rounded-xl flex items-center justify-center flex-col p-8`}>
+            <div className="absolute top-4 right-4 py-1 px-1 hover:cursor-pointer text-white" onClick={ toggleInstructionsVisible }>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-6 h-6">
+                    <path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                </svg>
+            </div>
+            <p className="text-center
+                bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
+                text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] -mr-[18px]
+            ">HOW TO PLAY</p>
+            <p className="text-center mb-2">
+                Join I Prevail for their bracket-ology tournament in which 64 of the band’s top performing songs will compete against each other for the title of top-streamed track!
+                <br/><br/>
+                Winners of each round will be determined by their streaming performance on Spotify in that pre-determined amount of time.
+                <br/><br/>
+                Select your picks for which track will out-stream it’s competitor, or click the autofill option to have your bracket randomly filled out for you.
+                <br/><br/>
+                Submit your bracket and share your picks on socials to see who will have the winning bracket!
+                <br/><br/>
+                There can only be one champion… “they can try to copy but they can’t compete.”
+                <br/><br/>
+                Participation requires a Spotify account.
+            </p>
+            <div className="">
+                <img src={ symbolLogo } className="h-[100px]" />
+            </div>
+        </div>
+    </div>)
+}
+
 const CountdownTimer = () => {
     const calculateTimeLeft = () => {
         let year = new Date().getFullYear()
@@ -67,9 +213,9 @@ const OrientationPrompt = () => {
         <p>Orientation Prompt</p>
     </>)
 }
-export default function Bracket({ accessToken , tokenType, user }) {    
+export default function Bracket({ accessToken , tokenType, user, setUser }) {    
     const [ participantsReady, setParticipantsReady ] = useState(false)
-    const [ instructionVisible, setInstructionVisible ] = useState(false)
+    const [ instructionsVisible, setInstructionsVisible ] = useState(false)
     const [ participants, setParticipants ] = useState({
         totalParticipants: 64,
         participantsPerDivision: 16,
@@ -285,8 +431,12 @@ export default function Bracket({ accessToken , tokenType, user }) {
     const [ bracket, setBracket ] = useState(null)
     const [ bracketReady, setBracketReady ] = useState(false)
     const [ submitting, setSubmitting ] = useState(false)
+    const [ saveStatus, setSaveStatus ] = useState("unsaved")
 
     const handleMatchPick = (division, round, set, match, pick, isFinal) => {
+        if (user.hasBracket === true) {
+            return
+        }
         if (pick) {
             let bracketCopy = bracket
             bracketCopy.divisions[division][round].matches[match].pick = pick
@@ -321,6 +471,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
 
     const handleSemifinalPick = (division, set, pick) => {
+        if (user.hasBracket === true) {
+            return
+        }
         if (pick) {
             let bracketCopy = bracket
             bracketCopy.semifinals[set].pick = pick
@@ -329,6 +482,9 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
 
     const handleChampionshipPick = (pick) => {
+        if (user.hasBracket === true) {
+            return
+        }
         if (pick) {
             if (pick === "undecided") {
                 return
@@ -421,10 +577,15 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 return setBracket(initBracket)
     }
 
+    const [ savePromptVisible, setSavePromptVisible ] = useState(false)
+
+    const toggleSavePrompt = () => {
+        setSavePromptVisible(!savePromptVisible)
+    }
+
     const handleSaveBracket = () => {
         let saveBracket = bracket
         setSubmitting(true)
-        setSubmitting(false)
         /*
         THIS STUFF HAS TO DO WITH BRACKET SAVING
         */
@@ -436,7 +597,15 @@ export default function Bracket({ accessToken , tokenType, user }) {
           body: JSON.stringify(saveBracket)
         }).then(resp => resp.json())
         .then(data => {
-            setSubmitting(false)
+            console.log(user)
+            fetch(`${url}/database/users/get?spotify_id=${user.spotifyId}`)
+            .then(resp => resp.json())
+            .then(data => { 
+                console.log(data)
+                setUser(data.user)
+                setSubmitting(false)
+                setSaveStatus("saved")
+            })
         })
 
         /*
@@ -470,8 +639,8 @@ export default function Bracket({ accessToken , tokenType, user }) {
     useEffect(() => {
     }, [ bracket ])
 
-    const toggleInstructionsModal = () => {
-        setInstructionVisible(!instructionVisible)
+    const toggleInstructionsVisible = () => {
+        setInstructionsVisible(!instructionsVisible)
     }
     // let matchcounter = -1
 
@@ -534,13 +703,13 @@ export default function Bracket({ accessToken , tokenType, user }) {
             { participant.preview_url === "unavailable" ? "" : 
                 <div onClick={ () => playAudioPreview(match.number, participant) } className="absolute z-50 h-[50px] w-full top-0 bottom-4 left-[1px] flex items-end justify-end p-1">
                 { currentPreview.match === match.number 
-                    ? currentPreview.participant === participant.id ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="absolute w-4 h-4">
+                    ? currentPreview.participant === participant.id ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="hover:cursor-pointer absolute w-4 h-4">
                         <path fill="#ffffff" d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"/>
                     </svg>
-                    : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="absolute w-4 h-4">
+                    : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="hover:cursor-pointer absolute w-4 h-4">
                         <path fill="#ffffff" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
                     </svg>
-                : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="absolute w-4 h-4">
+                : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="hover:cursor-pointer absolute w-4 h-4">
                     <path fill="#ffffff" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
                 </svg>  }
                 </div>
@@ -552,7 +721,6 @@ export default function Bracket({ accessToken , tokenType, user }) {
     }
 
     const renderChampionshipAlbumArt = (match, participant, align) => {
-        console.log(match)
         if (participant) {
             return (<>
             { participant.preview_url === "unavailable" ? "" : 
@@ -560,13 +728,13 @@ export default function Bracket({ accessToken , tokenType, user }) {
                     ${ align === "left" ? 'justify-start' : 'justify-end' }
                 `}>
                 { currentPreview.match === 98 
-                    ? currentPreview.participant === participant.id ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="absolute  bottom-2 w-4 h-4">
+                    ? currentPreview.participant === participant.id ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="hover:cursor-pointer absolute  bottom-2 w-4 h-4">
                         <path fill="#ffffff" d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"/>
                     </svg>
-                    : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="absolute  bottom-2 w-4 h-4">
+                    : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="hover:cursor-pointer absolute  bottom-2 w-4 h-4">
                         <path fill="#ffffff" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
                     </svg>
-                : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="absolute bottom-2 w-4 h-4">
+                : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="hover:cursor-pointer absolute bottom-2 w-4 h-4">
                     <path fill="#ffffff" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
                 </svg>  }
                 </div>
@@ -587,13 +755,13 @@ export default function Bracket({ accessToken , tokenType, user }) {
             { participant.preview_url === "unavailable" ? "" : 
                 <div onClick={ () => playAudioPreview(99, participant) } className="absolute z-50 h-[250px] w-[250px] top-0 right-0 left-0 flex items-end justify-start p-1">
                 { currentPreview.match === 99
-                    ? currentPreview.participant === participant.id ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="w-4 h-4">
+                    ? currentPreview.participant === participant.id ? <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512" className="hover:cursor-pointer absolute top-2 left-2 w-4 h-4">
                         <path fill="#ffffff" d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"/>
                     </svg>
-                    : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-4 h-4">
+                    : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="hover:cursor-pointer absolute top-2 left-2 w-4 h-4">
                         <path fill="#ffffff" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
                     </svg>
-                : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="absolute top-2 left-2 w-4 h-4">
+                : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="hover:cursor-pointer absolute top-2 left-2 w-4 h-4">
                     <path fill="#ffffff" d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/>
                 </svg>  }
                 </div>
@@ -750,8 +918,15 @@ export default function Bracket({ accessToken , tokenType, user }) {
             })
 
     }
-    
+
     return (<>
+    { savePromptVisible &&
+        <SavePrompt toggleSavePrompt={ toggleSavePrompt } handleSaveBracket={ handleSaveBracket } saveStatus={ saveStatus } shareBracket={ shareBracket } />
+    }
+    {
+        instructionsVisible &&
+        <InstructionsModal toggleInstructionsVisible={ toggleInstructionsVisible } />
+    }
     <div>
     { submitting &&
         <div className="absolute z-[999] h-full w-full bg-black top-0 right-0 left-0 bottom-0 flex items-center justify-center">
@@ -769,46 +944,61 @@ export default function Bracket({ accessToken , tokenType, user }) {
         {/* TODO: Make it so you are prompted to view the device in landscape mode on mobile */}
         {/* <OrientationPrompt /> */}
         <div className="flex flex-col gap-4 items-center bracket-container text-white">
-            <div className="max-w-[28rem] items-center flex-wrap justify-center flex gap-4 z-10">
-                <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
-                    bg-transparent text-white font-bold border-2
-                    px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
-                    onClick={ autofillBracket }
-                >
-                    <div className="mt-[1.75px]"><p className="text-sm">AUTOFILL BRACKET</p></div> 
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
-                        <path fill="#ffffff" d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/>
-                    </svg>
-                </div>
-                
-                <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
-                    bg-transparent text-white font-bold border-2
-                    px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
-                    onClick={ clearBracket }
-                >
-                    <div className="mt-[1.75px]"><p className="text-sm">CLEAR BRACKET</p></div> 
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
-                        <path fill="#ffffff" d="M290.7 57.4L57.4 290.7c-25 25-25 65.5 0 90.5l80 80c12 12 28.3 18.7 45.3 18.7H288h9.4H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H387.9L518.6 285.3c25-25 25-65.5 0-90.5L381.3 57.4c-25-25-65.5-25-90.5 0zM297.4 416H288l-105.4 0-80-80L227.3 211.3 364.7 348.7 297.4 416z"/>
-                    </svg>
-                </div>
-                
-                <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 bg-gradient-to-t from-cyan-400 to-ip-blue text-black font-bold drop-shadow-glow-sm px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
-                    onClick={ handleSaveBracket }
-                >
-                    <div className="mt-[1.75px]"><p className="text-sm">SAVE BRACKET</p></div> 
-                    <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
-                        <path d="M48 96V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V170.5c0-4.2-1.7-8.3-4.7-11.3l33.9-33.9c12 12 18.7 28.3 18.7 45.3V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H309.5c17 0 33.3 6.7 45.3 18.7l74.5 74.5-33.9 33.9L320.8 84.7c-.3-.3-.5-.5-.8-.8V184c0 13.3-10.7 24-24 24H104c-13.3 0-24-10.7-24-24V80H64c-8.8 0-16 7.2-16 16zm80-16v80H272V80H128zm32 240a64 64 0 1 1 128 0 64 64 0 1 1 -128 0z"/>  
-                    </svg>
-                </div>
+            { user.hasBracket === false
+                &&
+                <div className="max-w-[28rem] min-h-[112px] items-center flex-wrap justify-center flex gap-4 z-10">
+                    <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
+                        bg-transparent text-white font-bold border-2
+                        px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
+                        onClick={ autofillBracket }
+                    >
+                        <div className="mt-[1.75px]"><p className="text-sm">AUTOFILL BRACKET</p></div> 
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
+                            <path fill="#ffffff" d="M441 58.9L453.1 71c9.4 9.4 9.4 24.6 0 33.9L424 134.1 377.9 88 407 58.9c9.4-9.4 24.6-9.4 33.9 0zM209.8 256.2L344 121.9 390.1 168 255.8 302.2c-2.9 2.9-6.5 5-10.4 6.1l-58.5 16.7 16.7-58.5c1.1-3.9 3.2-7.5 6.1-10.4zM373.1 25L175.8 222.2c-8.7 8.7-15 19.4-18.3 31.1l-28.6 100c-2.4 8.4-.1 17.4 6.1 23.6s15.2 8.5 23.6 6.1l100-28.6c11.8-3.4 22.5-9.7 31.1-18.3L487 138.9c28.1-28.1 28.1-73.7 0-101.8L474.9 25C446.8-3.1 401.2-3.1 373.1 25zM88 64C39.4 64 0 103.4 0 152V424c0 48.6 39.4 88 88 88H360c48.6 0 88-39.4 88-88V312c0-13.3-10.7-24-24-24s-24 10.7-24 24V424c0 22.1-17.9 40-40 40H88c-22.1 0-40-17.9-40-40V152c0-22.1 17.9-40 40-40H200c13.3 0 24-10.7 24-24s-10.7-24-24-24H88z"/>
+                        </svg>
+                    </div>
+                    
+                    <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
+                        bg-transparent text-white font-bold border-2
+                        px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
+                        onClick={ clearBracket }
+                    >
+                        <div className="mt-[1.75px]"><p className="text-sm">CLEAR BRACKET</p></div> 
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
+                            <path fill="#ffffff" d="M290.7 57.4L57.4 290.7c-25 25-25 65.5 0 90.5l80 80c12 12 28.3 18.7 45.3 18.7H288h9.4H512c17.7 0 32-14.3 32-32s-14.3-32-32-32H387.9L518.6 285.3c25-25 25-65.5 0-90.5L381.3 57.4c-25-25-65.5-25-90.5 0zM297.4 416H288l-105.4 0-80-80L227.3 211.3 364.7 348.7 297.4 416z"/>
+                        </svg>
+                    </div>
+                    
+                    <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 bg-gradient-to-t from-cyan-400 to-ip-blue text-black font-bold drop-shadow-glow-sm px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
+                        onClick={ toggleSavePrompt }
+                    >
+                        <div className="mt-[1.75px]"><p className="text-sm">SAVE BRACKET</p></div> 
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
+                            <path d="M48 96V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V170.5c0-4.2-1.7-8.3-4.7-11.3l33.9-33.9c12 12 18.7 28.3 18.7 45.3V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H309.5c17 0 33.3 6.7 45.3 18.7l74.5 74.5-33.9 33.9L320.8 84.7c-.3-.3-.5-.5-.8-.8V184c0 13.3-10.7 24-24 24H104c-13.3 0-24-10.7-24-24V80H64c-8.8 0-16 7.2-16 16zm80-16v80H272V80H128zm32 240a64 64 0 1 1 128 0 64 64 0 1 1 -128 0z"/>  
+                        </svg>
+                    </div>
 
-                {/* <div className="min-w-52 flex flex-row items-center justify-center gap-x-2
-                    bg-transparent text-white font-bold border-2
-                    px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all"
-                    onClick={ shareBracket }
-                >
-                    <div className="mt-[1.75px]"><p className="text-sm">SHARE BRACKET</p></div>
-                </div> */}
-            </div>
+                    {/* <div className="min-w-52 flex flex-row items-center justify-center gap-x-2
+                        bg-transparent text-white font-bold border-2
+                        px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all"
+                        onClick={ shareBracket }
+                    >
+                        <div className="mt-[1.75px]"><p className="text-sm">SHARE BRACKET</p></div>
+                    </div> */}
+                </div>
+            }
+            {
+                user.hasBracket === true &&
+                <div className="min-h-[112px] max-w-[28rem] items-center flex-wrap justify-center flex gap-4 z-10">
+                    <div className="min-w-52 flex flex-row items-center justify-center gap-x-2
+                        bg-transparent text-white font-bold border-2
+                        px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all"
+                        onClick={ shareBracket }
+                    >
+                        <div className="mt-[1.75px]"><p className="text-sm">SHARE BRACKET</p></div>
+                    </div>
+                </div>
+            }
             <div className="flex flex-col items-center z-10">
                 <div className='flex items-center'>
                     <p className="text-center -mr-[10px]
@@ -822,7 +1012,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                 <div className="mt-2 flex flex-row items-center justify-center gap-x-2 
                     bg-transparent text-white font-bold border-2
                     px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
-                    onClick={ toggleInstructionsModal }
+                    onClick={ toggleInstructionsVisible }
                 >
                     <div className="mt-[1.75px]"><p className="text-sm">HOW TO PLAY</p></div> 
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
@@ -847,7 +1037,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                         return (<div key={ matchindex } className={`division-${ 0 } round-${ roundindex } match-${ matchindex } text-sm`}>
                                             { roundindex === 2 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Sweet 16</div> : "" }
                                             { roundindex === 3 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Elite 8</div> : "" }
-                                            <div className={`relative hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-start border border-b-0 min-h-10 ${ 
+                                            <div className={`relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" } flex flex-row items-start border border-b-0 min-h-10 ${ 
                                                 match.pick ?
                                                 match.pick !== "undecided" ? 
                                                     match.pick.name === match.a.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -859,7 +1049,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                     : <div className="h-[50px] w-[50px]"></div> }
                                                 { renderText(match.a.name) }
                                             </div>
-                                            <div className={ `relative hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-start border min-h-10 mb-4  ${ 
+                                            <div className={ `relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" } flex flex-row items-start border min-h-10 mb-4  ${ 
                                                 match.pick ?
                                                 match.pick !== "undecided" ? 
                                                     match.pick.name === match.b.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -894,7 +1084,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                     return (<div key={ matchindex } className={`division-${ 2 } round-${ roundindex } match-${ matchindex } text-sm`}>
                                         { roundindex === 2 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Sweet 16</div> : "" }
                                         { roundindex === 3 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Elite 8</div> : "" }
-                                        <div className={`relative hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-start border border-b-0 min-h-10 ${ 
+                                        <div className={`relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" } flex flex-row justify-between items-start border border-b-0 min-h-10 ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
                                                 match.pick.name === match.a.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -906,7 +1096,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                 : <div className="h-[50px] w-[50px]"></div> }
                                             { renderText(match.a.name) }
                                         </div>
-                                        <div className={ `relative hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-start border min-h-10 mb-4  ${ 
+                                        <div className={ `relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" } flex flex-row justify-between items-start border min-h-10 mb-4  ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
                                                 match.pick.name === match.b.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -936,7 +1126,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                 ${ bracket.champion ? "bg-ip-blue drop-shadow-glow" 
                                 : "bg-ip-gray-transparent"
                                 }
-                                hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                                ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" }
                                 `}>
                                 <p className={ `font-ultra-condensed tracking-wide text-center text-xl px-2 h-[35px] flex items-center justify-center border-b` }>
                                     Your Champion
@@ -973,7 +1163,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                         bracket.champion.name === bracket.semifinals[0].pick.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
                                         : "bg-ip-gray-transparent"
                                     }
-                                    hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                                    ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" }
                                 `} onClick={ () => handleChampionshipPick(bracket.semifinals[0].pick) }>
                                 { bracket.semifinals[0].pick !== "undecided" ?
                                     <>{ renderChampionshipAlbumArt(bracket, bracket.semifinals[0].pick, "right") }</>
@@ -990,7 +1180,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                         bracket.champion.name === bracket.semifinals[1].pick.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
                                         : "bg-ip-gray-transparent"
                                     }
-                                    hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
+                                    ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" }
                                 `} onClick={ () => handleChampionshipPick(bracket.semifinals[1].pick) }>
                                 { bracket.semifinals[1].pick !== "undecided" ?
                                     <>{ renderChampionshipAlbumArt(bracket, bracket.semifinals[1].pick, "left") }</>
@@ -1011,7 +1201,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                 <p className="text-2xl text-center -mr-[10px] font-ultra-condensed w-full">Final Four</p>
                             </div>
                             <div className={`text-sm col-span-1`}>
-                                <div className={`relative hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-start border min-h-10 mb-2 
+                                <div className={`relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" } flex flex-row items-start border min-h-10 mb-2 
                                     ${ bracket.semifinals[0].pick !== "undecided"
                                         ? bracket.semifinals[0].pick.name === bracket.semifinals[0].a.name ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
                                         : "bg-ip-gray-transparent" 
@@ -1030,7 +1220,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                         : ""
                                     }
                                 </div>
-                                <div className={`relative hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-start border min-h-10 mb-4 
+                                <div className={`relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" } flex flex-row items-start border min-h-10 mb-4 
                                     ${ bracket.semifinals[0].pick !== "undecided"
                                         ? bracket.semifinals[0].pick.name === bracket.semifinals[0].b.name ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
                                         : "bg-ip-gray-transparent" 
@@ -1055,7 +1245,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                 <p className="text-2xl text-center -mr-[10px] font-ultra-condensed w-full">Final Four</p>
                             </div>
                             <div className={`text-sm col-span-1`}>
-                                <div className={`relative hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-start border min-h-10 mb-2
+                                <div className={`relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" } flex flex-row justify-between items-start border min-h-10 mb-2
                                     ${ bracket.semifinals[1].pick !== "undecided"
                                         ? bracket.semifinals[1].pick.name === bracket.semifinals[1].a.name ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
                                         : "bg-ip-gray-transparent" 
@@ -1074,7 +1264,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                         : ""
                                     }
                                 </div>
-                                <div className={`relative hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row justify-between items-start border min-h-10 mb-4 
+                                <div className={`relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" } flex flex-row justify-between items-start border min-h-10 mb-4 
                                     ${ bracket.semifinals[1].pick !== "undecided"
                                         ? bracket.semifinals[1].pick.name === bracket.semifinals[1].b.name ? "bg-ip-blue" : "bg-ip-gray-transparent" // Do some stuff
                                         : "bg-ip-gray-transparent" 
@@ -1112,7 +1302,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                     return (<div key={ matchindex } className={`division-${ 1 } round-${ roundindex } match-${ matchindex } text-sm`}>
                                         { roundindex === 2 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Sweet 16</div> : "" }
                                         { roundindex === 3 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Elite 8</div> : "" }
-                                        <div className={`relative hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-start border border-b-0 min-h-10 ${ 
+                                        <div className={`relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" }s flex flex-row items-start border border-b-0 min-h-10 ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
                                                 match.pick.name === match.a.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -1124,7 +1314,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                 : <div className="h-[50px] w-[50px]"></div> }
                                             { renderText(match.a.name) }
                                         </div>
-                                        <div className={ `relative hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-start border min-h-10 mb-4  ${ 
+                                        <div className={ `relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" } flex flex-row items-start border min-h-10 mb-4  ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
                                                 match.pick.name === match.b.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -1158,7 +1348,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                     return (<div key={ matchindex } className={`division-${ 3 } round-${ roundindex } match-${ matchindex } text-sm`}>
                                         { roundindex === 2 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Sweet 16</div> : "" }
                                         { roundindex === 3 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Elite 8</div> : "" }
-                                        <div className={`relative hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-start justify-between border border-b-0 min-h-10 ${ 
+                                        <div className={`relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" } flex flex-row items-start justify-between border border-b-0 min-h-10 ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
                                                 match.pick.name === match.a.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -1170,7 +1360,7 @@ export default function Bracket({ accessToken , tokenType, user }) {
                                                 : <div className="h-[50px] w-[50px]"></div> }
                                             { renderText(match.a.name) }
                                         </div>
-                                        <div className={ `relative hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue flex flex-row items-start justify-between border min-h-10 mb-4  ${ 
+                                        <div className={ `relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" } flex flex-row items-start justify-between border min-h-10 mb-4  ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
                                                 match.pick.name === match.b.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -1197,37 +1387,5 @@ export default function Bracket({ accessToken , tokenType, user }) {
         <div className="bg-black h-screen"></div>
     }
     </div>
-    {
-        instructionVisible &&
-        <div className="absolute h-screen w-screen flex items-center justify-center bg-[rgba(0,0,0,1)] top-0 left-0 right-0 bottom-0 z-50">
-        <div className="max-w-[500px] py-8 px-16 flex items-center justify-start flex-col gap-8 relative">
-            <div className="absolute top-4 right-1 py-1 px-1 hover:cursor-pointer text-white" onClick={ toggleInstructionsModal }>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-6 h-6">
-                    <path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
-                </svg>
-            </div>
-            <p className="text-center
-                bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
-                text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] -mr-[18px]
-            ">HOW TO PLAY</p>
-            <p className="text-center mb-2">
-                Join I Prevail for their bracket-ology tournament in which 64 of the band’s top performing songs will compete against each other for the title of top-streamed track!
-                <br/><br/>
-                Winners of each round will be determined by their streaming performance on Spotify in that pre-determined amount of time.
-                <br/><br/>
-                Select your picks for which track will out-stream it’s competitor, or click the autofill option to have your bracket randomly filled out for you.
-                <br/><br/>
-                Submit your bracket and share your picks on socials to see who will have the winning bracket!
-                <br/><br/>
-                There can only be one champion… “they can try to copy but they can’t compete.”
-                <br/><br/>
-                Participation requires a Spotify account.
-            </p>
-            <div className="">
-                <img src={ symbolLogo } className="h-[100px]" />
-            </div>
-        </div>
-        </div>
-    }
     </>)
 }
