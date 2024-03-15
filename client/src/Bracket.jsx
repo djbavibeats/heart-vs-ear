@@ -597,6 +597,150 @@ export default function Bracket({ accessToken , tokenType, user }) {
             return ""
         }
     }
+
+    const mergeImageURIs = (images) => {
+        return new Promise( (resolve, reject) => {
+            var canvas = document.createElement('canvas')
+            canvas.width = 640
+            canvas.height = 1138
+            add2Canvas(canvas, images[0])
+            add2Canvas(canvas, images[1])
+            setTimeout(() => {
+                resolve(canvas.toDataURL('image/png'), reject)
+            }, 1000)
+            // Promise.all(images.map((imageObj, index) => add2Canvas(canvas, imageObj)))
+            //     .then(() => { 
+            //         resolve(canvas.toDataURL('image/png'), reject) 
+            //     })
+        })
+    }
+    
+    function printAtWordWrap( context , text, x, y, lineHeight, fitWidth)
+    {
+        fitWidth = fitWidth || 0;
+        
+        if (fitWidth <= 0)
+        {
+            context.fillText( text, x, y );
+            return;
+        }
+        var words = text.split(' ');
+        var currentLine = 0;
+        var idx = 1;
+        while (words.length > 0 && idx <= words.length)
+        {
+            var str = words.slice(0,idx).join(' ');
+            var w = context.measureText(str).width;
+            if ( w > fitWidth )
+            {
+                if (idx==1)
+                {
+                    idx=2;
+                }
+                context.fillText( words.slice(0,idx-1).join(' '), x, y + (lineHeight*currentLine) );
+                currentLine++;
+                words = words.splice(idx-1);
+                idx = 1;
+            }
+            else
+            {idx++;}
+        }
+        if  (idx > 0)
+            context.fillText( words.join(' '), x, y + (lineHeight*currentLine) );
+    }
+    
+    const add2Canvas = (canvas, imageObj) => {
+        return new Promise( (resolve, reject ) => {
+            if (!imageObj || typeof imageObj != 'object') return reject()
+            var x = imageObj.x && canvas.width ? (imageObj.x >= 0 ? imageObj.x : canvas.width + imageObj.x) : 0
+            var y = imageObj.y && canvas.height ? (imageObj.y >=0 ? imageObj.y : canvas.height + imageObj.y) : 0
+            var image = new Image()
+            image.onload = function() {
+                console.log(this)
+                canvas.getContext('2d').drawImage(this, x, y, imageObj.width, imageObj.height)
+
+                // Draw Label
+                canvas.getContext('2d').font = "50px ShareText"
+                canvas.getContext('2d').fillStyle = "#ffffff"
+                canvas.getContext('2d').strokeStyle = "#0000ff"
+                canvas.getContext("2d").textAlign = "center"
+                canvas.getContext('2d').fillText('My Champion Is', 320, 725)
+                
+                // Draw Name
+                canvas.getContext('2d').font = "50px ShareText"
+                canvas.getContext('2d').fillStyle = "#ffffff"
+                canvas.getContext('2d').strokeStyle = "#0000ff"
+                canvas.getContext("2d").textAlign = "center"
+                printAtWordWrap( canvas.getContext("2d"), bracket.champion.name, 320, 805, 60, 580 )
+                
+                // Draw Label
+                canvas.getContext('2d').font = "50px ShareText"
+                canvas.getContext('2d').fillStyle = "#ffffff"
+                canvas.getContext('2d').strokeStyle = "#0000ff"
+                canvas.getContext("2d").textAlign = "center"
+                canvas.getContext('2d').fillText("Who will YOU choose?", 320, 975)
+
+                // Draw Label
+                canvas.getContext('2d').font = "50px ShareText"
+                canvas.getContext('2d').fillStyle = "#ffffff"
+                canvas.getContext('2d').strokeStyle = "#0000ff"
+                canvas.getContext("2d").textAlign = "center"
+                printAtWordWrap( canvas.getContext("2d"), "Join the fray at bracket.iprevailband.com", 320, 1035, 60, 580 )
+                // canvas.fill()
+
+                // Draw Number of Misisons
+                // canvas.getContext('2d').font = "24px"
+                // canvas.getContext('2d').fillText(`Your Bracket`, 85, 595)
+                resolve()
+            }
+            image.src = imageObj.src
+            image.crossOrigin = "anonymous"
+
+        })
+    }
+
+    const dataURLtoFile = (dataurl, filename) => {
+        var arr = dataurl.split(","),
+            mimeType = arr[0].match(/:(.*?);/)[1],
+            decodedData = atob(arr[1]),
+            lengthOfDecodedData = decodedData.length,
+            u8array = new Uint8Array(lengthOfDecodedData)
+        while (lengthOfDecodedData--) {
+            u8array[lengthOfDecodedData] = decodedData.charCodeAt(lengthOfDecodedData)
+        }
+        return new File([u8array], filename, { type: mimeType })
+    }
+
+    const shareBracket = () => {
+        console.log("sharing!", bracket)
+        console.log("Track Name: " + bracket.champion.name)
+        console.log("Album Art Src: " + bracket.champion.album.images.url)
+
+        var shareimg = new Image()
+        shareimg.style.border = "2px solid blue"
+        shareimg.src = bracket.champion.album.images.url
+        shareimg.crossOrigin = "anonymous"
+
+        var bgimg = new Image()
+        bgimg.src = "/images/bg.jpg"
+        bgimg.crossOrigin = "anonymous"
+
+        var images = [
+            { src: bgimg.src, x: 0, y: 0, width: 1138, height: 1138 },
+            { src: shareimg.src, x: 20, y: 20, width: 600, height: 600 },
+        ]
+
+        mergeImageURIs(images)
+            .then(resp => {
+                var test = new Image
+                test.src = resp
+                test.crossOrigin = "anonymous"
+
+                var w = window.open("")
+                w.document.write(test.outerHTML)
+            })
+
+    }
     
     return (<>
     <div>
@@ -647,6 +791,14 @@ export default function Bracket({ accessToken , tokenType, user }) {
                         <path d="M48 96V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V170.5c0-4.2-1.7-8.3-4.7-11.3l33.9-33.9c12 12 18.7 28.3 18.7 45.3V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H309.5c17 0 33.3 6.7 45.3 18.7l74.5 74.5-33.9 33.9L320.8 84.7c-.3-.3-.5-.5-.8-.8V184c0 13.3-10.7 24-24 24H104c-13.3 0-24-10.7-24-24V80H64c-8.8 0-16 7.2-16 16zm80-16v80H272V80H128zm32 240a64 64 0 1 1 128 0 64 64 0 1 1 -128 0z"/>  
                     </svg>
                 </div>
+
+                {/* <div className="min-w-52 flex flex-row items-center justify-center gap-x-2
+                    bg-transparent text-white font-bold border-2
+                    px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all"
+                    onClick={ shareBracket }
+                >
+                    <div className="mt-[1.75px]"><p className="text-sm">SHARE BRACKET</p></div>
+                </div> */}
             </div>
             <div className="flex flex-col items-center z-10">
                 <div className='flex items-center'>
