@@ -916,11 +916,11 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                 test.src = resp
                 test.crossOrigin = "anonymous"
 
-                // const file = [ dataURLtoFile(test.src, `BRACKETOLOGY.png`) ]
-                // share("I Prevail Bracket-ology", file)
+                const file = [ dataURLtoFile(test.src, `BRACKETOLOGY.png`) ]
+                share("I Prevail Bracket-ology", file)
                
-                var w = window.open("")
-                w.document.write(test.outerHTML)
+                // var w = window.open("")
+                // w.document.write(test.outerHTML)
             })
 
     }
