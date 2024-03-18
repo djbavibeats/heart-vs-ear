@@ -121,7 +121,7 @@ function App() {
     const shareData = {
         title: "I Prevail - Bracket-ology",
         text: "Sixty-four songs enter, only one will remain.",
-        url: "https://zippy-lily-3f86ad.netlify.app",
+        url: "https://bracket.iprevailband.com",
     }
 
     if (navigator.share && navigator.canShare(shareData)) {
@@ -134,6 +134,7 @@ function App() {
      } else {
         // do something else like copying the data to the clipboard
         console.log(`Can't share in this browser`)
+        alert("Sharing is not enabled in this browser")
      }
 }
 
