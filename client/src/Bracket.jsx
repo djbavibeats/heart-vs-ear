@@ -933,7 +933,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
         //}
         const data = {
         	title: "I Prevail - Bracket-ology",
-        	text: "They can try to copy but they can’t compete..",
+        	text: "They can try to copy but they can’t compete...",
         	url: "https://bracket.iprevailband.com",
         	files: file
     	}
