@@ -30,7 +30,7 @@ const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBrac
         savePrompt.current.style.height = height + 'px'
     }, [ width ])
     return (<div className={`bg-[rgba(0,0,0,.75)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-[999]`} ref={ savePrompt }>
-        <div className={`w-full h-full px-2 md:w-full md:h-full bg-black flex items-center justify-start md:justify-center flex-col`}>
+        <div className={`w-full h-full px-2 md:w-full md:h-full bg-black flex items-center justify-start md:justify-center flex-col overflow-y-scroll md:overflow-y-auto`}>
             { saveStatus === "unsaved" 
                 && <>
                 <p className="text-center max-w-[90%]
