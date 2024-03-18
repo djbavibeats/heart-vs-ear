@@ -928,9 +928,15 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
     }
 
     const share = async (title, file) => {
+        //const data = {
+        //    files: file
+        //}
         const data = {
-            files: file
-        }
+        	title: "I Prevail - Bracket-ology",
+        	text: "They can try to copy but they can’t compete..",
+        	url: "https://bracket.iprevailband.com",
+        	files: file
+    	}
         try {
             if (!(navigator.canShare(data))) {
                 throw new Error("Cannot share data.", data)
