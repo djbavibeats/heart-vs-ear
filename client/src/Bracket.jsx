@@ -137,7 +137,7 @@ const InstructionsModal = ({ toggleInstructionsVisible }) => {
         instructionsPrompt.current.style.height = height + 'px'
     }, [ width ])
     return (<div className={`bg-[rgba(0,0,0,.75)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-[999]`} ref={ instructionsPrompt }>
-        <div className={`w-full h-full bg-black  flex items-center justify-center flex-col p-8 overflow-y-scroll md:overflow-y-auto`}>
+        <div className={`w-full h-full bg-black  flex items-center justify-start md:justify-center flex-col p-8 overflow-y-scroll md:overflow-y-auto`}>
             <div className="absolute top-4 right-4 py-1 px-1 hover:cursor-pointer text-white" onClick={ toggleInstructionsVisible }>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-6 h-6">
                     <path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
