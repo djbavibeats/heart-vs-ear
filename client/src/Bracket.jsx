@@ -31,6 +31,11 @@ const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBrac
     }, [ width ])
     return (<div className={`bg-[rgba(0,0,0,.75)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-[999]`} ref={ savePrompt }>
         <div className={`w-full h-full px-2 md:w-full md:h-full bg-black flex items-center justify-start md:justify-center flex-col overflow-y-scroll md:overflow-y-auto`}>
+            <div className="absolute top-4 right-4 py-1 px-1 hover:cursor-pointer text-white" onClick={ toggleSavePrompt }>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-6 h-6">
+                    <path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+                </svg>
+            </div>
             { saveStatus === "unsaved" 
                 && <>
                 <p className="text-center max-w-[90%]
@@ -95,7 +100,7 @@ const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBrac
                             <path fill="#ffffff" d="M352 224c53 0 96-43 96-96s-43-96-96-96s-96 43-96 96c0 4 .2 8 .7 11.9l-94.1 47C145.4 170.2 121.9 160 96 160c-53 0-96 43-96 96s43 96 96 96c25.9 0 49.4-10.2 66.6-26.9l94.1 47c-.5 3.9-.7 7.8-.7 11.9c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-25.9 0-49.4 10.2-66.6 26.9l-94.1-47c.5-3.9 .7-7.8 .7-11.9s-.2-8-.7-11.9l94.1-47C302.6 213.8 326.1 224 352 224z"/>
                         </svg>
                     </div>
-                    <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
+                    <div className="min-w-52 flex flex-row items-center justify-center mb-16 med:mb-0 gap-x-2 
                         bg-transparent text-white font-bold border-2
                         px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
                         onClick={ toggleSavePrompt }
