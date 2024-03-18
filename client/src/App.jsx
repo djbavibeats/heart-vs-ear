@@ -36,7 +36,6 @@ function App() {
             .then(data => {
               if (data.user) {
                 // This runs when a user is returning
-                console.log(data.user)
                 setUser(data.user)
               } else {
                 const newUser = {
@@ -53,7 +52,6 @@ function App() {
                   body: JSON.stringify(newUser)
                 }).then(resp => resp.json())
                 .then(data => {
-                  console.log("brand new user!", data)
                   let newuser = data.user
                   // This is runs when a user first signs up
                   fetch(`${url}/spotify/follow-i-prevail`, {
@@ -68,7 +66,6 @@ function App() {
                   })
                   .then(resp => resp.json())
                   .then(data => {
-                    console.log("user now follows i prevail", data.user)
                     setUser(newuser)
                   })
                 })
@@ -87,7 +84,6 @@ function App() {
       fetch(`${url}/spotify/refresh?refresh_token=${refresh_token}`)
         .then(resp => resp.json())
         .then(data => {
-          console.log('current user with a cookie')
           setAccessToken(data.data.access_token)
           setTokenType(data.data.token_type)
         })
@@ -99,7 +95,6 @@ function App() {
           .then(resp => resp.json())
           .then(data => {
             if (data.status === 200) {
-              console.log('new user with a code')
               localStorage.setItem('hve_spotify_refresh', data.data.refresh_token)
               setAccessToken(data.data.access_token)
               setTokenType(data.data.token_type)
@@ -113,14 +108,13 @@ function App() {
   }, [])
 
   const spotifyAuth = () => {
-    console.log('letsa go')
     window.open(`${url}/spotify/login`, '_self')
   }
 
   async function share() {
     const shareData = {
         title: "I Prevail - Bracket-ology",
-        text: "They can try to copy but they can’t compete..",
+        text: "They can try to copy but they can’t compete...",
         url: "https://bracket.iprevailband.com",
     }
 
@@ -130,6 +124,7 @@ function App() {
             console.log("Shared successfully")
         } catch (err) {
             console.log(`Error: ${err}`)
+            alert("Error")
         }
      } else {
         // do something else like copying the data to the clipboard
@@ -169,7 +164,7 @@ function openMenu() {
       </div>
       { !user &&
         <div className="flex items-center justify-start flex-col gap-8 max-w-screen w-screen h-full md:mt-[25px]">
-          <div className="w-[325px] md:w-[700px] flex items-center flex-col justify-start gap-4">
+          <div className="w-[90%] sm:[500px] md:w-[700px] flex items-center flex-col justify-start gap-4">
             <p className="text-center
                 bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
                 text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] -mr-[18px]

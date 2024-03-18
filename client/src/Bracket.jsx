@@ -8,7 +8,7 @@ import { autofill } from './utils/autofill'
 let url = 'https://heart-vs-ear.onrender.com'
 // let url = 'http://localhost:5000'
 
-const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBracket }) => {
+const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBracket, bracketShared, shareBracketModalFunction, loadingShareImageState }) => {
     const [ width, setWidth ] = useState(window.innerWidth)
     const [ height, setHeight ] = useState(window.innerHeight)
     const savePrompt = useRef()
@@ -26,12 +26,11 @@ const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBrac
     }, [])
 
     useEffect(() => {
-        console.log(width)
         savePrompt.current.style.width = width + 'px'
         savePrompt.current.style.height = height + 'px'
     }, [ width ])
     return (<div className={`bg-[rgba(0,0,0,.75)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-[999]`} ref={ savePrompt }>
-        <div className={`w-full h-full p-2 md:w-[65%] md:h-[65%] bg-black md:border md:rounded-xl flex items-center justify-center flex-col`}>
+        <div className={`w-full h-full px-2 md:w-full md:h-full bg-black flex items-center justify-center flex-col`}>
             { saveStatus === "unsaved" 
                 && <>
                 <p className="text-center max-w-[90%]
@@ -70,17 +69,31 @@ const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBrac
                     bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
                     text-[39px] md:text-[51px] font-ultra-condensed tracking-[4px] md:tracking-[14px] mb-4
                 ">YOU'RE IN!</p>
-                <p className="text-center mb-2">
+                <p className="text-center mb-2 max-w-[75%] md:max-w-none">
                 Check back when each round closes to see how you did!
-                <br/><br/>
                 </p>
-                <div className="flex gap-4">
+                <div className="w-[350px] mb-4 flex justify-center items-center">
+                    {
+                        loadingShareImageState === "loading" && 
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="my-8 animate-spin h-8 w-8">
+                            <path fill="#ffffff" d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/>
+                        </svg>
+                    }
+                    {/* {
+                        loadingShareImageState === "loaded" &&
+                    } */}
+                    <div id="bracket-share-image"></div>
+                </div>
+                <div className="flex gap-4 flex-col md:flex-row">
                     <div className="min-w-52 flex flex-row items-center justify-center gap-x-2
                         bg-transparent text-white font-bold border-2
                         px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all"
-                        onClick={ shareBracket }
+                        onClick={ shareBracketModalFunction }
                     >
                         <div className="mt-[1.75px]"><p className="text-sm">SHARE BRACKET</p></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 448 512">
+                            <path fill="#ffffff" d="M352 224c53 0 96-43 96-96s-43-96-96-96s-96 43-96 96c0 4 .2 8 .7 11.9l-94.1 47C145.4 170.2 121.9 160 96 160c-53 0-96 43-96 96s43 96 96 96c25.9 0 49.4-10.2 66.6-26.9l94.1 47c-.5 3.9-.7 7.8-.7 11.9c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-25.9 0-49.4 10.2-66.6 26.9l-94.1-47c.5-3.9 .7-7.8 .7-11.9s-.2-8-.7-11.9l94.1-47C302.6 213.8 326.1 224 352 224z"/>
+                        </svg>
                     </div>
                     <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
                         bg-transparent text-white font-bold border-2
@@ -88,13 +101,16 @@ const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBrac
                         onClick={ toggleSavePrompt }
                     >
                         <div className="mt-[1.75px]"><p className="text-sm">VIEW BRACKET</p></div> 
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
-                            <path fill="#ffffff" d="M367.2 412.5L99.5 144.8C77.1 176.1 64 214.5 64 256c0 106 86 192 192 192c41.5 0 79.9-13.1 111.2-35.5zm45.3-45.3C434.9 335.9 448 297.5 448 256c0-106-86-192-192-192c-41.5 0-79.9 13.1-111.2 35.5L412.5 367.2zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" className="w-4 h-4">
+                            <path fill="#ffffff" d="M400 0H176c-26.5 0-48.1 21.8-47.1 48.2c.2 5.3 .4 10.6 .7 15.8H24C10.7 64 0 74.7 0 88c0 92.6 33.5 157 78.5 200.7c44.3 43.1 98.3 64.8 138.1 75.8c23.4 6.5 39.4 26 39.4 45.6c0 20.9-17 37.9-37.9 37.9H192c-17.7 0-32 14.3-32 32s14.3 32 32 32H384c17.7 0 32-14.3 32-32s-14.3-32-32-32H357.9C337 448 320 431 320 410.1c0-19.6 15.9-39.2 39.4-45.6c39.9-11 93.9-32.7 138.2-75.8C542.5 245 576 180.6 576 88c0-13.3-10.7-24-24-24H446.4c.3-5.2 .5-10.4 .7-15.8C448.1 21.8 426.5 0 400 0zM48.9 112h84.4c9.1 90.1 29.2 150.3 51.9 190.6c-24.9-11-50.8-26.5-73.2-48.3c-32-31.1-58-76-63-142.3zM464.1 254.3c-22.4 21.8-48.3 37.3-73.2 48.3c22.7-40.3 42.8-100.5 51.9-190.6h84.4c-5.1 66.3-31.1 111.2-63 142.3z"/>
                         </svg>
                     </div>
                 </div>
                 </>
             }
+            
+            <>
+            </>
         </div>
     </div>)
 }
@@ -117,12 +133,11 @@ const InstructionsModal = ({ toggleInstructionsVisible }) => {
     }, [])
 
     useEffect(() => {
-        console.log(width)
         instructionsPrompt.current.style.width = width + 'px'
         instructionsPrompt.current.style.height = height + 'px'
     }, [ width ])
     return (<div className={`bg-[rgba(0,0,0,.75)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-[999]`} ref={ instructionsPrompt }>
-        <div className={`w-full h-full md:w-[65%] md:h-[65%] bg-black md:border md:rounded-xl flex items-center justify-start flex-col p-8 overflow-y-scroll md:overflow-y-auto`}>
+        <div className={`w-full h-full bg-black  flex items-center justify-center flex-col p-8 overflow-y-scroll md:overflow-y-auto`}>
             <div className="absolute top-4 right-4 py-1 px-1 hover:cursor-pointer text-white" onClick={ toggleInstructionsVisible }>
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-6 h-6">
                     <path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
@@ -214,6 +229,7 @@ const OrientationPrompt = () => {
 export default function Bracket({ accessToken , tokenType, user, setUser }) {    
     const [ participantsReady, setParticipantsReady ] = useState(false)
     const [ instructionsVisible, setInstructionsVisible ] = useState(false)
+    const [ bracketShared, setBracketShared ] = useState(false)
     const [ participants, setParticipants ] = useState({
         totalParticipants: 64,
         participantsPerDivision: 16,
@@ -581,6 +597,11 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
         setSavePromptVisible(!savePromptVisible)
     }
 
+    const toggleSharePrompt = () => {
+        setSaveStatus('saved')
+        shareBracket()
+        setSavePromptVisible(!savePromptVisible)
+    }
     const handleSaveBracket = () => {
         let saveBracket = bracket
         setSubmitting(true)
@@ -595,13 +616,12 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
           body: JSON.stringify(saveBracket)
         }).then(resp => resp.json())
         .then(data => {
-            console.log(user)
             fetch(`${url}/database/users/get?spotify_id=${user.spotifyId}`)
             .then(resp => resp.json())
             .then(data => { 
-                console.log(data)
                 setUser(data.user)
                 setSubmitting(false)
+                shareBracket()
                 setSaveStatus("saved")
             })
         })
@@ -833,7 +853,6 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             var y = imageObj.y && canvas.height ? (imageObj.y >=0 ? imageObj.y : canvas.height + imageObj.y) : 0
             var image = new Image()
             image.onload = function() {
-                console.log(this)
                 // canvas.getContext('2d').fillStyle = "black"
                 // canvas.getContext('2d').fillRect(0, 0, canvas.width, canvas.height)
 
@@ -892,11 +911,27 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
         }
         return new File([u8array], filename, { type: mimeType })
     }
+    
+    const [ loadingShareImageState, setLoadingShareImageState ] = useState("loading")
+    const shareBracketModalFunction = () => {
+        var toShare = new Image
+        toShare.src = document.getElementById('bracket-share-image').firstChild.src
+        toShare.crossOrigin = "anonymous"
+        const file = [ dataURLtoFile(toShare.src, `BRACKETOLOGY.png`) ]
+
+        // share("I Prevail Bracket-ology", file)
+
+        const data = {
+        	title: "I Prevail - Bracket-ology",
+        	text: "They can try to copy but they can’t compete...",
+        	url: "https://bracket.iprevailband.com",
+        	files: file
+    	}
+        share("I PREVAIL", file)
+    }
 
     const shareBracket = () => {
-        console.log("sharing!", bracket)
-        console.log("Track Name: " + bracket.champion.name)
-        console.log("Album Art Src: " + bracket.champion.album.images.url)
+        setLoadingShareImageState("loading")
 
         var shareimg = new Image()
         shareimg.style.border = "2px solid blue"
@@ -919,7 +954,11 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                 test.crossOrigin = "anonymous"
 
                 const file = [ dataURLtoFile(test.src, `BRACKETOLOGY.png`) ]
-                share("I Prevail Bracket-ology", file)
+                // console.log('sharing', test)
+                setBracketShared(true)
+                setLoadingShareImageState("loaded")
+                document.getElementById('bracket-share-image').appendChild(test)
+                // share("I Prevail Bracket-ology", file)
                
                 // var w = window.open("")
                 // w.document.write(test.outerHTML)
@@ -949,7 +988,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
 
     return (<>
     { savePromptVisible &&
-        <SavePrompt toggleSavePrompt={ toggleSavePrompt } handleSaveBracket={ handleSaveBracket } saveStatus={ saveStatus } shareBracket={ shareBracket } />
+        <SavePrompt toggleSavePrompt={ toggleSavePrompt } handleSaveBracket={ handleSaveBracket } saveStatus={ saveStatus } shareBracket={ shareBracket } shareBracketModalFunction={ shareBracketModalFunction }  loadingShareImageState={ loadingShareImageState } />
     }
     {
         instructionsVisible &&
@@ -958,13 +997,17 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
     <div>
     { submitting &&
         <div className="absolute z-[999] h-full w-full bg-black top-0 right-0 left-0 bottom-0 flex items-center justify-center">
-            <p>Submitting your bracket...</p>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="my-8 animate-spin h-8 w-8">
+                <path fill="#ffffff" d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/>
+            </svg>
         </div>
     }
     {
         !bracketReady &&
         <div className="absolute z-0 h-full w-full bg-black top-0 right-0 left-0 bottom-0 flex items-center justify-center">
-            Loading...
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" className="my-8 animate-spin h-8 w-8">
+                <path fill="#ffffff" d="M304 48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zm0 416a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM48 304a48 48 0 1 0 0-96 48 48 0 1 0 0 96zm464-48a48 48 0 1 0 -96 0 48 48 0 1 0 96 0zM142.9 437A48 48 0 1 0 75 369.1 48 48 0 1 0 142.9 437zm0-294.2A48 48 0 1 0 75 75a48 48 0 1 0 67.9 67.9zM369.1 437A48 48 0 1 0 437 369.1 48 48 0 1 0 369.1 437z"/>
+            </svg>
         </div>
     }
     { bracketReady &&
@@ -974,7 +1017,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
         <div className="flex flex-col gap-4 items-center bracket-container text-white">
             { user.hasBracket === false
                 &&
-                <div className="max-w-[28rem] min-h-[112px] items-center flex-wrap justify-center flex gap-4 z-10">
+                <div className="z-20 max-w-[28rem] min-h-[112px] items-center flex-wrap justify-center flex gap-4">
                     <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
                         bg-transparent text-white font-bold border-2
                         px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
@@ -1017,17 +1060,21 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             }
             {
                 user.hasBracket === true &&
-                <div className="min-h-[112px] max-w-[28rem] items-center flex-wrap justify-center flex gap-4 z-10">
+                <div className="min-h-[112px] max-w-[28rem] items-center flex-wrap justify-center flex gap-4 z-20">
                     <div className="min-w-52 flex flex-row items-center justify-center gap-x-2
                         bg-transparent text-white font-bold border-2
                         px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all"
-                        onClick={ shareBracket }
+                        // onClick={ shareBracket }
+                        onClick={ toggleSharePrompt }
                     >
                         <div className="mt-[1.75px]"><p className="text-sm">SHARE BRACKET</p></div>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 448 512">
+                            <path fill="#ffffff" d="M352 224c53 0 96-43 96-96s-43-96-96-96s-96 43-96 96c0 4 .2 8 .7 11.9l-94.1 47C145.4 170.2 121.9 160 96 160c-53 0-96 43-96 96s43 96 96 96c25.9 0 49.4-10.2 66.6-26.9l94.1 47c-.5 3.9-.7 7.8-.7 11.9c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-25.9 0-49.4 10.2-66.6 26.9l-94.1-47c.5-3.9 .7-7.8 .7-11.9s-.2-8-.7-11.9l94.1-47C302.6 213.8 326.1 224 352 224z"/>
+                        </svg>
                     </div>
                 </div>
             }
-            <div className="flex flex-col items-center z-10">
+            <div className="flex flex-col items-center z-20">
                 <div className='flex items-center'>
                     <p className="text-center -mr-[10px]
                         bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
@@ -1050,9 +1097,9 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
 
             </div>
         </div>
-        <div className="grid grid-cols-4 gap-1 md:gap-8 min-w-[1400px] p-2 z-1 relative -mt-[300px] md:-mt-[335px] text-white">
+        <div className="grid grid-cols-4 gap-1 md:gap-8 min-w-[1400px] p-2 z-10 relative -mt-[300px] md:-mt-[335px] text-white">
             {/* Division 1 */}
-            <div className={ `flex flex-col gap-5 col-span-2 md:col-span-2 h-full w-full` }>
+            <div className={ `z-10 flex flex-col gap-5 col-span-2 md:col-span-2 h-full w-full` }>
                 <div key={ 0 } className={`division-${ 0 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 0 === 2 || 0 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[0].map((round, roundindex) => {
@@ -1099,7 +1146,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             </div>
 
             {/* Division 3 */}
-            <div className={ `flex flex-col gap-5 col-span-2 md:col-span-2 h-full w-full` }>
+            <div className={ `z-10 flex flex-col gap-5 col-span-2 md:col-span-2 h-full w-full` }>
                 <div key={ 2 } className={`division-${ 2 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 2 === 2 || 2 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[2].map((round, roundindex) => {
@@ -1145,11 +1192,11 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             </div>
                         
             {/* Desktop Playoffs */}
-            <div className={ `flex flex-col col-span-4 items-center justify-center z-50` }>
+            <div className={ `flex flex-col col-span-4 items-center justify-center` }>
                 <div className={ `flex flex-col w-full -mb-[10%] md:-mb-[10%] -mt-[30%] md:-mt-[17.5%] max-w-[612px]` }>
                     <div className={ `flex justify-center mb-8` }>
                         { bracket.champion ? <>
-                            <div className={`border max-w-[250px] min-h-[360px] flex flex-1 flex-col items-center justify-center text-sm 
+                            <div className={`z-20 border max-w-[250px] min-h-[360px] flex flex-1 flex-col items-center justify-center text-sm 
                                 
                                 ${ bracket.champion ? "bg-ip-blue drop-shadow-glow" 
                                 : "bg-ip-gray-transparent"
@@ -1167,7 +1214,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                                 {/* <img className="object-contain h-[250px]" src={ bracket.champion.album.images.url } /> */}
                             </div>
                         </>
-                        : <div className={`border max-w-[250px] min-h-[360px] flex flex-1 flex-col items-center justify-center text-sm 
+                        : <div className={`z-20 border max-w-[250px] min-h-[360px] flex flex-1 flex-col items-center justify-center text-sm 
                         bg-ip-gray-transparent
                         hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue
                         `}>
@@ -1224,7 +1271,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                     </div>
                     {/* Semifinals */}
                     <div className={ `grid grid-cols-8 gap-2 w-full items-center` }>
-                        <div className="col-span-4">
+                        <div className="col-span-4 z-20">
                             <div className={ `flex justify-center mb-2` }>
                                 <p className="text-2xl text-center -mr-[10px] font-ultra-condensed w-full">Final Four</p>
                             </div>
@@ -1261,14 +1308,14 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                                         : <div className="h-[50px] w-[50px]"></div>
                                         : <div className="h-[50px] w-[50px]"></div>
                                     }
-                                    { bracket.semifinals[0].a 
+                                    { bracket.semifinals[0].b
                                         ? renderText( bracket.semifinals[0].b.name )
                                         : ""
                                     }
                                 </div>
                             </div>
                         </div>
-                        <div className="col-span-4" dir="rtl">
+                        <div className="col-span-4 z-20" dir="rtl">
                             <div className={ `flex justify-center mb-2` }>
                                 <p className="text-2xl text-center -mr-[10px] font-ultra-condensed w-full">Final Four</p>
                             </div>
@@ -1317,7 +1364,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             </div>
 
             {/* Division 2 */}
-            <div className={ `flex flex-col gap-5 col-span-2 md:col-span-2 h-full` }>
+            <div className={ `z-10 flex flex-col gap-5 col-span-2 md:col-span-2 h-full` }>
                 <div key={ 1 } className={`division-${ 1 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 1 === 2 || 1 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[1].map((round, roundindex) => {
@@ -1330,7 +1377,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                                     return (<div key={ matchindex } className={`division-${ 1 } round-${ roundindex } match-${ matchindex } text-sm`}>
                                         { roundindex === 2 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Sweet 16</div> : "" }
                                         { roundindex === 3 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Elite 8</div> : "" }
-                                        <div className={`relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" }s flex flex-row items-start border border-b-0 min-h-10 ${ 
+                                        <div className={`relative ${ user.hasBracket === false ? "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" : "" } flex flex-row items-start border border-b-0 min-h-10 ${ 
                                             match.pick ?
                                             match.pick !== "undecided" ? 
                                                 match.pick.name === match.a.name ? "bg-ip-blue" : "bg-ip-gray-transparent"
@@ -1363,7 +1410,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             </div>
 
             {/* Division 4 */}
-            <div className={ `flex flex-col gap-5 col-span-2 md:col-span-2 h-full` }>
+            <div className={ `z-10 flex flex-col gap-5 col-span-2 md:col-span-2 h-full` }>
                 <div key={ 3 } className={`division-${ 3 } h-full flex flex-col gap-2` }>
                     <div className="grid grid-cols-4 gap-2 grid-flow-col-dense h-full" dir={ `${ 3 === 2 || 3 === 3 ? 'rtl' : 'ltr' }` }>
                         { bracket.divisions[3].map((round, roundindex) => {
