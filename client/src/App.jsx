@@ -120,7 +120,7 @@ function App() {
   async function share() {
     const shareData = {
         title: "I Prevail - Bracket-ology",
-        text: "Sixty-four songs enter, only one will remain.",
+        text: "They can try to copy but they can’t compete..",
         url: "https://bracket.iprevailband.com",
     }
 
