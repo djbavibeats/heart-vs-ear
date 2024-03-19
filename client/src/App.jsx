@@ -5,8 +5,8 @@ import namelogo from './assets/name-logo.png'
 import symbolLogo from './assets/symbol-logo.png'
 import spotifyLogo from './assets/Spotify_Logo_RGB_White.png'
 
-// let url = 'https://heart-vs-ear.onrender.com'
-let url = 'http://localhost:5000'
+let url = 'https://heart-vs-ear.onrender.com'
+// let url = 'http://localhost:5000'
 // just a test comment
 function App() {
   const [ user, setUser ] = useState(null)
