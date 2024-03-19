@@ -31,11 +31,9 @@ const autofill = (bracket) => {
                     })
                 } else if (roundindex === 3) {
                     round.matches.map(match => {
-                        console.log(match)
                         switch (getRandomInt(2)) {
                             case (0):
                                 match.pick = match.a
-                                console.log('this match needs to be assigned to the semifinals', match, divisionindex)
                                 switch(divisionindex) {
                                     case (0):
                                         bracket.semifinals[0].a = match.a
@@ -58,7 +56,6 @@ const autofill = (bracket) => {
                                 break
                             case (1):
                                 match.pick = match.b
-                                console.log('this match needs to be assigned to the semifinals', match, divisionindex)
                                 switch(divisionindex) {
                                     case (0):
                                         bracket.semifinals[0].a = match.b

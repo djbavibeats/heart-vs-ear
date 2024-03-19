@@ -5,8 +5,8 @@ import symbolLogo from './assets/symbol-logo.png'
 
 import { autofill } from './utils/autofill'
 
-let url = 'https://heart-vs-ear.onrender.com'
-// let url = 'http://localhost:5000'
+// let url = 'https://heart-vs-ear.onrender.com'
+let url = 'http://localhost:5000'
 
 const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBracket, bracketShared, shareBracketModalFunction, loadingShareImageState }) => {
     const [ width, setWidth ] = useState(window.innerWidth)
@@ -610,6 +610,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
     const handleSaveBracket = () => {
         let saveBracket = bracket
         setSubmitting(true)
+    
         /*
         THIS STUFF HAS TO DO WITH BRACKET SAVING
         */
@@ -623,40 +624,41 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
         .then(data => {
             fetch(`${url}/database/users/get?spotify_id=${user.spotifyId}`)
             .then(resp => resp.json())
-            .then(data => { 
+            .then(data => {   
                 setUser(data.user)
                 setSubmitting(false)
                 shareBracket()
                 setSaveStatus("saved")
+
+                /*
+                THIS STUFF ALL HAS TO DO WITH PLAYLIST SAVING
+                */
+                let winnerURIs = []
+                saveBracket.divisions.map(round => {
+                    for (let i = 0; i < round.length; i++) {
+                        if (round[i].number === 0) {
+                            round[i].matches.map(match => {
+                                console.log(match.pick.uri)
+                                winnerURIs.push(match.pick.uri)
+                                
+                            })
+                        }
+                    }
+                })
+                fetch(`${url}/spotify/make-bracket-playlist`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        spotifyId: user.spotifyId,
+                        spotifyRefreshToken: user.spotifyRefreshToken,
+                        winnerURIs: winnerURIs
+                    })
+                })   
             })
         })
 
-        /*
-        THIS STUFF ALL HAS TO DO WITH PLAYLIST SAVING
-        let winnerURIs = []
-        saveBracket.divisions.map(round => {
-            for (let i = 0; i < round.length; i++) {
-                if (round[i].number === 0) {
-                    round[i].matches.map(match => {
-                        console.log(match.pick.uri)
-                        winnerURIs.push(match.pick.uri)
-                        
-                    })
-                }
-            }
-        })
-        fetch(`${url}/spotify/make-bracket-playlist`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                spotifyId: user.spotifyId,
-                spotifyRefreshToken: user.spotifyRefreshToken,
-                winnerURIs: winnerURIs
-            })
-        })
-        */
     }
 
     useEffect(() => {
@@ -691,7 +693,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             document.querySelector('html').style.minWidth = '1400px'
             document.querySelector('body').style.minWidth = '1400px'
         } else {
-            console.log('not yet')
+            console.log('loading bracket...')
         }
     }, [ bracketReady ])
 
@@ -1045,14 +1047,17 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                         </svg>
                     </div>
                     
-                    <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 bg-gradient-to-t from-cyan-400 to-ip-blue text-black font-bold drop-shadow-glow-sm px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
-                        onClick={ toggleSavePrompt }
-                    >
-                        <div className="mt-[1.75px]"><p className="text-sm">SAVE BRACKET</p></div> 
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
-                            <path d="M48 96V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V170.5c0-4.2-1.7-8.3-4.7-11.3l33.9-33.9c12 12 18.7 28.3 18.7 45.3V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H309.5c17 0 33.3 6.7 45.3 18.7l74.5 74.5-33.9 33.9L320.8 84.7c-.3-.3-.5-.5-.8-.8V184c0 13.3-10.7 24-24 24H104c-13.3 0-24-10.7-24-24V80H64c-8.8 0-16 7.2-16 16zm80-16v80H272V80H128zm32 240a64 64 0 1 1 128 0 64 64 0 1 1 -128 0z"/>  
-                        </svg>
-                    </div>
+                    { 
+                        bracket.champion !== "" &&
+                            <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 bg-gradient-to-t from-cyan-400 to-ip-blue text-black font-bold drop-shadow-glow-sm px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
+                                onClick={ toggleSavePrompt }
+                            >
+                                <div className="mt-[1.75px]"><p className="text-sm">SAVE BRACKET</p></div> 
+                                <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
+                                    <path d="M48 96V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V170.5c0-4.2-1.7-8.3-4.7-11.3l33.9-33.9c12 12 18.7 28.3 18.7 45.3V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H309.5c17 0 33.3 6.7 45.3 18.7l74.5 74.5-33.9 33.9L320.8 84.7c-.3-.3-.5-.5-.8-.8V184c0 13.3-10.7 24-24 24H104c-13.3 0-24-10.7-24-24V80H64c-8.8 0-16 7.2-16 16zm80-16v80H272V80H128zm32 240a64 64 0 1 1 128 0 64 64 0 1 1 -128 0z"/>  
+                                </svg>
+                            </div>
+                    }
 
                     {/* <div className="min-w-52 flex flex-row items-center justify-center gap-x-2
                         bg-transparent text-white font-bold border-2

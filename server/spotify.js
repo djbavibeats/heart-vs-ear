@@ -178,6 +178,10 @@ router.get('/get-bracket-tracks', (req, res) => {
 })
 
 router.post('/make-bracket-playlist', (req, res) => {
+    // console.log(req.body.winnerURIs.slice(0, 9).join(','))
+    let first = req.body.winnerURIs.slice(0,1).join(',')
+    let firstEight = req.body.winnerURIs.slice(0, 8).join(',')
+    let uris = req.body.winnerURIs.join(',')
     axios(`${process.env.ROOT_URL}/spotify/refresh?refresh_token=${req.body.spotifyRefreshToken}`)
         .then(response => {
             const access_token = response.data.data.access_token
@@ -191,7 +195,7 @@ router.post('/make-bracket-playlist', (req, res) => {
                 },
                 data: {
                     "name": "I Prevail - Bracket-ology Playlist",
-                    "description": "Sixty-four songs enter, only one will remain. Your Round 1 picks.",
+                    "description": "There can only be one champion… “they can try to copy but they can’t compete.” Your Round 1 picks.",
                     "public": true
                 }
             })
@@ -199,15 +203,16 @@ router.post('/make-bracket-playlist', (req, res) => {
                 let playlistId = response.data.id
                 axios({
                     method: 'post',
-                    url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+                    url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks?uris=${uris}`,
                     headers: {
                         Authorization: `${token_type} ${access_token}`
-                    },
-                    data: {
-                        "uris": req.body.winnerURIs.join(',')
                     }
+                }).then(resp => {
+                    res.send({
+                        status: 200,
+                        message: 'success'
+                    })
                 })
-                console.log(response)
             })
         })
 })
