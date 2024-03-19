@@ -5,8 +5,8 @@ import symbolLogo from './assets/symbol-logo.png'
 
 import { autofill } from './utils/autofill'
 
-// let url = 'https://heart-vs-ear.onrender.com'
-let url = 'http://localhost:5000'
+let url = 'https://heart-vs-ear.onrender.com'
+// let url = 'http://localhost:5000'
 
 const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBracket, bracketShared, shareBracketModalFunction, loadingShareImageState }) => {
     const [ width, setWidth ] = useState(window.innerWidth)
