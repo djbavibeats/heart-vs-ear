@@ -114,7 +114,7 @@ function App() {
   async function share() {
     const shareData = {
         title: "I Prevail - Bracket-ology",
-        text: "They can try to copy but they can’t compete...",
+        text: "I just submitted my #iprevailbracket!",
         url: "https://bracket.iprevailband.com",
     }
 
