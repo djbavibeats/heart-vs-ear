@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 import Bracket from './Bracket'
 import namelogo from './assets/name-logo.png'
@@ -8,6 +8,101 @@ import spotifyLogo from './assets/Spotify_Logo_RGB_White.png'
 let url = 'https://heart-vs-ear.onrender.com'
 // let url = 'http://localhost:5000'
 // just a test comment
+
+
+const TermsModal = ({ toggleTermsModalVisible }) => {
+  const [ width, setWidth ] = useState(window.innerWidth)
+  const [ height, setHeight ] = useState(window.innerHeight)
+  const termsModal = useRef()
+
+  const handleWindowSizeChange = () => {
+      setWidth(window.innerWidth)
+      setHeight(window.innerHeight)
+  }
+
+  useEffect(() => {
+      window.addEventListener('resize', handleWindowSizeChange)
+      return () => {
+          window.removeEventListener('resize', handleWindowSizeChange)
+      }
+  }, [])
+
+  useEffect(() => {
+      termsModal.current.style.width = width + 'px'
+      termsModal.current.style.height = height + 'px'
+  }, [ width ])
+  return (<div className={`bg-[rgba(0,0,0,.75)] fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center z-[999]`} ref={ termsModal }>
+      <div className={`w-full h-full px-2 md:w-full md:h-full bg-black flex items-center justify-start flex-col overflow-y-scroll md:overflow-y-auto`}>
+        <div className="absolute top-4 right-4 py-1 px-1 hover:cursor-pointer text-white" onClick={ toggleTermsModalVisible }>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" className="w-6 h-6">
+                <path fill="#ffffff" d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z"/>
+            </svg>
+        </div>
+        <div className="text-white px-8 pt-8 pb-16">
+        I PREVAIL “BRACKET-OLOGY” Contest Official Rules
+        <br/><br/>
+        NO PURCHASE NECESSARY. PURCHASE WILL NOT IMPROVE CHANCES OF WINNING. PARTICIPATION DOES NOT REQUIRE A SPOTIFY PREMIUM MEMBERSHIP.
+        <br/><br/>
+        ELIGIBILITY: I PREVAIL “BRACKET-OLOGY” Contest (“Contest”) begins on Wednesday, March 20, 2024 Eastern time, you must submit Your Bracket (as defined herein) by Monday, March 25th at 11:59pm Eastern time in order to participate, and the Contest will end on Monday, April 8, 2024 at 11:59pm Eastern time. The Contest is open to legal residents of the United States, excluding Rhode Island, who are 18 years of age or older at time of entry. Void where prohibited. You are not eligible to enter the contest if you are an employee of Concord Music Group, Inc. (“Sponsor,” “we,” us,” “our”) or its respective parent companies, subsidiaries, affiliates, advertising agencies, public relations agencies, prize suppliers, including any vendors providing services in connection with this Contest (collectively, the “Sponsor Affiliates”), or an employee, agent, director, or officer (including members of their immediate family – i.e., spouse, mother, father, in-laws, grandmother, grandfather, brother, sister, children and grandchildren – or same household) of Sponsor or any Sponsor Affiliate.
+        <br/><br/>
+        TO ENTER: To enter, log in to your Spotify account using the following link provided below: 
+        <br/><br/>
+        <a href="https://bracket.iprevailband.com">https://bracket.iprevailband.com/</a>
+        <br/><br/>
+        Once logged in, you will be provided with a bracket template consisting of 64 of I PREVAIL’s top performing sound recordings. The portal will guide you through completing your bracket (“Your Bracket”); you may also choose the “randomized bracket” selection provided in the portal if you so please. YOU MUST SUBMIT YOUR BRACKET BEFORE MONDAY, MARCH 25, AT 11:59PM EASTERN TIME TO BE ELIGIBLE TO PARTICIPATE.
+        <br/><br/>
+        From TUESDAY, MARCH 26 at 12:00AM EASTERN STANDARD TIME to MONDAY, APRIL 8 at 11:59PM EASTERN STANDARD TIME (the “First Round” and each “round” hereafter shall collectively be referred to as a “Round” or the “Rounds”) analytics populating the number of times each song was played solely within the time allotted (“listenship”) for the First Round will be logged to select the winner of each pairing of songs on the bracket template.
+        <br/><br/>
+        From TUESDAY, MARCH 26 at 12:00AM EASTERN STANDARD TIME to WEDNESDAY, MARCH 27 at 11:59PM EASTERN STANDARD TIME (the “Second Round”), the prevailing thirty-two (32) songs on the bracket will be selected solely from the top-performing listenship recorded during the Second Round. 
+        <br/><br/>
+        From THURSDAY, MARCH 28 at 12:00AM EASTERN STANDARD TIME to FRIDAY, MARCH 29 at 11:59PM EASTERN STANDARD TIME (the “Third Round”), the prevailing sixteen (16) songs on the bracket will be selected solely from the top-performing listenship recorded during the Third Round. 
+        <br/><br/>
+        From SATURDAY, MARCH 30 at 12:00AM EASTERN STANDARD TIME to MONDAY, APRIL 1 at 11:59PM EASTERN STANDARD TIME (the “Fourth Round”), the prevailing eight (8) songs on the bracket will be selected solely from the top-performing listenship recorded during the Fourth Round. 
+        <br/><br/>
+        From TUESDAY, APRIL 2 at 12:00AM EASTERN STANDARD TIME to WEDNESDAY, APRIL 3 at 11:59PM EASTERN STANDARD TIME (the “Fifth Round”), the prevailing four (4) songs on the bracket will be selected solely from the top-performing listenship recorded during the Fifth Round. 
+        <br/><br/>
+        From THURSDAY, APRIL 4 at 12:00AM EASTERN STANDARD TIME to FRIDAY, APRIL 5 at 11:59PM EASTERN STANDARD TIME (the “Sixth Round”), the prevailing two (2) songs on the bracket will be selected solely from the top-performing listenship recorded during the Sixth Round. 
+        <br/><br/>
+        From SATURDAY, APRIL 6 at 12:00AM EASTERN STANDARD TIME to MONDAY, APRIL 8 at 11:59PM EASTERN STANDRAD TIME (the “Championship Round”), the prevailing song on the bracket will be selected solely from the top-performing listenship recorded during the Championship Round. 
+        <br/><br/>
+        For the sake of clarity, listenship will not compound from one Round to the next, and listenship accumulated prior to the date of the Contest is void for the purposes of the Contest.
+        Once you have formally submitted Your Bracket on the portal link provided, please share Your Bracket on your preferred social media platform and use the following hashtag on your post:  “#iprevailbracket” (the “Social Post”).
+        <br/><br/>
+        You may only submit a bracket to the Contest portal once. 
+        <br/><br/>
+        GRANT OF RIGHTS: By submitting Your Bracket to us and selecting “agree” on the landing page following your log in at the link provided in the Contest instructions, you give the Sponsor permission to view your Spotify account data (i.e. your email, your Spotify subscription, account country, explicit contest filter settings, your name, your profile picture, your Spotify followers, and your public playlists), view your Spotify account activity (i.e. what you’ve saved in your library and who you follow), and you give Sponsor permission to take actions in Spotify on your behalf (i.e. add and remove items in your library, created/edit/follow private playlists, and manage who you follow) (“Your Data”). You may remove this access at any time by opting out of data sharing in your Spotify account settings. For the avoidance of doubt, Sponsor will not store Your Data at any time. 
+        <br/><br/>
+        JUDGING: The participant who has selected the most accurate bracket will be awarded the grand prize outlined below. A participant will be eligible for the second place prize outlined below if their bracket predicts the correct outcome for all Rounds except the Championship Round. Lastly, a participant will be eligible for the third place prize outlined below if their bracket predicts the correct outcome for all Rounds except the Sixth Round and the Championship Round. 
+        <br/><br/>
+        If there are multiple winning brackets for a prize, the Artist will determine a tie-breaker by randomly select one winner (the “Winner”) for each prize as outlined below (collectively, the “Winners”). For the avoidance of doubt, the Artist will not be utilizing metrics from social media engagement of the Social Post as an element of criteria in selecting the Winners of the Contest.
+        <br/><br/>
+        PRIZE: The following prizes (individually, the “Prize” and collectively referred to as the “Prizes”) (by way of an Amex giftcard) will be awarded to each Winner:
+        <br/><br/>
+        First Place Prize: US$500.00<br/>
+        Second Place Prize: US$300.00<br/>
+        Third Place Prize: US$200.00<br/>
+        <br/><br/>
+        Neither Sponsor nor Sponsor Affiliates make or offer any warranty or guarantee, either express or implied (including, without limitation, quality, merchantability, and fitness for a particular purpose) in connection with this Contest or any prize. Prize details and availability are subject to change, in which case a prize of equal value may be substituted at Sponsor's sole discretion. The Prizes consist only of the items listed, are non- transferable, with no cash redemption or substitution except at Sponsor's sole discretion. Federal, state, or local taxes on prizes, if any, and any other costs, fees or expenses not listed above are the sole responsibility of the Winners. Odds of winning depend on the number of eligible entries received, and accuracy of Your Bracket as it relates to listenship during the specified period of time provided herein.
+        <br/><br/>
+        NOTIFICATION: Winner will be notified by email address, using the contact information provided or collected at time of entry. The Winner will be subject to proving eligibility, including, but not limited to, verification of the Winner’s name, age and social security number. If Winner cannot furnish verifiable and valid proof of age within forty-eight (48) hours after being notified of winning the sweepstakes or Winner cannot be reached after five (5) days from first notification attempt, an alternate Winner may be chosen from among the eligible entries received, in the Sponsor’s sole discretion. Void where prohibited and restricted by law. Additional restrictions may apply.
+        <br/><br/>
+        PUBLICITY & MARKETING: Acceptance of any prize constitutes permission to the Sponsor to use your name, voice, statements, image and likeness for purposes of advertising and trade in any medium, without further compensation or notice, unless prohibited by law. Submission of your contact information in connection with this Contest (whether or not required), including name, mailing address, phone number, and email address, constitutes permission for Sponsor to add you to Sponsor’s contact database and to contact you in the future for promotional and other reasons. You may opt-out of receiving such communications as set forth in Sponsor’s Privacy Policy (located at https://concord.com/privacy-policy/) or as provided within any such marketing materials (e.g., using the “Unsubscribe” feature provided in the footer of Sponsor’s emails).
+        <br/><br/>
+        NO LIABILITY & INDEMNIFICATION: Sponsor and Sponsor Affiliates are not responsible for, and entrants release each from any failures of any kind (whether caused by computer, technical, or human error), that may either limit the entrant’s ability to submit an entry, claim a prize, or otherwise participate in this Contest, or Sponsor’s ability to include all eligible entries, conduct random drawings, notify potential winners, or otherwise execute this Contest in the manner intended. Entrants further release and agree to indemnify Sponsor and Sponsor Affiliates from any and all liability, claims or actions of any kind whatsoever arising from injuries, damages, or losses to persons or property which may be sustained in connection with this Contest including, but not limited to: (a) the receipt, ownership or use of any prize awarded; (b) any travel or prize-related activity; (c) any typographical or other error in these Official Rules or any other materials disseminated by Sponsor; and (d) any technical malfunction, failure, error, omission, interruption, deletion, defect, delay in operation or communications line failure, regardless of cause, with any equipment, systems, networks, lines, satellites, servers, computers, or providers used by an entrant or Sponsor.
+        <br/><br/>
+        OTHER TERMS: Decisions of Sponsor and/or Artist on all matters related to the Contest are final. Sponsor reserves the right to cancel or modify the Contest for any reason, including but not limited to, if fraud, misconduct or technical failures destroy the integrity of the Contest, or if a computer virus, bug, or other technical problem corrupts the administration, security, or proper administration of the Contest as determined by Sponsor, in its sole discretion. Sponsor reserves the right to disqualify or prohibit the participation of an individual if fraud or tampering is suspected, or if the individual fails to comply with any requirement of participation or with any provision in these Official Rules. CAUTION: ANY ATTEMPT TO DELIBERATELY DAMAGE OR UNDERMINE THE OPERATION OF THIS
+        CONTEST IS A VIOLATION OF CRIMINAL & CIVIL LAWS. SPONSOR RESERVES THE RIGHT TO DISQUALIFY AND/OR SEEK DAMAGES FROM ANY INDIVIDUAL MAKING ANY SUCH ATTEMPTS TO THE FULL EXTENT PERMITTED BY LAW.
+        <br/><br/>
+        JURISDICTION: Any claims or lawsuits related to the Contest brought against any Sponsor shall be brought in the federal or state courts of the State of Tennessee. By participating in the Contest, you agree to the jurisdiction and venue of such courts and waive all objections to such jurisdiction and venue.
+        <br/><br/>
+        WINNER LIST: To obtain the name of the Winners (available after June 14, 2024) send a self-addressed stamped envelope (residents of Vermont may omit return postage) to: I PREVAIL “BRACKET-OLOGY” Contest, 5750 Wilshire Boulevard, Suite 450, Los Angeles, CA 90036.
+        <br/><br/>
+        SPONSOR: CMGI Recorded Music Assets, LLC through Fearless Records, a division of Concord Music Group, Inc.
+        </div>
+    </div>
+  </div>)
+}
+
 function App() {
   const [ user, setUser ] = useState(null)
   const [ accessToken, setAccessToken ] = useState("")
@@ -107,6 +202,13 @@ function App() {
     }
   }, [])
 
+  
+  const [ termsModalVisible, setSaveModalVisible ] = useState(false)
+
+  const toggleTermsModalVisible = () => {
+    setSaveModalVisible(!termsModalVisible)
+}
+
   const spotifyAuth = () => {
     window.open(`${url}/spotify/login`, '_self')
   }
@@ -138,6 +240,10 @@ function openMenu() {
 }
 
   return (<>
+    {
+        termsModalVisible &&
+        <TermsModal toggleTermsModalVisible={ toggleTermsModalVisible } />
+    }
     <div className="content-wrapper flex flex-col items-center justify-start text-white">
       <div className="h-20 flex items-center justify-between bg-none w-full top-0 left-0 right-0 px-4 z-20">
       {/* <div className="bg-red-500 fixed w-fulls top-0 left-0 right-0 flex h-20 items-center justify-between"> */}
@@ -217,7 +323,8 @@ function openMenu() {
       </div>
       <div className="w-1/3  text-center">
         <p className="text-[10px] md:text-[14px] leading-[12px]">
-          <a href="https://concord.com/terms/" target="_blank" rel="noopener">Terms of Service.</a> 
+          <span onClick={ toggleTermsModalVisible } className="hover:cursor-pointer">Terms of Service.</span>
+          {/* <a href="https://concord.com/terms/" target="_blank" rel="noopener">Terms of Service.</a>  */}
           &nbsp;
           <a href="https://concord.com/privacy-policy/" target="_blank" rel="noopener">Privacy Policy.</a>
         </p>
