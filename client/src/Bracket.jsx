@@ -104,7 +104,7 @@ const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBrac
                         <FacebookShareButton url="https://bracket.iprevailband.com" hashtag="#iprevailbracket">
                             <FacebookIcon size={32} round />
                         </FacebookShareButton>
-                        <TwitterShareButton url="https://bracket.iprevailband.com" title="I just submitted my #iprevailbracket!" hashtags={[ "#iprevailbracket" ]}>
+                        <TwitterShareButton url="https://bracket.iprevailband.com" title="I just submitted my #iprevailbracket!">
                             <TwitterIcon size={32} round />
                         </TwitterShareButton>
                         <RedditShareButton url="https://bracket.iprevailband.com" title="I just submitted my #iprevailbracket!">
