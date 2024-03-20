@@ -101,31 +101,19 @@ const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBrac
                 </div>
                 <div className="flex gap-4 flex-col justify-center items-center mb-12 md:mb-0">
                     <div className="flex justify-center items-center">
-                        <FacebookShareButton url="https://bracket.iprevailband.com">
+                        <FacebookShareButton url="https://bracket.iprevailband.com" hashtag="#iprevailbracket">
                             <FacebookIcon size={32} round />
                         </FacebookShareButton>
-                        <TwitterShareButton url="https://bracket.iprevailband.com">
+                        <TwitterShareButton url="https://bracket.iprevailband.com" title="I just submitted my #iprevailbracket!" hashtags={[ "#iprevailbracket" ]}>
                             <TwitterIcon size={32} round />
                         </TwitterShareButton>
-                        <RedditShareButton url="https://bracket.iprevailband.com">
+                        <RedditShareButton url="https://bracket.iprevailband.com" title="I just submitted my #iprevailbracket!">
                             <RedditIcon size={32} round />
                         </RedditShareButton>
-                        <EmailShareButton url="https://bracket.iprevailband.com">
+                        <EmailShareButton url="https://bracket.iprevailband.com" subject="I Prevail - Bracket-ology" body="I just submitted my #iprevailbracket!">
                             <EmailIcon size={32} round />
                         </EmailShareButton>
                     </div>
-                    {/* <TwitterIcon size={32} round={true} /> */}
-                    {/* <div className="min-w-52 flex flex-row items-center justify-center gap-x-2
-                        bg-transparent text-white font-bold border-2
-                        px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all"
-                        onClick={ shareBracketModalFunction }
-                    >
-                        <div className="mt-[1.75px]"><p className="text-sm">SHARE BRACKET</p></div>
-                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 448 512">
-                            <path fill="#ffffff" d="M352 224c53 0 96-43 96-96s-43-96-96-96s-96 43-96 96c0 4 .2 8 .7 11.9l-94.1 47C145.4 170.2 121.9 160 96 160c-53 0-96 43-96 96s43 96 96 96c25.9 0 49.4-10.2 66.6-26.9l94.1 47c-.5 3.9-.7 7.8-.7 11.9c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-25.9 0-49.4 10.2-66.6 26.9l-94.1-47c.5-3.9 .7-7.8 .7-11.9s-.2-8-.7-11.9l94.1-47C302.6 213.8 326.1 224 352 224z"/>
-                        </svg>
-                    </div>
-                    */}
                     <div className="min-w-52 flex flex-row items-center justify-center gap-x-2 
                         bg-transparent text-white font-bold border-2
                         px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
@@ -139,9 +127,6 @@ const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBrac
                 </div>
                 </>
             }
-            
-            <>
-            </>
         </div>
     </div>)
 }
