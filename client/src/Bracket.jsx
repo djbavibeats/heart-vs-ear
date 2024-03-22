@@ -86,6 +86,8 @@ const SavePrompt = ({ toggleSavePrompt, handleSaveBracket, saveStatus, shareBrac
                 ">YOU'RE IN!</p>
                 <p className="text-center mb-2 max-w-[75%] md:max-w-none">
                 Check back when each round closes to see how you did!
+                <br/><br/>
+                We’ve added your picks as a custom playlist on your Spotify. Check it out!
                 </p>
                 <div className="w-[350px] mb-4 flex justify-center items-center">
                     {
