@@ -187,8 +187,15 @@ const InstructionsModal = ({ toggleInstructionsVisible }) => {
 
 const CountdownTimer = () => {
     const calculateTimeLeft = () => {
+        const tzname = "America/New_York"
+        const longOffsetFormatter = new Intl.DateTimeFormat("en-US", {timeZone: tzname ,timeZoneName: "longOffset"})
+        const longOffsetString = longOffsetFormatter.format(new Date("2024-03-25T23:59:59"))
+        const gmtOffset = longOffsetString.split('GMT')[1]
+        const d = new Date("2024-03-25T23:59:59" + gmtOffset)
+
         let year = new Date().getFullYear()
-        let difference = +new Date(`2024-03-25T23:59:59`) - +new Date()
+        // let difference = +new Date(`2024-03-25T23:59:59 EST`) - +new Date()
+        let difference = +new Date(d.toISOString()) - +new Date()
 
         let timeLeft = {}
 
