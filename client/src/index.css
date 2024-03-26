@@ -59,3 +59,41 @@ body {
 svg > circle {
     fill: none !important;
 }
+
+.correct {
+}
+
+.correct > .bg-ip-gray-transparent {
+    opacity: 0.35;
+}
+
+.correct > .bg-ip-blue {
+    background: #319fff;
+    box-shadow: 0px 0px 20px #319fff;
+    border: 1px solid #319fff;
+}
+
+.incorrect {
+    opacity: 0.35;
+}
+.incorrect > .bg-ip-gray-transparent {
+    /* box-shadow: 0px 0px 20px red; */
+    /* background: green; */
+}
+
+.incorrect > .bg-ip-blue {
+    background: #de2021;
+    box-shadow: 0px 0px 10px #de2021;
+    border: 1px solid #de2021;
+}
+
+/* For Webkit-based browsers (Chrome, Safari and Opera) */
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* For IE, Edge and Firefox */
+.scrollbar-hide {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}

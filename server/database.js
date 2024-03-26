@@ -3,6 +3,8 @@ import mongoose from 'mongoose'
 import 'dotenv/config'
 const router = express.Router()
 
+import answersbracket from './answers.js'
+
 const url = process.env.MONGODB_URL
 const { Schema, model } = mongoose
 const userSchema = new Schema({
@@ -63,4 +65,44 @@ router.post('/users/update-bracket', async (req, res) => {
         user: updateUser
     })
 })
+
+router.get('/users/get-leaderboard', async (req, res) => {
+    const users = await User.find({ }).sort({ score: -1 }).limit(25)
+    res.send({
+        status: 200,
+        users: users
+    })
+})
+
+
+// router.get('/users/score-brackets', async (req, res) => {
+//     const users = await User.find({ hasBracket: true })
+//     users.map((user, userindex) => {
+//         console.log(user)
+//         let userscore = 0
+//         user.bracket[0].divisions.map((division, divisionindex) => {
+//             division.map((round, roundindex) => {
+//                 if (roundindex === 0) {
+//                     round.matches.map((match, matchindex) => {
+//                         if (match.pick.name === answersbracket.divisions[divisionindex][roundindex].matches[matchindex].pick.name) {
+//                             userscore += 1
+//                         }
+//                     })
+//                 }
+//             })
+//         })
+//         console.log(userindex + " :" + user.displayName + " score after round 1: " + userscore)
+//         let updateUser = User.findOneAndUpdate(
+//             { displayName: user.displayName },
+//             { 
+//                 score: userscore
+//             }
+//         ).exec()
+//     })
+    
+//     res.send({
+//         status: 200,
+//         user: "user"
+//     })
+// })
 export default router
