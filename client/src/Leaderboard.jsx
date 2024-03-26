@@ -29,11 +29,11 @@ const Leaderboard = ({ toggleLeaderboard }) => {
     }, [ width ])
 
     useEffect(() => {
-        console.log('hey')
+        
         fetch(`${url}/database/users/get-leaderboard`)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
+                
                 setLeaders(data.users)
                 setLoading(false)
             })
@@ -43,7 +43,7 @@ const Leaderboard = ({ toggleLeaderboard }) => {
 
     })
     const renderLeaders = () => {
-        console.log(leaders)
+        
         
         if (leaders) {
             return leaders.map((leader, index) => {
