@@ -1664,8 +1664,6 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                                         { roundindex === 2 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Sweet 16</div> : "" }
                                         { roundindex === 3 ? <div className="text-2xl text-center font-ultra-condensed w-full -mt-8 mb-2">Elite 8</div> : "" }
 
-                                        { renderAnswer(3, roundindex, matchindex) }
-
                                         <div className={`relative ${ user.hasBracket === false ? 
                                             // "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" 
                                             ""
