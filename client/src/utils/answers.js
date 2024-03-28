@@ -80,21 +80,21 @@ const answerbracket = {
                         "number": 9,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Deep End",
                         }
                     },
                     {
                         "number": 10,
                         "set": 1,
                         "pick": {
-                            "name": "",
+                            "name": "Feel Something (With I Prevail)",
                         }
                     },
                     {
                         "number": 11,
                         "set": 1,
                         "pick": {
-                            "name": "",
+                            "name": "Lifelines",
                         }
                     }
                 ]
@@ -208,28 +208,28 @@ const answerbracket = {
                         "number": 8,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Alone",
                         }
                     },
                     {
                         "number": 9,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "My Heart I Surrender",
                         }
                     },
                     {
                         "number": 10,
                         "set": 1,
                         "pick": {
-                            "name": "",
+                            "name": "Deadweight",
                         }
                     },
                     {
                         "number": 11,
                         "set": 1,
                         "pick": {
-                            "name": "",
+                            "name": "Gasoline",
                         }
                     }
                 ]
@@ -343,28 +343,28 @@ const answerbracket = {
                         "number": 8,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Bow Down",
                         }
                     },
                     {
                         "number": 9,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "There’s Fear In Letting Go",
                         }
                     },
                     {
                         "number": 10,
                         "set": 1,
                         "pick": {
-                            "name": "",
+                            "name": "Paranoid",
                         }
                     },
                     {
                         "number": 11,
                         "set": 1,
                         "pick": {
-                            "name": "",
+                            "name": "Crossroads",
                         }
                     }
                 ]
@@ -478,28 +478,28 @@ const answerbracket = {
                         "number": 8,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Chaos",
                         }
                     },
                     {
                         "number": 9,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "I Don't Belong Here",
                         }
                     },
                     {
                         "number": 10,
                         "set": 1,
                         "pick": {
-                            "name": "",
+                            "name": "Long Live The King",
                         }
                     },
                     {
                         "number": 11,
                         "set": 1,
                         "pick": {
-                            "name": "",
+                            "name": "0:00",
                         }
                     }
                 ]

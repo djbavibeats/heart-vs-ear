@@ -7,7 +7,7 @@ const checkanswers = (userbracket, answersbracket) => {
                 division.map((round, roundindex) => {
                     if (
                         roundindex === 0
-                        // || roundindex === 1
+                        || roundindex === 1
                         // || roundindex === 2
                         // || roundindex === 3
                     ) {

@@ -73,28 +73,28 @@ const answerbracket = {
                         "number": 8,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "Hurricane",
                         }
                     },
                     {
                         "number": 9,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "Deep End",
                         }
                     },
                     {
                         "number": 10,
                         "set": 1,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "Feel Something (With I Prevail)",
                         }
                     },
                     {
                         "number": 11,
                         "set": 1,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "Lifelines",
                         }
                     }
                 ]
@@ -108,14 +108,14 @@ const answerbracket = {
                         "number": 12,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "",
                         }
                     },
                     {
                         "number": 13,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "",
                         }
                     }
                 ]
@@ -129,7 +129,7 @@ const answerbracket = {
                         "number": 14,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "",
                         }
                     }
                 ]
@@ -208,28 +208,28 @@ const answerbracket = {
                         "number": 8,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "Alone",
                         }
                     },
                     {
                         "number": 9,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "My Heart I Surrender",
                         }
                     },
                     {
                         "number": 10,
                         "set": 1,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "Deadweight",
                         }
                     },
                     {
                         "number": 11,
                         "set": 1,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "Gasoline",
                         }
                     }
                 ]
@@ -243,14 +243,14 @@ const answerbracket = {
                         "number": 12,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "",
                         }
                     },
                     {
                         "number": 13,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "",
                         }
                     }
                 ]
@@ -264,7 +264,7 @@ const answerbracket = {
                         "number": 14,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "",
                         }
                     }
                 ]
@@ -343,28 +343,28 @@ const answerbracket = {
                         "number": 8,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "Bow Down",
                         }
                     },
                     {
                         "number": 9,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "There’s Fear In Letting Go",
                         }
                     },
                     {
                         "number": 10,
                         "set": 1,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "Paranoid",
                         }
                     },
                     {
                         "number": 11,
                         "set": 1,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "Crossroads",
                         }
                     }
                 ]
@@ -378,14 +378,14 @@ const answerbracket = {
                         "number": 12,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "",
                         }
                     },
                     {
                         "number": 13,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "",
                         }
                     }
                 ]
@@ -399,7 +399,7 @@ const answerbracket = {
                         "number": 14,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "",
                         }
                     }
                 ]
@@ -478,28 +478,28 @@ const answerbracket = {
                         "number": 8,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "Chaos",
                         }
                     },
                     {
                         "number": 9,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "I Don't Belong Here",
                         }
                     },
                     {
                         "number": 10,
                         "set": 1,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "Long Live The King",
                         }
                     },
                     {
                         "number": 11,
                         "set": 1,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "0:00",
                         }
                     }
                 ]
@@ -513,14 +513,14 @@ const answerbracket = {
                         "number": 12,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "",
                         }
                     },
                     {
                         "number": 13,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "",
                         }
                     }
                 ]
@@ -534,7 +534,7 @@ const answerbracket = {
                         "number": 14,
                         "set": 0,
                         "pick": {
-                            "name": "Self-Destruction",
+                            "name": "",
                         }
                     }
                 ]
@@ -545,13 +545,13 @@ const answerbracket = {
         {
             "set": 0,
             "pick": {
-                "name": "Breaking Down",
+                "name": "",
             }
         },
         {
             "set": 1,
             "pick": {
-                "name": "0:00",
+                "name": "",
             }
         }
     ],
@@ -560,11 +560,11 @@ const answerbracket = {
             "set": 0,
             "a": "",
             "b": "",
-            "pick": "undecided"
+            "pick": ""
         }
     ],
     "champion": {
-        "name": "0:00",
+        "name": "",
     }
 }
 
