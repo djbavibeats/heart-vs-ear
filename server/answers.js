@@ -108,14 +108,14 @@ const answerbracket = {
                         "number": 12,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Hurricane",
                         }
                     },
                     {
                         "number": 13,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Feel Something (With I Prevail)",
                         }
                     }
                 ]
@@ -243,14 +243,14 @@ const answerbracket = {
                         "number": 12,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Alone",
                         }
                     },
                     {
                         "number": 13,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Gasoline",
                         }
                     }
                 ]
@@ -378,14 +378,14 @@ const answerbracket = {
                         "number": 12,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Bow Down",
                         }
                     },
                     {
                         "number": 13,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Paranoid",
                         }
                     }
                 ]
@@ -513,14 +513,14 @@ const answerbracket = {
                         "number": 12,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "I Don't Belong Here",
                         }
                     },
                     {
                         "number": 13,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Long Live The King",
                         }
                     }
                 ]

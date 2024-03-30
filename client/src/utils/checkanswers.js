@@ -8,7 +8,7 @@ const checkanswers = (userbracket, answersbracket) => {
                     if (
                         roundindex === 0
                         || roundindex === 1
-                        // || roundindex === 2
+                        || roundindex === 2
                         // || roundindex === 3
                     ) {
                         round.matches.map((match, matchindex) => {

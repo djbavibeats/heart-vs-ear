@@ -81,11 +81,14 @@ router.get('/users/score-brackets', async (req, res) => {
     // let userscore = 0
     // user.bracket[0].divisions.map((division, divisionindex) => {
     //     division.map((round, roundindex) => {
-    //         if (roundindex === 0 || roundindex === 1) {
+    //         if (roundindex === 0 || roundindex === 1 || roundindex === 2) {
     //             round.matches.map((match, matchindex) => {
     //                 if (match.pick.name === answersbracket.divisions[divisionindex][roundindex].matches[matchindex].pick.name) {
     //                     console.log('correct')
     //                     userscore += 1
+    //                 } else {
+    //                     console.log(match.pick.name)
+    //                     console.log(answersbracket.divisions[divisionindex][roundindex].matches[matchindex].pick.name)
     //                 }
     //             })
     //         }
@@ -100,12 +103,13 @@ router.get('/users/score-brackets', async (req, res) => {
     // ).exec()
 
     // Live Function
+    // console.log('start scoring')
     // const users = await User.find({ hasBracket: true  })
     // users.map((user, userindex) => {
     //     let userscore = 0
     //     user.bracket[0].divisions.map((division, divisionindex) => {
     //         division.map((round, roundindex) => {
-    //             if (roundindex === 0 || roundindex === 1) {
+    //             if (roundindex === 0 || roundindex === 1 || roundindex === 2) {
     //                 round.matches.map((match, matchindex) => {
     //                     if (match.pick.name === answersbracket.divisions[divisionindex][roundindex].matches[matchindex].pick.name) {
     //                         userscore += 1
@@ -114,7 +118,7 @@ router.get('/users/score-brackets', async (req, res) => {
     //             }
     //         })
     //     })
-    //     console.log(userindex + " :" + user.displayName + " score after round 2: " + userscore)
+    //     console.log(userindex + " :" + user.displayName + " score after round 3: " + userscore)
     //     let updateUser = User.findOneAndUpdate(
     //         { displayName: user.displayName },
     //         { 
