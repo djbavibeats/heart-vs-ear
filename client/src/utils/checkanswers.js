@@ -9,7 +9,7 @@ const checkanswers = (userbracket, answersbracket) => {
                         roundindex === 0
                         || roundindex === 1
                         || roundindex === 2
-                        // || roundindex === 3
+                        || roundindex === 3
                     ) {
                         round.matches.map((match, matchindex) => {
                             if (match.pick.name === answersbracket.divisions[divisionindex][roundindex].matches[matchindex].pick.name) {

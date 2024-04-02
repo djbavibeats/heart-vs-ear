@@ -194,9 +194,9 @@ const CountdownTimer = () => {
     const calculateTimeLeft = () => {
         const tzname = "America/New_York"
         const longOffsetFormatter = new Intl.DateTimeFormat("en-US", {timeZone: tzname ,timeZoneName: "longOffset"})
-        const longOffsetString = longOffsetFormatter.format(new Date("2024-04-01T23:59:59"))
+        const longOffsetString = longOffsetFormatter.format(new Date("2024-04-03T23:59:59"))
         const gmtOffset = longOffsetString.split('GMT')[1]
-        const d = new Date("2024-04-01T23:59:59" + gmtOffset)
+        const d = new Date("2024-04-03T23:59:59" + gmtOffset)
 
         let year = new Date().getFullYear()
         // let difference = +new Date(`2024-03-25T23:59:59 EST`) - +new Date()
@@ -831,7 +831,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             <p className="text-center -mr-[10px]
                 bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
                 text-[20px] md:text-[32px] font-ultra-condensed tracking-[4px] md:tracking-[14px] mb-0
-            ">{ user.score } / 56</p>
+            ">{ user.score } / 60</p>
         </>)
     }
 
@@ -1215,14 +1215,14 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                 </div>
 
 
-                <div className="z-[99] min-w-52 flex flex-row items-center justify-center gap-x-2 bg-gradient-to-t from-cyan-400 to-ip-blue text-black font-bold drop-shadow-glow-sm px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
+                {/* <div className="z-[99] min-w-52 flex flex-row items-center justify-center gap-x-2 bg-gradient-to-t from-cyan-400 to-ip-blue text-black font-bold drop-shadow-glow-sm px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
                     onClick={ toggleSavePrompt }
                 >
                     <div className="mt-[1.75px]"><p className="text-sm">SAVE BRACKET</p></div> 
                     <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" viewBox="0 0 512 512">
                         <path d="M48 96V416c0 8.8 7.2 16 16 16H384c8.8 0 16-7.2 16-16V170.5c0-4.2-1.7-8.3-4.7-11.3l33.9-33.9c12 12 18.7 28.3 18.7 45.3V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96C0 60.7 28.7 32 64 32H309.5c17 0 33.3 6.7 45.3 18.7l74.5 74.5-33.9 33.9L320.8 84.7c-.3-.3-.5-.5-.8-.8V184c0 13.3-10.7 24-24 24H104c-13.3 0-24-10.7-24-24V80H64c-8.8 0-16 7.2-16 16zm80-16v80H272V80H128zm32 240a64 64 0 1 1 128 0 64 64 0 1 1 -128 0z"/>  
                     </svg>
-                </div>
+                </div> */}
                 </>
             }
             {

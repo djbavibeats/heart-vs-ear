@@ -129,7 +129,7 @@ const answerbracket = {
                         "number": 14,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Hurricane",
                         }
                     }
                 ]
@@ -264,7 +264,7 @@ const answerbracket = {
                         "number": 14,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Gasoline",
                         }
                     }
                 ]
@@ -399,7 +399,7 @@ const answerbracket = {
                         "number": 14,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Bow Down",
                         }
                     }
                 ]
@@ -534,7 +534,7 @@ const answerbracket = {
                         "number": 14,
                         "set": 0,
                         "pick": {
-                            "name": "",
+                            "name": "Long Live The King",
                         }
                     }
                 ]

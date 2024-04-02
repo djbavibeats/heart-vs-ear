@@ -81,7 +81,7 @@ router.get('/users/score-brackets', async (req, res) => {
     // let userscore = 0
     // user.bracket[0].divisions.map((division, divisionindex) => {
     //     division.map((round, roundindex) => {
-    //         if (roundindex === 0 || roundindex === 1 || roundindex === 2) {
+    //         if (roundindex === 0 || roundindex === 1 || roundindex === 2 || roundindex === 3) {
     //             round.matches.map((match, matchindex) => {
     //                 if (match.pick.name === answersbracket.divisions[divisionindex][roundindex].matches[matchindex].pick.name) {
     //                     console.log('correct')
@@ -109,7 +109,7 @@ router.get('/users/score-brackets', async (req, res) => {
     //     let userscore = 0
     //     user.bracket[0].divisions.map((division, divisionindex) => {
     //         division.map((round, roundindex) => {
-    //             if (roundindex === 0 || roundindex === 1 || roundindex === 2) {
+    //             if (roundindex === 0 || roundindex === 1 || roundindex === 2 || roundindex === 3) {
     //                 round.matches.map((match, matchindex) => {
     //                     if (match.pick.name === answersbracket.divisions[divisionindex][roundindex].matches[matchindex].pick.name) {
     //                         userscore += 1
@@ -118,7 +118,9 @@ router.get('/users/score-brackets', async (req, res) => {
     //             }
     //         })
     //     })
-    //     console.log(userindex + " :" + user.displayName + " score after round 3: " + userscore)
+    //     if (userscore >= 39) {
+    //         console.log(userindex + " :" + user.displayName + " score after round 3: " + userscore)
+    //     }
     //     let updateUser = User.findOneAndUpdate(
     //         { displayName: user.displayName },
     //         { 
