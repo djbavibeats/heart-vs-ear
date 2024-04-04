@@ -545,13 +545,13 @@ const answerbracket = {
         {
             "set": 0,
             "pick": {
-                "name": "",
+                "name": "Gasoline",
             }
         },
         {
             "set": 1,
             "pick": {
-                "name": "",
+                "name": "Bow Down",
             }
         }
     ],

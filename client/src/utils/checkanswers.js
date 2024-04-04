@@ -24,15 +24,16 @@ const checkanswers = (userbracket, answersbracket) => {
         })
     )
     // Final Four Scoring
-    // Promise.all(
-    //     checkbracket.semifinals.map((semifinal, semifinalindex) => {
-    //         if (semifinal.pick.name === answersbracket.semifinals[semifinalindex].pick.name) {
-    //             return semifinal.correct = true
-    //         } else {
-    //             return semifinal.correct = false
-    //         }
-    //     })
-    // )
+    Promise.all(
+        checkbracket.semifinals.map((semifinal, semifinalindex) => {
+            if (semifinal.pick.name === answersbracket.semifinals[semifinalindex].pick.name) {
+                return semifinal.correct = true
+            } else {
+                return semifinal.correct = false
+            }
+        })
+    )
+
     // Championship Scoring
     // if (checkbracket.champion.name === answersbracket.champion.name) {
     //     checkbracket.champion.correct = true

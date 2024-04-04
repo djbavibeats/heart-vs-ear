@@ -194,9 +194,9 @@ const CountdownTimer = () => {
     const calculateTimeLeft = () => {
         const tzname = "America/New_York"
         const longOffsetFormatter = new Intl.DateTimeFormat("en-US", {timeZone: tzname ,timeZoneName: "longOffset"})
-        const longOffsetString = longOffsetFormatter.format(new Date("2024-04-03T23:59:59"))
+        const longOffsetString = longOffsetFormatter.format(new Date("2024-04-05T23:59:59"))
         const gmtOffset = longOffsetString.split('GMT')[1]
-        const d = new Date("2024-04-03T23:59:59" + gmtOffset)
+        const d = new Date("2024-04-05T23:59:59" + gmtOffset)
 
         let year = new Date().getFullYear()
         // let difference = +new Date(`2024-03-25T23:59:59 EST`) - +new Date()
@@ -545,15 +545,12 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
         }
     }
     const renderSemifinalAnswer = (semifinal) => {
+        console.log(semifinal.correct)
         if (checkbracket) {
             if (semifinal.correct) {
-                return (<>
-                    <p className="text-center">Correct</p>
-                </>)
+                return "correct"
             } else {
-                return (<>
-                    <p className="text-center">Incorrect</p>
-                </>)
+                return "incorrect"
             }
         }
     }
@@ -831,7 +828,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             <p className="text-center -mr-[10px]
                 bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
                 text-[20px] md:text-[32px] font-ultra-condensed tracking-[4px] md:tracking-[14px] mb-0
-            ">{ user.score } / 60</p>
+            ">{ user.score } / 62</p>
         </>)
     }
 
@@ -1495,7 +1492,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                             <div className={ `flex justify-center mb-2` }>
                                 <p className="text-2xl text-center -mr-[10px] font-ultra-condensed w-full">Final Four</p>
                             </div>
-                            <div className={`text-sm col-span-1`}>
+                            <div className={`${ renderSemifinalAnswer(bracket.semifinals[0]) } text-sm col-span-1`}>
                                 <div className={`relative ${ user.hasBracket === false ? 
                                     ""
                                     // "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" 
@@ -1545,7 +1542,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                             <div className={ `flex justify-center mb-2` }>
                                 <p className="text-2xl text-center -mr-[10px] font-ultra-condensed w-full">Final Four</p>
                             </div>
-                            <div className={`text-sm col-span-1`}>
+                            <div className={`${ renderSemifinalAnswer(bracket.semifinals[1]) } text-sm col-span-1`}>
                                 <div className={`relative ${ user.hasBracket === false ? 
                                     ""
                                     // "hover:cursor-pointer hover:drop-shadow-glow hover:bg-gradient-to-t hover:from-cyan-400 hover:to-ip-blue" 

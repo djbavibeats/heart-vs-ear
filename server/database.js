@@ -93,6 +93,16 @@ router.get('/users/score-brackets', async (req, res) => {
     //             })
     //         }
     //     })
+
+    // })
+
+    // user.bracket[0].semifinals.map((semifinal, semifinalindex) => {
+    //     if (semifinal.pick.name === answersbracket.semifinals[semifinalindex].pick.name) {
+    //         console.log('semifinal corret')
+    //         userscore += 1
+    //     } else {
+    //         console.log('semifinal incorrect')
+    //     }
     // })
     // console.log(userscore)
     // let updateUser = User.findOneAndUpdate(
@@ -118,8 +128,13 @@ router.get('/users/score-brackets', async (req, res) => {
     //             }
     //         })
     //     })
+    //     user.bracket[0].semifinals.map((semifinal, semifinalindex) => {
+    //         if (semifinal.pick.name === answersbracket.semifinals[semifinalindex].pick.name) {
+    //             userscore += 1
+    //         }
+    //     })
     //     if (userscore >= 39) {
-    //         console.log(userindex + " :" + user.displayName + " score after round 3: " + userscore)
+    //         console.log(userindex + " :" + user.displayName + " score after semifinals " + userscore)
     //     }
     //     let updateUser = User.findOneAndUpdate(
     //         { displayName: user.displayName },
@@ -128,6 +143,8 @@ router.get('/users/score-brackets', async (req, res) => {
     //         }
     //     ).exec()
     // })
+
+    
     
     res.send({
         status: 200,
