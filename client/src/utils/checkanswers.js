@@ -35,11 +35,11 @@ const checkanswers = (userbracket, answersbracket) => {
     )
 
     // Championship Scoring
-    // if (checkbracket.champion.name === answersbracket.champion.name) {
-    //     checkbracket.champion.correct = true
-    // } else {
-    //     checkbracket.champion.correct = false
-    // }
+    if (checkbracket.champion.name === answersbracket.champion.name) {
+        checkbracket.champion.correct = true
+    } else {
+        checkbracket.champion.correct = false
+    }
     return checkbracket
 }
 export { checkanswers }

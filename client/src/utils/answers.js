@@ -560,11 +560,11 @@ const answerbracket = {
             "set": 0,
             "a": "",
             "b": "",
-            "pick": ""
+            "pick": "Gasoline"
         }
     ],
     "champion": {
-        "name": "",
+        "name": "Gasoline",
     }
 }
 

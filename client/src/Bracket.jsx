@@ -557,13 +557,9 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
     const renderChampionshipAnswer = (champion) => {
         console.log(champion)
         if (champion.correct === true) {
-            return (<>
-                <p className="text-center">Correct</p>
-            </>)
+            return "correct"
         } else {
-            return (<>
-                <p className="text-center">Incorrect</p>
-            </>)
+            return "incorrect"
         }
     }
     // End scoring stuff
@@ -828,7 +824,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             <p className="text-center -mr-[10px]
                 bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
                 text-[20px] md:text-[32px] font-ultra-condensed tracking-[4px] md:tracking-[14px] mb-0
-            ">{ user.score } / 62</p>
+            ">{ user.score } / 63</p>
         </>)
     }
 
@@ -1268,7 +1264,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                 </>
             }
             <div className="flex flex-col items-center z-20">
-                <div className='flex items-center'>
+                {/* <div className='flex items-center'>
                     <p className="text-center -mr-[10px]
                         bg-gradient-to-t from-cyan-400 to-ip-blue inline-block text-transparent bg-clip-text
                         text-[20px] md:text-[32px] font-ultra-condensed tracking-[4px] md:tracking-[14px]
@@ -1276,7 +1272,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                 </div>
                 <div className="flex items-center justify-center gap-2">
                     <CountdownTimer />
-                </div>
+                </div> */}
                 <div className="mt-2 flex flex-row items-center justify-center gap-x-2 
                     bg-transparent text-white font-bold border-2
                     px-4 py-3 rounded-xl text-center hover:cursor-pointer hover:scale-105 transition-all" 
@@ -1402,7 +1398,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
             {/* Desktop Playoffs */}
             <div className={ `flex flex-col col-span-4 items-center justify-center` }>
                 <div className={ `flex flex-col w-full -mb-[10%] md:-mb-[10%] -mt-[30%] md:-mt-[17.5%] max-w-[612px]` }>
-                    <div className={ `flex justify-center mb-8` }>
+                    <div className={ `${ renderChampionshipAnswer(bracket.champion)}  flex justify-center mb-8` }>
                         { bracket.champion ? <>
                             <div className={`z-20 border max-w-[250px] min-h-[360px] flex flex-1 flex-col items-center justify-center text-sm 
                                 
@@ -1443,7 +1439,7 @@ export default function Bracket({ accessToken , tokenType, user, setUser }) {
                         <div className={ `flex justify-center w-full mb-2` }>
                             <p className="text-2xl text-center -mr-[10px] font-ultra-condensed w-full">Championship</p>
                         </div>
-                        <div className={`gap-2 text-sm col-span-1 w-full flex flex-row`}>
+                        <div className={`${ renderChampionshipAnswer(bracket.champion)} gap-2 text-sm col-span-1 w-full flex flex-row`}>
                             <div className={`overflow-hidden relative h-[75px] border flex flex-1 flex-row items-start justify-start text-sm 
                                     ${ bracket.champion ?
                                         bracket.champion.name === bracket.semifinals[0].pick.name ? "bg-ip-blue" : "bg-ip-gray-transparent"

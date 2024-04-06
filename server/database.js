@@ -104,6 +104,11 @@ router.get('/users/score-brackets', async (req, res) => {
     //         console.log('semifinal incorrect')
     //     }
     // })
+
+    // if (user.bracket[0].champion.name === answersbracket.champion.name) {
+    //     console.log('correct champion!')
+    //     userscore += 1
+    // }
     // console.log(userscore)
     // let updateUser = User.findOneAndUpdate(
     //     { displayName: "The Stylish Hampton Crab" },
@@ -133,7 +138,12 @@ router.get('/users/score-brackets', async (req, res) => {
     //             userscore += 1
     //         }
     //     })
-    //     if (userscore >= 39) {
+    //     // Championship Scoring
+    //     if (user.bracket[0].champion.name === answersbracket.champion.name) {
+    //         console.log(user.displayName +  ' picked the correct champion!')
+    //         userscore += 1
+    //     }
+    //     if (userscore >= 40) {
     //         console.log(userindex + " :" + user.displayName + " score after semifinals " + userscore)
     //     }
     //     let updateUser = User.findOneAndUpdate(
